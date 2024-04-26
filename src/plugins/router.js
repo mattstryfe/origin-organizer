@@ -2,22 +2,22 @@ import { createRouter, createWebHistory } from 'vue-router'
 // import Eggs from '@/pages/egg-details.vue'
 // import Breeding from '@/pages/breeding-plans.vue'
 // import Hatching from '@/pages/hatching-data.vue'
-// import HomePage from '@/pages/home-page.vue'
+import HomePage from '@/pages/home-page.vue'
 // import SOP from '@/pages/standard-of-perfection.vue'
 // import ChickenDetails from '@/components/bird-details.vue'
 // import Finances from '@/pages/money-tracker.vue';
 // import MoneyTracker from '@/pages/money-tracker.vue';
 
 const routes = [
-  // {
-  //   path: '/',
-  //   component: HomePage
-  // },
+  {
+    path: '/',
+    component: HomePage
+  },
   // {
   //   path: '/details',
   //   component: ChickenDetails
   // },
-  //
+  
   // {
   //   path: '/eggs',
   //   component: Eggs

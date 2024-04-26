@@ -9,6 +9,6 @@ import { vuetify } from '@/plugins/vuetify'
 
 createApp(App)
   .use(pinia)
-  // .use(router)
+  .use(router)
   .use(vuetify)
   .mount('#app')

@@ -14,9 +14,11 @@
     </v-app-bar>
 
     <v-main class="d-flex align-center justify-center" style="min-height: 300px;">
-      Main Content
+      <RouterView />
     </v-main>
   </v-layout>
 </template>
 <script setup lang="ts">
+import { RouterView } from 'vue-router';
+
 </script>
