@@ -18,5 +18,20 @@
     </v-main>
   </v-layout>
 </template>
-<script setup lang="ts">
+<script setup>
+
+import { onMounted, ref } from 'vue'
+import { collection, getDocs } from 'firebase/firestore'
+import db from '@/plugins/firebase'
+
+const users = ref([])
+
+onMounted(async () => {
+  const querySnapshot = await getDocs(collection(db, 'users'))
+  querySnapshot.forEach((doc) => {
+
+    users.value.push(doc.data())
+    console.log('user', users.value)
+  })
+})
 </script>
