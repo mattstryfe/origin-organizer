@@ -5,3 +5,13 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 ## Recommended IDE Setup
 
 - [VS Code](https://code.visualstudio.com/) + [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (previously Volar) and disable Vetur
+
+
+### Firebase
+
+to open general firebase things
+firebase init
+
+to build local copy of app and deploy manually from local machine - do not use this
+vite build && firebase deploy
+
