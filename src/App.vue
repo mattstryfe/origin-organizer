@@ -9,10 +9,10 @@
       <template #append>
         <v-btn icon="mdi-dots-grid"></v-btn>
         <v-avatar>
-          <v-btn v-if="!uid" icon="mdi-account" @click="handleAuth()"> </v-btn>
+          <v-btn v-if="!userInfo" icon="mdi-account" @click="handleAuth()">Login </v-btn>
           <v-img
             v-else
-            :src="`${photoURL}`"
+            :src="`${userInfo.photoURL}`"
           ></v-img>
         </v-avatar>
       </template>
@@ -41,7 +41,7 @@ import { GoogleAuthProvider } from 'firebase/auth'
 const provider = new GoogleAuthProvider()
 const auth = getAuth()
 
-const userInfo = ref({})
+const userInfo = ref(null)
 const uid = ref()
 const photoURL = ref()
 
@@ -49,8 +49,9 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     // User is signed in, see docs for a list of available properties
     // https://firebase.google.com/docs/reference/js/auth.user
-    uid.value = user.uid
-    photoURL.value = user.photoURL
+    // console.log('users', user)
+    // uid.value = user.uid
+    // photoURL.value = user.photoURL
     // ...
   } else {
     // User is signed out
@@ -61,14 +62,14 @@ onAuthStateChanged(auth, (user) => {
 const handleAuth = async () => {
   // auth
   //initialize firebase auth
-  console.log('provider', provider)
   const authResponse = await signInWithPopup(auth, provider)
   console.log('authResponse', authResponse)
   // const res = await getRedirectResult(auth)
   // console.log(res)
   userInfo.value = {
     currentUser: authResponse.user,
-    uid: authResponse.user.uid
+    uid: authResponse.user.uid,
+    photoURL: authResponse.user.photoURL
   }
   // console.log('auth', auth)
 }
