@@ -8,9 +8,6 @@
     >
       Main Content
       <v-card>
-<!--        userInfo: {{ userInfo }} <br />-->
-<!--        uid: {{ uid }} <br />-->
-<!--        photoURL: {{ photoURL }} <br />-->
       </v-card>
     </v-main>
   </v-layout>
