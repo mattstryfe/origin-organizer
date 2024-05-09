@@ -1,5 +1,7 @@
 <template>
   <v-list>
+    <v-list-subheader color="secondary">User Controls</v-list-subheader>
+
     <v-list-item>
       <v-switch
         v-model="enableDarkMode"
