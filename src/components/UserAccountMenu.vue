@@ -1,9 +1,5 @@
 <template>
-  <v-menu
-    v-model="accountMenu"
-    :close-on-content-click="false"
-    location="end"
-  >
+  <v-menu v-model="accountMenu" :close-on-content-click="false" location="end">
     <template #activator="{ props }">
       <v-chip
         v-if="!userInfo"
@@ -15,9 +11,12 @@
         Sign in
       </v-chip>
       <!-- v-bind props opens menu -->
-      <v-avatar v-else v-bind="props">
-        <v-img :src="`${userInfo.photoURL}`"></v-img>
-      </v-avatar>
+      <v-div v-else>
+        <v-avatar v-bind="props">
+          <v-img :src="`${userInfo.photoURL}`"></v-img>
+        </v-avatar>
+        <v-chip @click="deleteUser()">Delete User</v-chip>
+      </v-div>
     </template>
 
     <v-card>
@@ -50,13 +49,19 @@
           Save
         </v-btn>
       </v-card-actions>
-
     </v-card>
   </v-menu>
 </template>
 
 <script setup>
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import {
+  setDoc,
+  doc,
+  getDoc,
+  deleteDoc
+} from 'firebase/firestore'
+import db from '../plugins/firebase'
 import { ref } from 'vue'
 import UserAccountMenuActions from '@/components/UserAccountMenuActions.vue'
 
@@ -70,12 +75,39 @@ const provider = new GoogleAuthProvider()
 const handleAuth = async () => {
   //initialize firebase auth
   const authResponse = await signInWithPopup(auth, provider)
-  userInfo.value = {
-    currentUser: authResponse.user,
-    uid: authResponse.user.uid,
-    photoURL: authResponse.user.photoURL
+  console.log('authResponse', authResponse.user)
+
+  const userDoc = await getDoc(doc(db, 'users', authResponse.user.uid))
+  if (!userDoc.exists()) {
+    try {
+      await setDoc(doc(db, 'users', authResponse.user.uid), {
+        displayName: authResponse.user.displayName,
+        autoSave: false,
+        photoUrl: authResponse.user.photoURL
+      })
+    } catch (e) {
+      console.error('Error adding document: ', e)
+    }
+
+    userInfo.value = {
+      currentUser: authResponse.user,
+      uid: authResponse.user.uid,
+      photoURL: authResponse.user.photoURL
+    }
+  } else {
+    const savedUserData = userDoc.data()
+    console.log('userDoc', userDoc.id)
+    userInfo.value = {
+      currentUser: savedUserData.displayName,
+      uid: authResponse.user.uid,
+      photoURL: savedUserData.photoURL
+    }
   }
-  console.log('currentUser', userInfo.value.currentUser)
+}
+
+const deleteUser = async () => {
+  await deleteDoc(doc(db, 'users', userInfo.value.uid))
+  userInfo.value = null
 }
 </script>
 
