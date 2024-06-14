@@ -7,6 +7,7 @@
       style="min-height: 300px"
     >
       Main Content
+      <AddForm></AddForm>
       <v-card>
       </v-card>
     </v-main>
@@ -18,6 +19,7 @@ import { onMounted } from 'vue'
 import { collection, getDocs } from 'firebase/firestore'
 import db from '@/plugins/firebase'
 import MainAppHeader from '@/components/MainAppHeader.vue'
+import AddForm from './components/AddForm.vue'
 
 onMounted(async () => {
   // const querySnapshot = await getDocs(collection(db, 'users'))

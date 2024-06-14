@@ -11,12 +11,12 @@
         Sign in
       </v-chip>
       <!-- v-bind props opens menu -->
-      <v-div v-else>
+      <div v-else>
         <v-avatar v-bind="props">
           <v-img :src="`${userInfo.photoURL}`"></v-img>
         </v-avatar>
         <v-chip @click="deleteUser()">Delete User</v-chip>
-      </v-div>
+      </div>
     </template>
 
     <v-card>
