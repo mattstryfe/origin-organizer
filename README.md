@@ -15,4 +15,3 @@ firebase init
 to build local copy of app and deploy manually from local machine - do not use this
 vite build && firebase deploy
 
-eee
