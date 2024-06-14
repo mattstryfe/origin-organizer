@@ -11,12 +11,9 @@
         Sign in
       </v-chip>
       <!-- v-bind props opens menu -->
-      <v-div v-else>
-        <v-avatar v-bind="props">
-          <v-img :src="`${userInfo.photoURL}`"></v-img>
-        </v-avatar>
-        <v-chip @click="deleteUser()">Delete User</v-chip>
-      </v-div>
+      <v-avatar v-else v-bind="props">
+        <v-img :src="`${userInfo.photoURL}`"></v-img>
+      </v-avatar>
     </template>
 
     <v-card>
@@ -48,6 +45,7 @@
         <v-btn color="primary" variant="tonal" @click="accountMenu = false">
           Save
         </v-btn>
+        <v-chip @click="deleteUser()">Delete User</v-chip>
       </v-card-actions>
     </v-card>
   </v-menu>
@@ -69,7 +67,7 @@ import UserAccountMenuActions from '@/components/UserAccountMenuActions.vue'
 const accountMenu = ref(false)
 
 const auth = getAuth()
-const userInfo = ref(null)
+const userInfo = ref(null) // TODO: move this to store
 const provider = new GoogleAuthProvider()
 
 const handleAuth = async () => {
@@ -105,6 +103,7 @@ const handleAuth = async () => {
   }
 }
 
+// TODO: move this to user store and run this from UserAccountMenuActions
 const deleteUser = async () => {
   await deleteDoc(doc(db, 'users', userInfo.value.uid))
   userInfo.value = null
