@@ -20,3 +20,4 @@ vite build && firebase deploy
 Add `TG-REF #STATUS-slug` to commit summary or description to change TIAGA ticket status
 - Example:
 `TG-123 #closed`
+- Example: `TG-12 updated readme to relfect changes...`
