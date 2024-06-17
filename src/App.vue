@@ -1,17 +1,15 @@
 <template>
   <v-layout>
-   <main-app-header></main-app-header>
+    <main-app-header></main-app-header>
 
-    <v-main
-      class="d-flex align-center justify-center"
-      style="min-height: 300px"
-    >
+
+    <v-main id="app" class="d-flex align-center justify-center" style="min-height: 300px">
       Main Content
-      <AddForm></AddForm>
       <v-card>
       </v-card>
     </v-main>
   </v-layout>
+
 </template>
 
 <script setup>
