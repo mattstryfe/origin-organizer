@@ -65,9 +65,9 @@ import UserAccountMenuActions from '@/components/UserAccountMenuActions.vue'
 
 // menu
 const accountMenu = ref(false)
-
+const fav = ref()
 const auth = getAuth()
-const userInfo = ref(null) // TODO: move this to store
+const userInfo = ref() // TODO: move this to store
 const provider = new GoogleAuthProvider()
 
 const handleAuth = async () => {
@@ -81,33 +81,33 @@ const handleAuth = async () => {
       await setDoc(doc(db, 'users', authResponse.user.uid), {
         displayName: authResponse.user.displayName,
         autoSave: false,
-        photoUrl: authResponse.user.photoURL
+        photoURL: authResponse.user.photoURL
       })
+      console.log('uthResponse.user.photoURL', authResponse.user.photoURL)
+      userInfo.value = {
+        currentUser: authResponse.user,
+        uid: authResponse.user.uid,
+        photoURL: authResponse.user.photoURL
+      }
     } catch (e) {
       console.error('Error adding document: ', e)
     }
-
-    userInfo.value = {
-      currentUser: authResponse.user,
-      uid: authResponse.user.uid,
-      photoURL: authResponse.user.photoURL
-    }
   } else {
     const savedUserData = userDoc.data()
-    console.log('userDoc', userDoc.id)
     userInfo.value = {
       currentUser: savedUserData.displayName,
       uid: authResponse.user.uid,
       photoURL: savedUserData.photoURL
     }
   }
+  console.log('userInfo.value', userInfo.value.photoURL)
 }
 
-// TODO: move this to user store and run this from UserAccountMenuActions
-const deleteUser = async () => {
-  await deleteDoc(doc(db, 'users', userInfo.value.uid))
-  userInfo.value = null
-}
+// // TODO: move this to user store and run this from UserAccountMenuActions
+// const deleteUser = async () => {
+//   await deleteDoc(doc(db, 'users', userInfo.value.uid))
+//   userInfo.value = null
+// }
 </script>
 
 <style scoped></style>

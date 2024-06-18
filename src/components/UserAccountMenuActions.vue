@@ -37,6 +37,13 @@ import { ref } from 'vue'
 
 const enableDarkMode = ref(false)
 const enableAutoSave = ref(true)
+
+// TODO: move this to user store and run this from UserAccountMenuActions
+const deleteUser = async () => {
+  await deleteDoc(doc(db, 'users', userInfo.value.uid))
+  userInfo.value = null
+}
+
 </script>
 
 <style scoped></style>
