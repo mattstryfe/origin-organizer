@@ -20,15 +20,17 @@
       <v-list>
         <v-list-item
           :prepend-avatar="`${userStore.getUserPhotoURL}`"
-          :subtitle="userStore.userInfo.email"
+          :subtitle="userStore.getUserEmail"
           :title="userStore.getUserDisplayName"
         >
           <template #append>
             <v-btn
-              :class="fav ? 'text-red' : ''"
-              icon="mdi-heart"
-              variant="text"
-              @click="fav = !fav"
+              size="small"
+              variant="tonal"
+              color="error"
+              icon="mdi-logout"
+              class="ml-2"
+              @click="userStore.handleLogout()"
             ></v-btn>
           </template>
         </v-list-item>
@@ -51,14 +53,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
 import UserAccountMenuActions from '@/components/UserAccountMenuActions.vue'
 import { useUserStore } from '@/stores/userStore'
+import { storeToRefs } from 'pinia'
 const userStore = useUserStore()
-
-// menu
-const accountMenu = ref(false)
-const fav = ref()
+const { accountMenu } = storeToRefs(userStore)
 </script>
 
 <style scoped></style>
