@@ -30,6 +30,9 @@ export const useUserStore = defineStore('userStore', {
       this.hasProfileBeenRepaired = true
     },
     async nukeUserAccount() {
+      // Hide menu because it de-populates during logout
+      this.accountMenu = false
+
       await deleteDoc(doc(db, 'users', this.getUserUid))
       this.userInfo = null
     },
