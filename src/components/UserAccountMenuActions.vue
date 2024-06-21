@@ -25,7 +25,7 @@
     <v-list-subheader color="warning">Danger Zone</v-list-subheader>
 
     <v-list-item>
-      <v-btn variant="outlined" color="primary" prepend-icon="mdi-nuke">
+      <v-btn variant="outlined" color="primary" prepend-icon="mdi-nuke" @click="userStore.nukeUserAccount()">
         Nuke Profile
       </v-btn>
     </v-list-item>
@@ -34,15 +34,10 @@
 
 <script setup>
 import { ref } from 'vue'
-
 const enableDarkMode = ref(false)
 const enableAutoSave = ref(true)
-
-// TODO: move this to user store and run this from UserAccountMenuActions
-const deleteUser = async () => {
-  await deleteDoc(doc(db, 'users', userInfo.value.uid))
-  userInfo.value = null
-}
+import { useUserStore } from '@/stores/userStore'
+const userStore = useUserStore()
 
 </script>
 
