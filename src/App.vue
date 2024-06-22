@@ -6,17 +6,21 @@
       class="d-flex align-center justify-center"
       style="min-height: 300px"
     >
-      Main Content
-      <v-card>
-      </v-card>
+
+      <v-container>
+        <router-view>
+
+        </router-view>
+      </v-container>
+
     </v-main>
   </v-layout>
 </template>
 
 <script setup>
 import { onMounted } from 'vue'
-import { collection, getDocs } from 'firebase/firestore'
-import db from '@/plugins/firebase'
+// import { collection, getDocs } from 'firebase/firestore'
+// import db from '@/plugins/firebase'
 import MainAppHeader from '@/components/MainAppHeader.vue'
 
 onMounted(async () => {
