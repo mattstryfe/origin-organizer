@@ -69,7 +69,7 @@ export const useUserStore = defineStore('userStore', {
         console.log('no worky', e)
       }
       finally {
-        // Get the doc now... 
+        // Get the doc now...
         userDoc = await getDoc(doc(db, 'users', authResponse.user.uid))
         // Always get userData from the stored doc, even if it's being created right now.
         // Update the store with this value so all components who depend on it, pull from here
