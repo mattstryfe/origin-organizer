@@ -1,6 +1,7 @@
 # Vue 3 + Vite
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+This template should help get you started developing with Vue 3 in Vite. 
+The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
 
 ## Recommended IDE Setup
 
@@ -15,3 +16,10 @@ firebase init
 to build local copy of app and deploy manually from local machine - do not use this
 vite build && firebase deploy
 
+### TIAGA Integration - https://docs.taiga.io/changing-elements-status-via-commit-message.html
+Add `TG-REF #STATUS-slug` to commit summary or description to change TIAGA ticket status
+- Example:
+- `TG-123 #in-progress`
+- `TG-123 #in-pr`
+- `TG-123 #done`
+- Example: `TG-12 updated readme to relfect changes...`

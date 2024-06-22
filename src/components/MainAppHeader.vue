@@ -6,7 +6,7 @@
     </template>
 
     <template #append>
-      <waffle-menu></waffle-menu>
+      <waffle-menu class="mr-1"></waffle-menu>
       <user-account-menu></user-account-menu>
     </template>
   </v-app-bar>
