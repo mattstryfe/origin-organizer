@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import AddEntryPage from '@/pages/AddEntryPage.vue'
+import LandingPage from '@/pages/LandingPage.vue'
 // import Eggs from '@/pages/egg-details.vue'
 // import Breeding from '@/pages/breeding-plans.vue'
 // import Hatching from '@/pages/hatching-data.vue'
@@ -9,10 +11,13 @@ import { createRouter, createWebHistory } from 'vue-router'
 // import MoneyTracker from '@/pages/money-tracker.vue';
 
 const routes = [
-  // {
-  //   path: '/',
-  //   component: HomePage
-  // },
+  {
+    name: 'landingPage',
+    path: '/',
+    component: LandingPage
+  },
+  { name: 'addEntry', path: '/addentry', component: AddEntryPage }
+
   // {
   //   path: '/details',
   //   component: ChickenDetails

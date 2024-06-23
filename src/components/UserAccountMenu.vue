@@ -1,5 +1,5 @@
 <template>
-  <v-menu v-model="accountMenu" :close-on-content-click="false" location="end">
+  <v-menu v-model="accountMenu" :close-on-content-click="false" location="bottom">
     <template #activator="{ props }">
       <v-chip
         v-if="!userStore.userInfo"
