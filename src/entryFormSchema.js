@@ -30,7 +30,7 @@ export const baseSchema = [
     items: ['breed1', 'breed2', 'breed3', 'breed4'],
     multiple: true,
     chips: true,
-    class: ''
+    class: 'v-col-6'
   },
   {
     label: 'Sex',
