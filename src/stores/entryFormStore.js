@@ -2,8 +2,7 @@ import { defineStore } from 'pinia'
 
 export const useEntryFormStore = defineStore('entryFormStore', {
   state: () => ({
-    formData: {
-    }
+    formData: {}
   }),
 
   getters: {

@@ -3,6 +3,7 @@
     <v-col cols="12" class="mb-2">
       <v-card color="" border>
         <v-card-title>Add Entry</v-card-title>
+        <v-card-subtitle>Advanced Add/Expansion</v-card-subtitle>
         <v-card-subtitle>Add multiple?</v-card-subtitle>
         <v-card-subtitle>How many?</v-card-subtitle>
         <v-card-subtitle>Display them and edit manually?</v-card-subtitle>

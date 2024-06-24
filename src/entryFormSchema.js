@@ -31,6 +31,11 @@ export const baseSchema = [
     label: 'notes',
     type: 'text-area',
     model: 'notes'
+  },
+  {
+    label: 'date',
+    type: 'date',
+    model: 'date'
   }
 ]
 
