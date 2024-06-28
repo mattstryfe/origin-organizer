@@ -1,3 +1,5 @@
+import dayjs from 'dayjs'
+
 export const schemaPhaseOptions = [
   { label: 'egg', type: 'egg', icon: ['mdi-egg'], iconSize: '' },
   { label: 'chick', type: 'chick', icon: ['mdi-bird'], iconSize: 'small' },
@@ -44,7 +46,8 @@ export const baseSchema = [
     label: 'DoB',
     type: 'date',
     model: 'DoB',
-    class: 'v-col-5'
+    class: 'v-col-5',
+    placeholder: dayjs().format('YYYY-MM-DD'),
   },
   {
     label: 'Notes',
