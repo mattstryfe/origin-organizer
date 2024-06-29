@@ -14,7 +14,12 @@
       :chips="field.chips"
       :class="field.class || 'v-col-12'"
       :placeholder="field.placeholder"
+      :append-inner-icon="field.appendIcon"
+      @click:appendInner="genericAppendAction(field)"
     >
+      <template >
+        j
+      </template>
     </component>
   </v-row>
 
@@ -55,6 +60,13 @@ const schemaToUse = ref(baseSchema)
 // const chickSchema = ref(chickSchema)
 const { formData } = storeToRefs(entryFormStore)
 
+// This simply makes choosing a date less annoying
+const genericAppendAction = (field) => {
+  switch (field.appendInnerAction) {
+    case 'autoPopulateToToday':
+      formData.value.DoB = field.placeholder
+  }
+}
 const getFieldComponent = (type) => {
   switch (type) {
     case 'checkbox':

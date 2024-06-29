@@ -48,6 +48,8 @@ export const baseSchema = [
     model: 'DoB',
     class: 'v-col-5',
     placeholder: dayjs().format('YYYY-MM-DD'),
+    appendIcon: 'mdi-calendar-today',
+    appendInnerAction: 'autoPopulateToToday'
   },
   {
     label: 'Notes',
