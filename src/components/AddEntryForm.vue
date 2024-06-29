@@ -15,11 +15,8 @@
       :class="field.class || 'v-col-12'"
       :placeholder="field.placeholder"
       :append-inner-icon="field.appendIcon"
-      @click:appendInner="genericAppendAction(field)"
+      @click:append-inner="genericAppendAction(field)"
     >
-      <template >
-        j
-      </template>
     </component>
   </v-row>
 
