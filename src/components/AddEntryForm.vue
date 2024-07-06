@@ -21,28 +21,28 @@
   </v-row>
 
   <!-- special/ complex components -->
-    <v-card-title>Characteristics</v-card-title>
-    <v-chip-group
-      v-model="formData['characteristics']"
-      column
-      class="pl-4"
-      multiple
+  <v-card-title>Characteristics</v-card-title>
+  <v-chip-group
+    v-model="formData['characteristics']"
+    column
+    class="pl-4"
+    multiple
+  >
+    <!-- TODO: this v-for target is trash. need to make better -->
+    <v-chip
+      v-for="(field, index) in chickSchema[0].items"
+      :key="index"
+      variant="outlined"
+      density="compact"
+      :value="field"
+      color="green-darken-3"
     >
-      <!-- TODO: this v-for target is trash. need to make better -->
-      <v-chip
-        v-for="(field, index) in chickSchema[0].items"
-        :key="index"
-        variant="outlined"
-        density="compact"
-        :value="field"
-        color="green-darken-3"
-      >
-        <!-- customise the filter slot, which in our cars is when they're selected -->
-        <!-- #filter is same(shorthand) for v-slot:filter -->
-        <template #filter> </template>
-        <span class="grey">{{ field }}</span>
-      </v-chip>
-    </v-chip-group>
+      <!-- customise the filter slot, which in our cars is when they're selected -->
+      <!-- #filter is same(shorthand) for v-slot:filter -->
+      <template #filter> </template>
+      <span class="grey">{{ field }}</span>
+    </v-chip>
+  </v-chip-group>
 </template>
 
 <script setup>
