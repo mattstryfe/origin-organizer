@@ -10,23 +10,32 @@
       </v-card>
     </v-col>
     <v-divider class="mb-2"></v-divider>
-    <v-col class="v-col-6">
+    <v-col class="v-col-md-6">
       <!-- Custom Entry Type Picker -->
-      <v-btn-toggle
-        v-for="(opt, index) in schemaPhaseOptions"
-        :key="index"
-        v-model="formData['type']"
-        class="my-2"
-      >
-        <v-btn class="mr-1 border" :value="opt.type">
-          <v-icon v-for="i in opt.icon" :key="i" :size="opt.iconSize">
-            {{ i }}
-          </v-icon>
-        </v-btn>
-      </v-btn-toggle>
+      <v-card border class="pb-2 mb-2">
+        <v-form>
+          <v-btn-toggle
+            v-model="formData['type']"
+            color="green-darken-3"
+            class="ma-4 flex-wrap fill-height"
+          >
+            <v-btn
+              v-for="(opt, index) in schemaPhaseOptions"
+              :key="index"
+              class="border mr-2 mb-2"
+              :value="opt.type"
+              height="40"
+            >
+              <v-icon v-for="i in opt.icon" :key="i" :size="opt.iconSize" >
+                {{ i }}
+              </v-icon>
+            </v-btn>
+          </v-btn-toggle>
 
-      <!-- basic form -->
-      <add-entry-form></add-entry-form>
+          <!-- basic form -->
+          <add-entry-form></add-entry-form>
+        </v-form>
+      </v-card>
 
       <!-- some placeholder info -->
       <v-card class="pb-2">
@@ -38,7 +47,7 @@
     </v-col>
 
     <!-- Right side widget to hold Object for DEV-ing -->
-    <v-col class="ml-3 v-col-5">
+    <v-col class="pl-3 v-col-md-6">
       <v-card min-height="1000" class="overflow-auto">
         <v-card-title> Live Reactive/Object</v-card-title>
         <v-card-text>
