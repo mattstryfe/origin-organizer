@@ -14,6 +14,8 @@
       <!-- Custom Entry Type Picker -->
       <v-card border class="pb-2 mb-2">
         <v-form>
+
+          <!-- Entry Type Picker -->
           <v-btn-toggle
             v-model="formData['type']"
             color="green-darken-3"
@@ -32,8 +34,10 @@
             </v-btn>
           </v-btn-toggle>
 
-          <!-- basic form -->
+          <!-- Basic Form -->
           <add-entry-form></add-entry-form>
+
+          <add-entry-form-controls></add-entry-form-controls>
         </v-form>
       </v-card>
 
@@ -67,6 +71,7 @@ import { useEntryFormStore } from '@/stores/entryFormStore'
 const entryFormStore = useEntryFormStore()
 const { formData } = storeToRefs(entryFormStore)
 import { schemaPhaseOptions } from '@/entryFormSchema'
+import AddEntryFormControls from '@/components/AddEntryFormControls.vue'
 </script>
 
 <style scoped>
