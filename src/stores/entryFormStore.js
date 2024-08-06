@@ -43,6 +43,9 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       // for (const entry of entriesData) {
       await addDoc(entriesCollectionRef, this.formData);
       // }
+
+      // Now also requery to resync everything
+      await this.getExistingEntries()
     },
     updateField(field, value) {
       this.formData[field] = value
