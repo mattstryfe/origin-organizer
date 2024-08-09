@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card width="150" class="border-sm ma-1">
     <v-card-title>
       ID - {{ entryId }}
     </v-card-title>

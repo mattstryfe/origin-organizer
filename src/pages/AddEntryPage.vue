@@ -20,11 +20,9 @@
       </v-card>
 
       <!-- temporary entries display -->
-      <v-card class="border pb-2 mb-2">
+      <v-card class="border pa-4 mb-2">
         <v-row class="flex-wrap">
-          <v-col>
-            <display-entry-card v-for="entry in entries" :key="entry" :entryId="entry.id"></display-entry-card>
-          </v-col>
+          <display-entry-card v-for="entry in entries" :key="entry" :entryId="entry.id"></display-entry-card>
         </v-row>
       </v-card>
 
