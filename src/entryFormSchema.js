@@ -81,7 +81,8 @@ export const chickSchema = [
       'bully',
       'last to hatch',
       '1st to hatch',
-      'weak hatchling'
+      'weak hatchling',
+      'new one'
     ]
   }
 ]

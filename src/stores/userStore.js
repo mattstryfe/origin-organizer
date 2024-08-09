@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth'
 import { doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore'
 import db from '@/plugins/firebase'
+import { useEntryFormStore } from '@/stores/entryFormStore'
 
 export const useUserStore = defineStore('userStore', {
   state: () => ({
@@ -75,6 +76,9 @@ export const useUserStore = defineStore('userStore', {
         // Update the store with this value so all components who depend on it, pull from here
         // and updating happens seamlessly.
         this.userInfo = userDoc.data()
+
+        // Also init entry query
+        await useEntryFormStore().getExistingEntries()
       }
     }
   }
