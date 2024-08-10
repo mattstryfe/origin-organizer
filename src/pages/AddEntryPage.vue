@@ -9,6 +9,10 @@
       <v-card border class="pb-2 mb-2">
         <v-form>
 
+          <!-- Species Picker -->
+          <add-entry-species-picker></add-entry-species-picker>
+          <v-divider></v-divider>
+
           <!-- Entry Type Picker -->
           <add-entry-type-picker></add-entry-type-picker>
 
@@ -22,7 +26,11 @@
       <!-- temporary entries display -->
       <v-card class="border pa-4 mb-2">
         <v-row class="flex-wrap">
-          <display-entry-card v-for="entry in entries" :key="entry" :entryId="entry.id"></display-entry-card>
+          <display-entry-card
+            v-for="entry in entries"
+            :key="entry"
+            :entryId="entry.id"
+          ></display-entry-card>
         </v-row>
       </v-card>
 
@@ -58,7 +66,7 @@ import AddEntryHeader from '@/components/AddEntryHeader.vue'
 import AddEntryTypePicker from '@/components/AddEntryTypePicker.vue'
 import AddEntryFormDetails from '@/components/AddEntryFormDetails.vue'
 import { onMounted } from 'vue'
-
+import AddEntrySpeciesPicker from '@/components/AddEntrySpeciesPicker.vue'
 const entryFormStore = useEntryFormStore()
 const { formData, entries } = storeToRefs(entryFormStore)
 
