@@ -10,10 +10,15 @@ export const useEntryFormStore = defineStore('entryFormStore', {
   }),
 
   getters: {
-
+    // getEntryByID: (state) => {
+    //   return (entryId) => state.entries.find(id => id === entryId)
+    // }
   },
 
   actions: {
+    getEntryById(entryId) {
+      return this.entries.find(entry => entry.id === entryId)
+    },
     async getExistingEntries() {
       const userStore = useUserStore()
 
@@ -28,7 +33,6 @@ export const useEntryFormStore = defineStore('entryFormStore', {
 
       // map over entries
       this.entries = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
-
     },
     async saveEntryToDb() {
       const userStore = useUserStore()
