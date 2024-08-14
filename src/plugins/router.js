@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import AddEntryPage from '@/pages/AddEntryPage.vue'
 import LandingPage from '@/pages/LandingPage.vue'
+import FlockManagerPage from '@/pages/FlockManagerPage.vue'
+import EntryDetailsPage from '@/components/EntryDetailsPage.vue'
 // import Eggs from '@/pages/egg-details.vue'
 // import Breeding from '@/pages/breeding-plans.vue'
 // import Hatching from '@/pages/hatching-data.vue'
@@ -16,8 +18,9 @@ const routes = [
     path: '/',
     component: LandingPage
   },
-  { name: 'addEntry', path: '/addentry', component: AddEntryPage }
-
+  { name: 'addEntry', path: '/addentry', component: AddEntryPage },
+  { name: 'flockManager', path: '/flockmanager', component: FlockManagerPage },
+  { name: 'entryDetails', path: '/entrydetails/:id', component: EntryDetailsPage, props: true }
   // {
   //   path: '/details',
   //   component: ChickenDetails
