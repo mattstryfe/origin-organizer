@@ -32,7 +32,7 @@
         variant="text"
         color="blue-darken-3"
         density="compact"
-        @click="router.push({ name: 'entryDetails', params: { id: entryId } })"
+        @click="router.push({ name: 'EntryDetails', params: { id: entryId } })"
       >
       </v-btn>
     </v-col>

@@ -1,7 +1,7 @@
 <template>
   <v-row no-gutters>
     <v-col cols="12" class="mb-1">
-      <v-btn variant="outlined" color="info" density="compact" @click="router.push({ name: 'flockManager'})">
+      <v-btn variant="outlined" color="info" density="compact" @click="router.push({ name: 'FlockManager'})">
         <v-icon >mdi-arrow-left</v-icon> Flock Manager
 
       </v-btn>

@@ -2,50 +2,19 @@ import { createRouter, createWebHistory } from 'vue-router'
 import AddEntryPage from '@/pages/AddEntryPage.vue'
 import LandingPage from '@/pages/LandingPage.vue'
 import FlockManagerPage from '@/pages/FlockManagerPage.vue'
-import EntryDetailsPage from '@/components/EntryDetailsPage.vue'
-// import Eggs from '@/pages/egg-details.vue'
-// import Breeding from '@/pages/breeding-plans.vue'
-// import Hatching from '@/pages/hatching-data.vue'
-// import HomePage from '@/pages/home-page.vue'
-// import SOP from '@/pages/standard-of-perfection.vue'
-// import ChickenDetails from '@/components/bird-details.vue'
-// import Finances from '@/pages/money-tracker.vue';
-// import MoneyTracker from '@/pages/money-tracker.vue';
+import EntryDetailsPage from '@/pages/EntryDetailsPage.vue'
+import { useUserStore } from '@/stores/userStore'
 
 const routes = [
   {
-    name: 'landingPage',
+    name: 'LandingPage',
     path: '/',
     component: LandingPage
   },
-  { name: 'addEntry', path: '/addentry', component: AddEntryPage },
-  { name: 'flockManager', path: '/flockmanager', component: FlockManagerPage },
-  { name: 'entryDetails', path: '/entrydetails/:id', component: EntryDetailsPage, props: true }
-  // {
-  //   path: '/details',
-  //   component: ChickenDetails
-  // },
-  //
-  // {
-  //   path: '/eggs',
-  //   component: Eggs
-  // },
-  // {
-  //   path: '/breeding',
-  //   component: Breeding
-  // },
-  // {
-  //   path: '/sop',
-  //   component: SOP
-  // },
-  // {
-  //   path: '/hatching',
-  //   component: Hatching
-  // },
-  // {
-  //   path: '/finance',
-  //   component: MoneyTracker
-  // }
+  { name: 'AddEntry', path: '/addentry', component: AddEntryPage },
+  { name: 'FlockManager', path: '/flockmanager', component: FlockManagerPage },
+  { name: 'EntryDetails', path: '/entrydetails/:id', component: EntryDetailsPage, props: true }
+
 ]
 // 3. Create the router instance and pass the `routes` option
 // You can pass in additional options here, but let's
@@ -54,6 +23,13 @@ const router = createRouter({
   // 4. Provide the history implementation to use. We are using the hash history for simplicity here.
   history: createWebHistory(),
   routes, // short for `routes: routes`
+})
+
+router.beforeEach(async (to) => {
+  // If not authed
+  if (to.name !== 'LandingPage' && !useUserStore().userIsAuthenticated) {
+    return { name: 'LandingPage'}
+  }
 })
 
 export default router
