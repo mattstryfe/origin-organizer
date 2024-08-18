@@ -6,6 +6,7 @@ import { useEntryFormStore } from '@/stores/entryFormStore'
 
 export const useUserStore = defineStore('userStore', {
   state: () => ({
+    userIsAuthenticated: false,
     accountMenu: false,
     userInfo: null,
     hasProfileBeenRepaired: {},  // empty but truthy.  Important for loader to have 3 states
@@ -43,6 +44,7 @@ export const useUserStore = defineStore('userStore', {
       const auth = getAuth()
       await signOut(auth)
       this.userInfo = null
+      this.userIsAuthenticated = false
     },
     async handleLogin() {
       const auth = getAuth()
@@ -65,6 +67,7 @@ export const useUserStore = defineStore('userStore', {
             enableDarkMode: false
           })
         }
+        this.userIsAuthenticated = true
       }
       catch (e) {
         console.log('no worky', e)
