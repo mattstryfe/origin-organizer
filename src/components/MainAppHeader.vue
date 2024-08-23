@@ -18,8 +18,8 @@
 </template>
 
 <script setup>
-import WaffleMenu from '@/components/WaffleMenu.vue'
-import UserAccountMenu from '@/components/UserAccountMenu.vue'
+import WaffleMenu from '@/components/MainWaffleMenu.vue'
+import UserAccountMenu from '@/components/MainUserAccountMenu.vue'
 </script>
 
 <style scoped>

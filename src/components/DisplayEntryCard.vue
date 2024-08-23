@@ -1,7 +1,10 @@
 <template>
   <v-card width="300" height="400" class="border-sm ma-1 pa-1">
     <!-- top bar -->
-    <display-entry-card-top-bar :entry-id="entryId"></display-entry-card-top-bar>
+    longPressedHook: {{ longPressedHook }}
+    <display-entry-card-top-bar
+      :entry-id="entryId"
+    ></display-entry-card-top-bar>
 
     <!-- background image -->
     <v-img
@@ -60,6 +63,10 @@ const props = defineProps({
   entryId: {
     type: String,
     default: 'xxx'
+  },
+  isSelected: {
+    type: Boolean,
+    default: false
   }
 })
 

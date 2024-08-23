@@ -2,7 +2,12 @@
   <v-row class="flex-wrap">
     <!-- filters -->
     <v-col cols="12">
-      <v-chip-group v-model="filter" column multiple selected-class="text-green-darken-3">
+      <v-chip-group
+        v-model="filter"
+        column
+        multiple
+        selected-class="text-green-darken-3"
+      >
         <v-icon class="pt-1 mr-3">mdi-filter-variant-plus</v-icon>
 
         <v-chip
@@ -21,9 +26,10 @@
       <!-- Add filtering components here populated by info from queries -->
     </v-col>
     <display-entry-card
-      v-for="entry in entries"
-      :key="entry"
+      v-for="(entry, index) in entries"
+      :key="entry.id"
       :entry-id="entry.id"
+      ref="entryRefs"
     ></display-entry-card>
   </v-row>
 </template>
@@ -32,11 +38,31 @@
 import DisplayEntryCard from '@/components/DisplayEntryCard.vue'
 import { storeToRefs } from 'pinia'
 import { useEntryFormStore } from '@/stores/entryFormStore'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { onLongPress } from '@vueuse/core'
 
 const entryFormStore = useEntryFormStore()
 const { entries } = storeToRefs(entryFormStore)
 const filter = ref([])
+
+// Long press logic
+// const htmlRefHook = ref(null)
+// const longPressedHook = ref(false)
+const entryRefs = ref([])
+const handleLongPress = (entry) => {
+  console.log('Long press on entry:', entry);
+  // Your long press logic here
+};
+
+onMounted(() => {
+  entryRefs.value.forEach((entryRef, index) => {
+    if (entryRef) {
+      onLongPress(entryRef, () => handleLongPress(entries[index]), {
+        delay: 600, // long press duration in ms
+      });
+    }
+  });
+});
 </script>
 
 <style scoped></style>
