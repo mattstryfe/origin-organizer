@@ -26,11 +26,7 @@
       <!-- temporary entries display -->
       <v-card class="border pa-4 mb-2">
         <v-row class="flex-wrap">
-          <display-entry-card
-            v-for="entry in entries"
-            :key="entry"
-            :entryId="entry.id"
-          ></display-entry-card>
+          <display-entry-card v-for="entry in entries" :key="entry" :entry-id="entry.id"></display-entry-card>
         </v-row>
       </v-card>
 

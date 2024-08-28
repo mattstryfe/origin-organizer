@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia'
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth'
+import { getAuth, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth'
 import { doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore'
 import db from '@/plugins/firebase'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 
 export const useUserStore = defineStore('userStore', {
   state: () => ({
+    userIsAuthenticated: false,
     accountMenu: false,
     userInfo: null,
     hasProfileBeenRepaired: {},  // empty but truthy.  Important for loader to have 3 states
@@ -15,7 +16,7 @@ export const useUserStore = defineStore('userStore', {
   getters: {
     // ?. is used to prevent logout from throwing console errors for now.
     getUserDisplayName: (state) => state.userInfo?.displayName,
-    getUserPhotoURL: (state) => state.userInfo?.photoURL,
+    getUserPhotoURL: (state) => state.userInfo?.photoURL || 'https://randomuser.me/api/portraits/lego/1.jpg',
     getUserUid: (state) => state.userInfo?.uid,
     getUserEmail: (state) => state.userInfo?.email,
   },
@@ -38,19 +39,30 @@ export const useUserStore = defineStore('userStore', {
       this.userInfo = null
     },
     async handleLogout() {
+      // TODO: does it make sense to clear User and Flock stores here?
       // Hide menu because it de-populates during logout
       this.accountMenu = false
       const auth = getAuth()
       await signOut(auth)
       this.userInfo = null
+      this.userIsAuthenticated = false
     },
-    async handleLogin() {
+    async handleLogin(useTestAccount) {
       const auth = getAuth()
-      const provider = new GoogleAuthProvider()
-      //initialize firebase auth
-      const authResponse = await signInWithPopup(auth, provider)
-      // Pull this outside scope to use as SoT
-      let userDoc
+      let userDoc, authResponse
+
+      if (useTestAccount) {
+        const testEmail = import.meta.env.VITE_TEST_USER_EMAIL;
+        const testPassword = import.meta.env.VITE_TEST_USER_PASSWORD;
+        authResponse = await signInWithEmailAndPassword(auth, testEmail, testPassword)
+      }
+      else {
+        const provider = new GoogleAuthProvider()
+        //initialize firebase auth
+        authResponse = await signInWithPopup(auth, provider)
+        // Pull this outside scope to use as SoT
+      }
+
 
       try {
         userDoc = await getDoc(doc(db, 'users', authResponse.user.uid))
@@ -65,6 +77,7 @@ export const useUserStore = defineStore('userStore', {
             enableDarkMode: false
           })
         }
+        this.userIsAuthenticated = true
       }
       catch (e) {
         console.log('no worky', e)

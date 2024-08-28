@@ -1,5 +1,9 @@
 <template>
-  <v-menu v-model="accountMenu" :close-on-content-click="false" location="bottom">
+  <v-menu
+    v-model="accountMenu"
+    :close-on-content-click="false"
+    location="bottom"
+  >
     <template #activator="{ props }">
       <v-chip
         v-if="!userStore.userInfo"
@@ -58,6 +62,7 @@ import { useUserStore } from '@/stores/userStore'
 import { storeToRefs } from 'pinia'
 const userStore = useUserStore()
 const { accountMenu } = storeToRefs(userStore)
+const mode = import.meta.env.MODE
 </script>
 
 <style scoped></style>
