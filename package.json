@@ -23,7 +23,7 @@
     "vue": "3.4.21",
     "vue-query": "1.26.0",
     "vue-router": "4.3.0",
-    "vuetify": "3.5.15",
+    "vuetify": "3.7.0",
     "dayjs": "1.11.11"
   },
   "devDependencies": {

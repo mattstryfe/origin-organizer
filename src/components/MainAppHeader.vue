@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar :elevation="2" rounded title="Origin Organizer">
+  <v-app-bar :elevation="2" rounded title="Origin Organizer" class="cust-o">
     <template #prepend>
       <v-btn
         icon="mdi-orbit"
@@ -34,5 +34,13 @@ import UserAccountMenu from '@/components/MainUserAccountMenu.vue'
 
 .hover-spin-continuous {
   animation: spin 5s linear infinite;
+}
+.cust {
+  z-index: 1000 !important;
+  color: blue;
+  position: relative;
+}
+.cust-o {
+  overflow: visible !important;
 }
 </style>

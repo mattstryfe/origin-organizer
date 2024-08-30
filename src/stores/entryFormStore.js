@@ -6,7 +6,8 @@ import db from '@/plugins/firebase'
 export const useEntryFormStore = defineStore('entryFormStore', {
   state: () => ({
     formData: {},
-    entries: []
+    entries: [],
+    selectionIds: new Map() // Putting selections here because it might be used for multiple features (breeding, comparison, etc)
   }),
 
   getters: {

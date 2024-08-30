@@ -1,7 +1,6 @@
 <template>
   <v-card width="300" height="400" class="border-sm ma-1 pa-1">
     <!-- top bar -->
-    longPressedHook: {{ longPressedHook }}
     <display-entry-card-top-bar
       :entry-id="entryId"
     ></display-entry-card-top-bar>
@@ -78,7 +77,6 @@ const allEntryDetails = ref([])
 onMounted(() => {
   // Use entryID prop to lookup entries in pinia store
   allEntryDetails.value = getEntryById(props.entryId)
-  console.log('allEntryDetails', allEntryDetails)
 })
 </script>
 

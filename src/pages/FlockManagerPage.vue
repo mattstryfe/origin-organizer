@@ -42,27 +42,30 @@ import { onMounted, ref } from 'vue'
 import { onLongPress } from '@vueuse/core'
 
 const entryFormStore = useEntryFormStore()
-const { entries } = storeToRefs(entryFormStore)
+const { entries, selectionIds } = storeToRefs(entryFormStore)
 const filter = ref([])
 
 // Long press logic
-// const htmlRefHook = ref(null)
-// const longPressedHook = ref(false)
 const entryRefs = ref([])
 const handleLongPress = (entry) => {
-  console.log('Long press on entry:', entry);
-  // Your long press logic here
-};
+  console.log('selectionIds', selectionIds.value)
+  if (selectionIds.value.has(entry.id)) {
+    console.log('already selected')
+    selectionIds.value.delete(entry.id)
+  }
+  selectionIds.value.set(entry.id)
+  // passing in the ACTUAL entry here.  [entry.value === entries[0]] is true
+}
 
 onMounted(() => {
   entryRefs.value.forEach((entryRef, index) => {
     if (entryRef) {
-      onLongPress(entryRef, () => handleLongPress(entries[index]), {
-        delay: 600, // long press duration in ms
-      });
+      onLongPress(entryRef, () => handleLongPress(entries.value[index]), {
+        delay: 600 // long press duration in ms
+      })
     }
-  });
-});
+  })
+})
 </script>
 
 <style scoped></style>
