@@ -26,7 +26,7 @@
       <!-- Add filtering components here populated by info from queries -->
     </v-col>
 
-    <v-col class="v-row" v-if="isLoadingEntries">
+    <v-col v-if="isLoadingEntries" class="v-row">
       <v-skeleton-loader
         v-for="i in 12"
         :key="i"
@@ -38,15 +38,17 @@
       </v-skeleton-loader>
     </v-col>
 
-
     <display-entry-card
-      v-for="(entry) in entries"
+      v-for="entry in entries"
       :key="entry.id"
       ref="entryRefs"
       :entry-id="entry.id"
       class="cust-border-trans"
       :class="highlightThisCard(entry.id)"
     ></display-entry-card>
+
+    <create-breeding-navigation-drawer>
+    </create-breeding-navigation-drawer>
   </v-row>
 </template>
 
@@ -56,6 +58,7 @@ import { storeToRefs } from 'pinia'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 import { nextTick, onMounted, ref, watch } from 'vue'
 import { onLongPress } from '@vueuse/core'
+import CreateBreedingNavigationDrawer from '@/components/CreateBreedingNavigationDrawer.vue'
 
 const entryFormStore = useEntryFormStore()
 const { entries, selectionIds, isLoadingEntries } = storeToRefs(entryFormStore)
@@ -111,11 +114,11 @@ onMounted(() => {
 
 <style scoped>
 .cust-card-highlight {
-  border-color: #1976D2 !important;
+  border-color: #1976d2 !important;
   border-width: 0.3em !important;
 }
 .cust-border-trans {
-  border-color: blue ;
+  border-color: blue;
   transition: border-width 0.1s ease;
 }
 </style>

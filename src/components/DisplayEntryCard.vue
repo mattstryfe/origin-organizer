@@ -1,8 +1,12 @@
 <template>
-  <v-card width="300" height="400" class="border-sm ma-1 pa-1">
-    <v-overlay v-model="showOverlay" contained persistent>
+  <v-card width="300" height="400" class="border-sm ma-1 pa-1" :class="{ 'opacity-80': showOverlay }">
+    <v-sheet v-if="showOverlay" height="100" width="100" class="cust-overlay">
+      <v-icon size="100" color="blue-darken-2" @click="deselectThisCard(entryId)">mdi-trash-can</v-icon>
 
-    </v-overlay>
+    </v-sheet>
+<!--    <v-overlay v-model="showOverlay" contained persistent>
+      <v-icon size="50" color="blue-darken-2">mdi-trash-can</v-icon>
+    </v-overlay>-->
     <!-- top bar -->
     <display-entry-card-top-bar
       :entry-id="entryId"
@@ -60,7 +64,6 @@
 import { computed, onMounted, ref } from 'vue'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 import DisplayEntryCardTopBar from '@/components/DisplayEntryCardTopBar.vue'
-import { storeToRefs } from 'pinia'
 
 const props = defineProps({
   entryId: {
@@ -74,15 +77,21 @@ const props = defineProps({
 })
 
 const entryFormStore = useEntryFormStore()
-const { getEntryById } = entryFormStore
-const { selectionIds } = storeToRefs(entryFormStore)
+const { getEntryById, selectionIds } = entryFormStore
 const allEntryDetails = ref([])
 
 const showOverlay = computed(() => {
-  if (selectionIds.value.length === 0)
-    return false
-  return selectionIds.value.has(props.entryId)
+  if (selectionIds.length === 0) return false
+  return selectionIds.has(props.entryId)
 })
+
+// short press, ONLY for deselection
+const deselectThisCard = (id) => {
+  if (selectionIds.has(id)) {
+    selectionIds.delete(id)
+  }
+}
+
 // Once mounted, do query for card details...
 onMounted(() => {
   // Use entryID prop to lookup entries in pinia store
@@ -90,4 +99,15 @@ onMounted(() => {
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.cust-overlay {
+  z-index: 2400;
+  position: absolute;
+  left: 30%;
+  top: 35%;
+  margin: auto auto;
+  background: transparent;
+  //background-color: white;
+  //opacity: 0.32;
+}
+</style>
