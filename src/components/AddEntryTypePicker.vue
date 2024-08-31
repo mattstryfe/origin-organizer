@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-import { schemaPhaseOptions } from '@/entryFormSchema'
+import { schemaPhaseOptions } from '@/schemas/entryFormSchema'
 import { storeToRefs } from 'pinia'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 

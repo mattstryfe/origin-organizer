@@ -6,26 +6,25 @@ import db from '@/plugins/firebase'
 export const useEntryFormStore = defineStore('entryFormStore', {
   state: () => ({
     formData: {},
-    entries: []
+    entries: [],
+    selectionIds: new Map(), // Putting selections here because it might be used for multiple features (breeding, comparison, etc)
+    isLoadingEntries: false,
+    showBottomSheet: false,
   }),
-
-  getters: {
-    // getEntryByID: (state) => {
-    //   return (entryId) => state.entries.find(id => id === entryId)
-    // }
-  },
-
+  getters: {},
   actions: {
     getEntryById(entryId) {
       return this.entries.find(entry => entry.id === entryId)
     },
     async getExistingEntries() {
+      this.isLoadingEntries = true
       const userStore = useUserStore()
 
       // prevents firing before logged in
       if (!userStore.userInfo)
         return
 
+      console.log('got here...')
       const flockId = userStore.getUserUid
 
       // get snapshot of entries
@@ -33,6 +32,7 @@ export const useEntryFormStore = defineStore('entryFormStore', {
 
       // map over entries
       this.entries = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+      this.isLoadingEntries = false
     },
     async saveEntryToDb() {
       const userStore = useUserStore()

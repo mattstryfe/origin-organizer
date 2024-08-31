@@ -47,8 +47,8 @@
 
 <script setup>
 import { useEntryFormStore } from '@/stores/entryFormStore'
-import { baseSchema } from '@/entryFormSchema'
-import { chickSchema } from '@/entryFormSchema'
+import { baseSchema } from '@/schemas/entryFormSchema'
+import { chickSchema } from '@/schemas/entryFormSchema'
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 const entryFormStore = useEntryFormStore()

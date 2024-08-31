@@ -3,7 +3,7 @@ import AddEntryPage from '@/pages/AddEntryPage.vue'
 import LandingPage from '@/pages/LandingPage.vue'
 import FlockManagerPage from '@/pages/FlockManagerPage.vue'
 import EntryDetailsPage from '@/pages/EntryDetailsPage.vue'
-import { useUserStore } from '@/stores/userStore'
+// import { useUserStore } from '@/stores/userStore'
 
 const routes = [
   {
@@ -27,9 +27,10 @@ const router = createRouter({
 
 router.beforeEach(async (to) => {
   // If not authed
-  if (to.name !== 'LandingPage' && !useUserStore().userIsAuthenticated) {
-    return { name: 'LandingPage'}
-  }
+  // TODO: Uncomment for actual permissions.
+  // if (to.name !== 'LandingPage' && !useUserStore().userIsAuthenticated) {
+  //   return { name: 'LandingPage'}
+  // }
 })
 
 export default router

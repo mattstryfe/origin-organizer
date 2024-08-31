@@ -57,7 +57,7 @@
 </template>
 
 <script setup>
-import UserAccountMenuActions from '@/components/UserAccountMenuActions.vue'
+import UserAccountMenuActions from '@/components/MainUserAccountMenuActions.vue'
 import { useUserStore } from '@/stores/userStore'
 import { storeToRefs } from 'pinia'
 const userStore = useUserStore()
