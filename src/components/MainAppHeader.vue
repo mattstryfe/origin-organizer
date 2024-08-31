@@ -5,12 +5,27 @@
         icon="mdi-orbit"
         color="primary"
         class="mr-2 hover-spin-continuous"
-        @click="$router.push({ name: 'landingPage'})"
+        @click="$router.push({ name: 'landingPage' })"
       ></v-btn>
       <v-divider vertical></v-divider>
     </template>
 
     <template #append>
+      <div v-if="mode">
+        <v-icon
+          v-for="w in routerLinksSchema"
+          :key="w.name"
+          :name="w.name"
+          class="pa-1 ma-1"
+          :color="w.color"
+          size="x-large"
+          :disabled="!w.routeName"
+          @click="router.push({ name: w.routeName })"
+        >
+          {{ w.icon }}
+        </v-icon>
+      </div>
+
       <waffle-menu></waffle-menu>
       <user-account-menu></user-account-menu>
     </template>
@@ -18,8 +33,13 @@
 </template>
 
 <script setup>
+// TODO: Used w in routerLinksSchema to follow same pattern in MainWaffleMenu -> Easier refactor.
 import WaffleMenu from '@/components/MainWaffleMenu.vue'
 import UserAccountMenu from '@/components/MainUserAccountMenu.vue'
+import routerLinksSchema from '@/schemas/routerLinksSchema'
+import router from '@/plugins/router'
+import { ref } from 'vue'
+const mode = ref(import.meta.env.MODE === 'development')
 </script>
 
 <style scoped>
@@ -34,11 +54,6 @@ import UserAccountMenu from '@/components/MainUserAccountMenu.vue'
 
 .hover-spin-continuous {
   animation: spin 5s linear infinite;
-}
-.cust {
-  z-index: 1000 !important;
-  color: blue;
-  position: relative;
 }
 .cust-o {
   overflow: visible !important;

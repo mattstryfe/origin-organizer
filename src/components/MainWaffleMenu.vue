@@ -22,7 +22,7 @@
           <!-- Wrap main card with another card to keep consistency with v-col-4
               otherwise, an offset or indent needs to be used and it's annoying -->
           <v-card
-            v-for="w in waffles"
+            v-for="w in routerLinksSchema"
             :key="w.title"
             class="cursor-pointer text-center v-col-4 pa-1"
             variant="flat"
@@ -60,52 +60,14 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/userStore'
 import { storeToRefs } from 'pinia'
+import routerLinksSchema from '@/schemas/routerLinksSchema'
 
 const router = useRouter()
 const userStore = useUserStore()
 const { userIsAuthenticated } = storeToRefs(userStore)
 
 const waffleMenu = ref()
-const waffles = ref([
-  {
-    title: 'Add Entry',
-    icon: 'mdi-plus',
-    color: 'info',
-    routeName: 'AddEntry',
-    class: 'hover-gradient'
-  },
-  {
-    title: 'Planner',
-    icon: 'mdi-calendar-arrow-right',
-    color: 'orange-darken-3',
-    class: 'hover-gradient'
-  },
-  {
-    title: 'Flock Manager',
-    icon: 'mdi-bird',
-    color: 'yellow-lighten-2',
-    routeName: 'FlockManager',
-    class: 'hover-gradient'
-  },
-  {
-    title: 'Calendar',
-    icon: 'mdi-calendar',
-    color: 'indigo-darken-1',
-    class: 'hover-gradient'
-  },
-  {
-    title: 'Reports',
-    icon: 'mdi-chart-bar',
-    color: 'red-darken-2',
-    class: 'hover-gradient'
-  },
-  {
-    title: 'Gene Tools',
-    icon: 'mdi-atom',
-    color: 'yellow-darken-2',
-    class: 'hover-spin-continuous'
-  }
-])
+
 </script>
 
 <style scoped>

@@ -38,12 +38,14 @@
       </v-skeleton-loader>
     </v-col>
 
+
     <display-entry-card
       v-for="(entry) in entries"
       :key="entry.id"
       ref="entryRefs"
       :entry-id="entry.id"
       :border="highlightThisCard(entry.id)"
+      class="cust-border-trans"
     ></display-entry-card>
   </v-row>
 </template>
@@ -62,8 +64,7 @@ const entryRefs = ref([])
 
 const highlightThisCard = (id) => {
   if (selectionIds.value.has(id)) {
-    console.log('match!')
-    return 'warning xl'
+    return 'info xl'
   }
 }
 
@@ -88,7 +89,7 @@ watch(entries, async () => {
   entryRefs.value.forEach((entryRef, index) => {
     if (entryRef) {
       onLongPress(entryRef, () => handleLongPress(entries.value[index]), {
-        delay: 600 // long press duration in ms
+        delay: 200 // long press duration in ms
       })
     }
   })
@@ -100,7 +101,7 @@ onMounted(() => {
     entryRefs.value.forEach((entryRef, index) => {
       if (entryRef) {
         onLongPress(entryRef, () => handleLongPress(entries.value[index]), {
-          delay: 600 // long press duration in ms
+          delay: 200 // long press duration in ms
         })
       }
     })
@@ -108,4 +109,8 @@ onMounted(() => {
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.cust-border-trans {
+  transition: border-width 0.1s ease;
+}
+</style>

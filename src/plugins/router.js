@@ -3,7 +3,7 @@ import AddEntryPage from '@/pages/AddEntryPage.vue'
 import LandingPage from '@/pages/LandingPage.vue'
 import FlockManagerPage from '@/pages/FlockManagerPage.vue'
 import EntryDetailsPage from '@/pages/EntryDetailsPage.vue'
-import { useUserStore } from '@/stores/userStore'
+// import { useUserStore } from '@/stores/userStore'
 
 const routes = [
   {
