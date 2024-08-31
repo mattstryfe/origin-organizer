@@ -1,30 +1,6 @@
 <template>
   <v-row class="flex-wrap">
-    <!-- filters -->
-    <v-col cols="12">
-      <v-chip-group
-        v-model="filter"
-        column
-        multiple
-        selected-class="text-green-darken-3"
-      >
-        <v-icon class="pt-1 mr-3">mdi-filter-variant-plus</v-icon>
-
-        <v-chip
-          v-for="n in 5"
-          :key="n"
-          class="mr-1"
-          density="compact"
-          variant="outlined"
-          filter
-        >
-          Criteria
-        </v-chip>
-      </v-chip-group>
-      <span class="text-caption mr-2">Filter choices: {{ filter }}</span>
-
-      <!-- Add filtering components here populated by info from queries -->
-    </v-col>
+    <flock-manager-filters></flock-manager-filters>
 
     <v-col v-if="isLoadingEntries" class="v-row">
       <v-skeleton-loader
@@ -47,8 +23,16 @@
       :class="highlightThisCard(entry.id)"
     ></display-entry-card>
 
-    <create-breeding-navigation-drawer>
-    </create-breeding-navigation-drawer>
+    <create-breeding-navigation-drawer> </create-breeding-navigation-drawer>
+    <v-btn
+      fab
+      color="primary"
+      icon="mdi-atom"
+      class="v-btn--fixed v-btn--bottom v-btn--right"
+      @click="showBottomSheet = !showBottomSheet"
+    >
+      <v-icon>mdi-atom</v-icon>
+    </v-btn>
   </v-row>
 </template>
 
@@ -59,10 +43,10 @@ import { useEntryFormStore } from '@/stores/entryFormStore'
 import { nextTick, onMounted, ref, watch } from 'vue'
 import { onLongPress } from '@vueuse/core'
 import CreateBreedingNavigationDrawer from '@/components/CreateBreedingNavigationDrawer.vue'
+import FlockManagerFilters from '@/components/FlockManagerFilters.vue'
 
 const entryFormStore = useEntryFormStore()
-const { entries, selectionIds, isLoadingEntries } = storeToRefs(entryFormStore)
-const filter = ref([])
+const { entries, selectionIds, isLoadingEntries, showBottomSheet } = storeToRefs(entryFormStore)
 const entryRefs = ref([])
 
 const highlightThisCard = (id) => {
@@ -120,5 +104,15 @@ onMounted(() => {
 .cust-border-trans {
   border-color: blue;
   transition: border-width 0.1s ease;
+}
+
+.v-btn--fixed {
+  position: fixed !important;
+}
+.v-btn--bottom {
+  bottom: 16px;
+}
+.v-btn--right {
+  right: 16px;
 }
 </style>

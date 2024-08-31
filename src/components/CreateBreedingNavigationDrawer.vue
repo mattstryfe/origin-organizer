@@ -37,14 +37,13 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 import DisplayEntryCard from '@/components/DisplayEntryCard.vue'
 
 const entryFormStore = useEntryFormStore()
-const showBottomSheet = ref()
-const { selectionIds } = storeToRefs(entryFormStore)
+const { selectionIds, showBottomSheet } = storeToRefs(entryFormStore)
 
 watch(selectionIds.value, (newValue) => {
   if (newValue.size > 1) {

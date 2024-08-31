@@ -8,15 +8,10 @@ export const useEntryFormStore = defineStore('entryFormStore', {
     formData: {},
     entries: [],
     selectionIds: new Map(), // Putting selections here because it might be used for multiple features (breeding, comparison, etc)
-    isLoadingEntries: false
+    isLoadingEntries: false,
+    showBottomSheet: false,
   }),
-
-  getters: {
-    // getEntryByID: (state) => {
-    //   return (entryId) => state.entries.find(id => id === entryId)
-    // }
-  },
-
+  getters: {},
   actions: {
     getEntryById(entryId) {
       return this.entries.find(entry => entry.id === entryId)
