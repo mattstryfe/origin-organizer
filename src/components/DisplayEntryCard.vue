@@ -1,5 +1,8 @@
 <template>
   <v-card width="300" height="400" class="border-sm ma-1 pa-1">
+    <v-overlay v-model="showOverlay" contained persistent>
+
+    </v-overlay>
     <!-- top bar -->
     <display-entry-card-top-bar
       :entry-id="entryId"
@@ -54,9 +57,10 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 import DisplayEntryCardTopBar from '@/components/DisplayEntryCardTopBar.vue'
+import { storeToRefs } from 'pinia'
 
 const props = defineProps({
   entryId: {
@@ -71,8 +75,14 @@ const props = defineProps({
 
 const entryFormStore = useEntryFormStore()
 const { getEntryById } = entryFormStore
+const { selectionIds } = storeToRefs(entryFormStore)
 const allEntryDetails = ref([])
 
+const showOverlay = computed(() => {
+  if (selectionIds.value.length === 0)
+    return false
+  return selectionIds.value.has(props.entryId)
+})
 // Once mounted, do query for card details...
 onMounted(() => {
   // Use entryID prop to lookup entries in pinia store

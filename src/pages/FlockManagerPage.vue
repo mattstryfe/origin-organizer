@@ -44,8 +44,8 @@
       :key="entry.id"
       ref="entryRefs"
       :entry-id="entry.id"
-      :border="highlightThisCard(entry.id)"
       class="cust-border-trans"
+      :class="highlightThisCard(entry.id)"
     ></display-entry-card>
   </v-row>
 </template>
@@ -64,7 +64,7 @@ const entryRefs = ref([])
 
 const highlightThisCard = (id) => {
   if (selectionIds.value.has(id)) {
-    return 'info xl'
+    return 'cust-card-highlight'
   }
 }
 
@@ -110,7 +110,12 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.cust-card-highlight {
+  border-color: #1976D2 !important;
+  border-width: 0.3em !important;
+}
 .cust-border-trans {
+  border-color: blue ;
   transition: border-width 0.1s ease;
 }
 </style>
