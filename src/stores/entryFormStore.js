@@ -27,6 +27,7 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       if (!userStore.userInfo)
         return
 
+      console.log('got here...')
       const flockId = userStore.getUserUid
 
       // get snapshot of entries

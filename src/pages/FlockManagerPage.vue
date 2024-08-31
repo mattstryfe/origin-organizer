@@ -30,6 +30,7 @@
       :key="entry.id"
       :entry-id="entry.id"
       ref="entryRefs"
+      :border="highlightThisCard(entry.id)"
     ></display-entry-card>
   </v-row>
 </template>
@@ -38,26 +39,39 @@
 import DisplayEntryCard from '@/components/DisplayEntryCard.vue'
 import { storeToRefs } from 'pinia'
 import { useEntryFormStore } from '@/stores/entryFormStore'
-import { onMounted, ref } from 'vue'
+import { nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { onLongPress } from '@vueuse/core'
 
 const entryFormStore = useEntryFormStore()
 const { entries, selectionIds } = storeToRefs(entryFormStore)
 const filter = ref([])
-
-// Long press logic
 const entryRefs = ref([])
-const handleLongPress = (entry) => {
-  console.log('selectionIds', selectionIds.value)
-  if (selectionIds.value.has(entry.id)) {
-    console.log('already selected')
-    selectionIds.value.delete(entry.id)
+
+const highlightThisCard = (id) => {
+  if (selectionIds.value.has(id)) {
+    console.log('match!')
+    return 'warning xl'
   }
-  selectionIds.value.set(entry.id)
-  // passing in the ACTUAL entry here.  [entry.value === entries[0]] is true
 }
 
-onMounted(() => {
+// Long press logic - applied in watch()
+const handleLongPress = (entry) => {
+  // If exists, delete and exit
+  if (selectionIds.value.has(entry.id)) {
+    selectionIds.value.delete(entry.id)
+    return
+  }
+  // passing in the ACTUAL entry here.  [entry.value === entries[0]] is true
+  selectionIds.value.set(entry.id)
+}
+
+// Entries updates from store.  Needs to fire each time it changes.
+// However, it also needs to wait for the DOM to update (v-for)
+watch(entries, async () => {
+  // Required because refs need to be applied to v-for element AFTER render
+  // this ONLY needs to happen because this is being attached via [listener/ref]
+  await nextTick()
+
   entryRefs.value.forEach((entryRef, index) => {
     if (entryRef) {
       onLongPress(entryRef, () => handleLongPress(entries.value[index]), {
@@ -65,6 +79,20 @@ onMounted(() => {
       })
     }
   })
+})
+
+onMounted(() => {
+  // if the watcher already fired...
+  if (entryRefs.value.length !== 0) {
+    entryRefs.value.forEach((entryRef, index) => {
+      if (entryRef) {
+        onLongPress(entryRef, () => handleLongPress(entries.value[index]), {
+          delay: 600 // long press duration in ms
+        })
+      }
+    })
+  }
+  console.log('entryReds:onMounted', entryRefs.value.length)
 })
 </script>
 

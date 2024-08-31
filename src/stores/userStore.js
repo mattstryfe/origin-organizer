@@ -77,12 +77,9 @@ export const useUserStore = defineStore('userStore', {
             enableDarkMode: false
           })
         }
+
         this.userIsAuthenticated = true
-      }
-      catch (e) {
-        console.log('no worky', e)
-      }
-      finally {
+
         // Get the doc now...
         userDoc = await getDoc(doc(db, 'users', authResponse.user.uid))
         // Always get userData from the stored doc, even if it's being created right now.
@@ -92,6 +89,9 @@ export const useUserStore = defineStore('userStore', {
 
         // Also init entry query
         await useEntryFormStore().getExistingEntries()
+      }
+      catch (e) {
+        console.log('no worky', e)
       }
     }
   }

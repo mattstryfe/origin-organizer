@@ -27,9 +27,10 @@ const router = createRouter({
 
 router.beforeEach(async (to) => {
   // If not authed
-  if (to.name !== 'LandingPage' && !useUserStore().userIsAuthenticated) {
-    return { name: 'LandingPage'}
-  }
+  // TODO: Uncomment for actual permissions.
+  // if (to.name !== 'LandingPage' && !useUserStore().userIsAuthenticated) {
+  //   return { name: 'LandingPage'}
+  // }
 })
 
 export default router
