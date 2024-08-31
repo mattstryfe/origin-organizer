@@ -25,11 +25,24 @@
 
       <!-- Add filtering components here populated by info from queries -->
     </v-col>
+
+    <v-col class="v-row" v-if="isLoadingEntries">
+      <v-skeleton-loader
+        v-for="i in 12"
+        :key="i"
+        width="300"
+        height="400"
+        class="v-card ma-1 pa-1 border-sm"
+        type="card-avatar, article, actions"
+      >
+      </v-skeleton-loader>
+    </v-col>
+
     <display-entry-card
-      v-for="(entry, index) in entries"
+      v-for="(entry) in entries"
       :key="entry.id"
-      :entry-id="entry.id"
       ref="entryRefs"
+      :entry-id="entry.id"
       :border="highlightThisCard(entry.id)"
     ></display-entry-card>
   </v-row>
@@ -39,11 +52,11 @@
 import DisplayEntryCard from '@/components/DisplayEntryCard.vue'
 import { storeToRefs } from 'pinia'
 import { useEntryFormStore } from '@/stores/entryFormStore'
-import { nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+import { nextTick, onMounted, ref, watch } from 'vue'
 import { onLongPress } from '@vueuse/core'
 
 const entryFormStore = useEntryFormStore()
-const { entries, selectionIds } = storeToRefs(entryFormStore)
+const { entries, selectionIds, isLoadingEntries } = storeToRefs(entryFormStore)
 const filter = ref([])
 const entryRefs = ref([])
 
@@ -92,7 +105,6 @@ onMounted(() => {
       }
     })
   }
-  console.log('entryReds:onMounted', entryRefs.value.length)
 })
 </script>
 

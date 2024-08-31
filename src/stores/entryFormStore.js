@@ -7,7 +7,8 @@ export const useEntryFormStore = defineStore('entryFormStore', {
   state: () => ({
     formData: {},
     entries: [],
-    selectionIds: new Map() // Putting selections here because it might be used for multiple features (breeding, comparison, etc)
+    selectionIds: new Map(), // Putting selections here because it might be used for multiple features (breeding, comparison, etc)
+    isLoadingEntries: false
   }),
 
   getters: {
@@ -21,6 +22,7 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       return this.entries.find(entry => entry.id === entryId)
     },
     async getExistingEntries() {
+      this.isLoadingEntries = true
       const userStore = useUserStore()
 
       // prevents firing before logged in
@@ -35,6 +37,7 @@ export const useEntryFormStore = defineStore('entryFormStore', {
 
       // map over entries
       this.entries = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+      this.isLoadingEntries = false
     },
     async saveEntryToDb() {
       const userStore = useUserStore()
