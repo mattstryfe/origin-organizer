@@ -16,9 +16,8 @@
           v-for="w in routerLinksSchema"
           :key="w.name"
           :name="w.name"
-          class="pa-1 ma-1"
+          class="pa-1 ma-1 v-icon--size-x-small"
           :color="w.color"
-          size="x-large"
           :disabled="!w.routeName"
           @click="router.push({ name: w.routeName })"
         >

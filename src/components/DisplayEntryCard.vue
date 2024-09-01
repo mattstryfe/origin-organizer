@@ -1,12 +1,21 @@
 <template>
-  <v-card width="300" height="400" class="border-sm ma-1 pa-1" :class="{ 'opacity-80': showOverlay }">
+  <v-card
+    :width="mdAndUp ? 300 : 225"
+    :height="mdAndUp ? 400 : 300"
+    class="border-sm ma-1 pa-1"
+    :class="{
+      'opacity-80': showOverlay
+    }"
+  >
     <v-sheet v-if="showOverlay" height="100" width="100" class="cust-overlay">
-      <v-icon size="100" color="blue-darken-2" @click="deselectThisCard(entryId)">mdi-trash-can</v-icon>
-
+      <v-icon
+        size="100"
+        color="blue-darken-2"
+        @click="deselectThisCard(entryId)"
+        >mdi-trash-can</v-icon
+      >
     </v-sheet>
-<!--    <v-overlay v-model="showOverlay" contained persistent>
-      <v-icon size="50" color="blue-darken-2">mdi-trash-can</v-icon>
-    </v-overlay>-->
+
     <!-- top bar -->
     <display-entry-card-top-bar
       :entry-id="entryId"
@@ -14,7 +23,7 @@
 
     <!-- background image -->
     <v-img
-      height="150"
+      :height="mdAndUp ? 150 : 100"
       src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
       cover
       class="text-black align-end mb-1"
@@ -30,6 +39,7 @@
     </v-img>
 
     <v-divider class="my-2"></v-divider>
+
     <!-- Breed area -->
     <v-row v-if="allEntryDetails?.breed?.length > 1" no-gutters>
       <v-col cols="5" class="text-right pr-2">
@@ -61,9 +71,10 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, inject, onMounted, ref } from 'vue'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 import DisplayEntryCardTopBar from '@/components/DisplayEntryCardTopBar.vue'
+const mdAndUp = inject('mdAndUp')
 
 const props = defineProps({
   entryId: {
