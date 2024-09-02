@@ -1,5 +1,5 @@
 <template>
-  <v-row class="flex-wrap">
+  <v-row class="flex-wrap justify-center">
     <flock-manager-filters></flock-manager-filters>
 
     <v-col v-if="isLoadingEntries" class="v-row">
@@ -28,7 +28,7 @@
       fab
       color="primary"
       icon="mdi-atom"
-      class="v-btn--fixed v-btn--bottom v-btn--right"
+      class="v-btn--fixed v-btn--top v-btn--right"
       @click="showBottomSheet = !showBottomSheet"
     >
       <v-icon>mdi-atom</v-icon>
@@ -109,10 +109,10 @@ onMounted(() => {
 .v-btn--fixed {
   position: fixed !important;
 }
-.v-btn--bottom {
-  bottom: 16px;
+.v-btn--top {
+  top: 5.5rem;
 }
 .v-btn--right {
-  right: 16px;
+  right: .5rem;
 }
 </style>
