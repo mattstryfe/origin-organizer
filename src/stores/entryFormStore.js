@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { useUserStore } from '@/stores/userStore'
 import { collection, doc, getDocs, addDoc } from 'firebase/firestore'
 import db from '@/plugins/firebase'
+import { reactive } from 'vue'
 
 export const useEntryFormStore = defineStore('entryFormStore', {
   state: () => ({

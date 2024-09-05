@@ -64,6 +64,7 @@ const handleLongPress = (entry) => {
   }
   // passing in the ACTUAL entry here.  [entry.value === entries[0]] is true
   selectionIds.value.set(entry.id)
+  console.log('selectionIds', selectionIds.value)
 }
 
 // Entries updates from store.  Needs to fire each time it changes.

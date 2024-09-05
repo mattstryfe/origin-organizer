@@ -1,5 +1,5 @@
 <template>
-  <v-bottom-sheet v-model="showBottomSheet" class="border-md">
+  <v-bottom-sheet v-model="showBottomSheet" class="border-md"  :scrim="false">
     <v-btn
       variant="flat"
       size="small"
@@ -35,19 +35,25 @@
 </template>
 
 <script setup>
-import { inject, watch } from 'vue'
+import { computed, inject, shallowRef, watch, watchEffect } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 import DisplayEntryCard from '@/components/DisplayEntryCard.vue'
 const mdAndUp = inject('mdAndUp')
 
 const entryFormStore = useEntryFormStore()
-const { selectionIds, showBottomSheet } = storeToRefs(entryFormStore)
+const { showBottomSheet, selectionIds } = storeToRefs(entryFormStore)
+const oldSize = shallowRef(); // used because Map() in pinia is stupid and won't provide oldVal
 
-watch(selectionIds.value, (newValue) => {
-  if (newValue.size > 1) {
+watch( selectionIds.value,
+  (newValue) => {
+  // Only popup the navigation drawer the first time the user
+  // adds 1, then 2.
+  console.log('oldValue.size', oldSize, 'newValue.size', newValue.size)
+  if (oldSize.value === 1 && newValue.size === 2) {
     showBottomSheet.value = true
   }
+  oldSize.value = newValue.size
 })
 </script>
 

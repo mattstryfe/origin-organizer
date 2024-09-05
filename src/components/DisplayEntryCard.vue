@@ -74,6 +74,7 @@
 import { computed, inject, onMounted, ref } from 'vue'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 import DisplayEntryCardTopBar from '@/components/DisplayEntryCardTopBar.vue'
+import { storeToRefs } from 'pinia'
 const mdAndUp = inject('mdAndUp')
 
 const props = defineProps({
@@ -88,18 +89,19 @@ const props = defineProps({
 })
 
 const entryFormStore = useEntryFormStore()
-const { getEntryById, selectionIds } = entryFormStore
+const { getEntryById } = entryFormStore
+const { selectionIds } = storeToRefs(entryFormStore)
 const allEntryDetails = ref([])
 
 const showOverlay = computed(() => {
-  if (selectionIds.length === 0) return false
-  return selectionIds.has(props.entryId)
+  if (selectionIds.value.length === 0) return false
+  return selectionIds.value.has(props.entryId)
 })
 
 // short press, ONLY for deselection
 const deselectThisCard = (id) => {
-  if (selectionIds.has(id)) {
-    selectionIds.delete(id)
+  if (selectionIds.value.has(id)) {
+    selectionIds.value.delete(id)
   }
 }
 
