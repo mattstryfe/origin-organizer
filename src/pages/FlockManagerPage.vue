@@ -1,5 +1,5 @@
 <template>
-  <v-row class="flex-wrap justify-center">
+  <v-row class="flex-wrap" :class="mdAndUp ? '' : 'justify-center'">
     <flock-manager-filters></flock-manager-filters>
 
     <v-col v-if="isLoadingEntries" class="v-row">
@@ -40,11 +40,12 @@
 import DisplayEntryCard from '@/components/DisplayEntryCard.vue'
 import { storeToRefs } from 'pinia'
 import { useEntryFormStore } from '@/stores/entryFormStore'
-import { nextTick, onMounted, ref, watch } from 'vue'
+import { inject, nextTick, onMounted, ref, watch } from 'vue'
 import { onLongPress } from '@vueuse/core'
 import CreateBreedingNavigationDrawer from '@/components/CreateBreedingNavigationDrawer.vue'
 import FlockManagerFilters from '@/components/FlockManagerFilters.vue'
 
+const mdAndUp = inject('mdAndDown')
 const entryFormStore = useEntryFormStore()
 const { entries, selectionIds, isLoadingEntries, showBottomSheet } = storeToRefs(entryFormStore)
 const entryRefs = ref([])
