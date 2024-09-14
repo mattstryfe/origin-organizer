@@ -27,7 +27,6 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       if (!userStore.userInfo)
         return
 
-      console.log('got here...')
       const flockId = userStore.getUserUid
 
       // get snapshot of entries
@@ -40,10 +39,8 @@ export const useEntryFormStore = defineStore('entryFormStore', {
     async saveEntryToDb() {
       const userStore = useUserStore()
 
-      console.log('saving entry... ', userStore.getUserUid)
       const flockId = userStore.getUserUid
       // const entryName =
-      console.log('flockId ', flockId)
       const flockDocRef = await doc(db, "flocks", flockId);
       // await setDoc(flockDocRef)
       const entriesCollectionRef = collection(flockDocRef, 'entries');

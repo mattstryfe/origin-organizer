@@ -8,12 +8,16 @@
     }"
   >
     <v-sheet v-if="showOverlay" height="100" width="100" class="cust-overlay">
+      allowCardDeselection - {{ allowCardDeselection }}
       <v-icon
+        @click="deselectThisCard(entryId)"
         size="100"
         color="blue-darken-2"
-        @click="deselectThisCard(entryId)"
-        >mdi-trash-can</v-icon
+        class="ma-0 pa-0"
+        :disabled="!allowCardDeselection"
       >
+        mdi-trash-can
+      </v-icon>
     </v-sheet>
 
     <!-- top bar -->
@@ -34,8 +38,7 @@
         readonly
         :model-value="3"
         color="amber"
-      >
-      </v-rating>
+      ></v-rating>
     </v-img>
 
     <v-divider class="my-2"></v-divider>
@@ -46,14 +49,14 @@
         {{ allEntryDetails.breed[0] }}
       </v-col>
       <v-col>
-        <v-icon size="xx-large"> mdi-compare-horizontal </v-icon>
+        <v-icon size="xx-large">mdi-compare-horizontal</v-icon>
       </v-col>
       <v-col cols="5" class="text-left">
         {{ allEntryDetails.breed[1] }}
       </v-col>
     </v-row>
-    <v-card-subtitle> Name: {{ allEntryDetails.name }} </v-card-subtitle>
-    <v-card-subtitle> Age: {{ allEntryDetails.DoB }} </v-card-subtitle>
+    <v-card-subtitle>Name: {{ allEntryDetails.name }}</v-card-subtitle>
+    <v-card-subtitle>Age: {{ allEntryDetails.DoB }}</v-card-subtitle>
 
     <v-divider class="my-1"></v-divider>
     <v-row no-gutters class="px-2 mt-2">
@@ -77,10 +80,14 @@ import DisplayEntryCardTopBar from '@/components/DisplayEntryCardTopBar.vue'
 import { storeToRefs } from 'pinia'
 const mdAndUp = inject('mdAndUp')
 
-const { entryId } = defineProps({
+const { entryId, allowCardDeselection } = defineProps({
   entryId: {
     type: String,
     default: 'xxx'
+  },
+  allowCardDeselection: {
+    type: Boolean,
+    default: false
   }
 })
 

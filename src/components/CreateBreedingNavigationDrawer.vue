@@ -43,7 +43,6 @@ watch( selectionIds.value,
   (newValue) => {
   // Only popup the navigation drawer the first time the user
   // adds 1, then 2.
-  console.log('oldValue.size', oldSize, 'newValue.size', newValue.size)
   if (oldSize.value === 1 && newValue.size === 2) {
     showBottomSheet.value = true
   }

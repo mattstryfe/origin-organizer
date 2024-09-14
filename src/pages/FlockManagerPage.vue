@@ -19,6 +19,7 @@
       :key="entry.id"
       ref="entryRefs"
       :entry-id="entry.id"
+      :allow-card-deselection="allowCardDeselection"
       class="cust-border-trans"
       :class="highlightThisCard(entry.id)"
     ></display-entry-card>
@@ -33,7 +34,8 @@
       @click="showBottomSheet = !showBottomSheet"
     >
       <v-icon size="30" color="success" class="hover-spin-continuous">
-        mdi-atom</v-icon>
+        mdi-atom</v-icon
+      >
     </v-btn>
   </v-row>
 </template>
@@ -57,6 +59,7 @@ const {
   disableBottomSheetButton
 } = storeToRefs(entryFormStore)
 const entryRefs = ref([])
+const allowCardDeselection = ref(false)
 
 const highlightThisCard = (id) => {
   if (selectionIds.value.has(id)) {
@@ -66,6 +69,10 @@ const highlightThisCard = (id) => {
 
 // Long press logic - applied in watch()
 const handleLongPress = (entry) => {
+  // Manually set deselction back to false.  Will currently impact ALL cards.
+  // This is acceptable for now.
+  allowCardDeselection.value = false
+
   // If exists, delete and exit
   if (selectionIds.value.has(entry.id)) {
     selectionIds.value.delete(entry.id)
@@ -73,7 +80,11 @@ const handleLongPress = (entry) => {
   }
   // passing in the ACTUAL entry here.  [entry.value === entries[0]] is true
   selectionIds.value.set(entry.id)
-  console.log('selectionIds', selectionIds.value)
+
+  // Also start a timeout to prevent collision with
+  setTimeout(() => {
+    allowCardDeselection.value = true
+  }, 500)
 }
 
 // Entries updates from store.  Needs to fire each time it changes.
