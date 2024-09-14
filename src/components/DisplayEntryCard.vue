@@ -77,14 +77,10 @@ import DisplayEntryCardTopBar from '@/components/DisplayEntryCardTopBar.vue'
 import { storeToRefs } from 'pinia'
 const mdAndUp = inject('mdAndUp')
 
-const { entryId, isSelected } = defineProps({
+const { entryId } = defineProps({
   entryId: {
     type: String,
     default: 'xxx'
-  },
-  isSelected: {
-    type: Boolean,
-    default: false
   }
 })
 
