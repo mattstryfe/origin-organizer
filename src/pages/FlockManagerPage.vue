@@ -26,12 +26,14 @@
     <create-breeding-navigation-drawer> </create-breeding-navigation-drawer>
     <v-btn
       fab
-      color="primary"
+      :variant="disableBottomSheetButton ? 'outlined' : 'elevated'"
+      :disabled="disableBottomSheetButton"
       icon="mdi-atom"
-      class="v-btn--fixed v-btn--top v-btn--right"
+      class="v-btn--fixed v-btn--top v-btn--right border-thin"
       @click="showBottomSheet = !showBottomSheet"
     >
-      <v-icon>mdi-atom</v-icon>
+      <v-icon size="30" color="success" class="hover-spin-continuous">
+        mdi-atom</v-icon>
     </v-btn>
   </v-row>
 </template>
@@ -45,9 +47,15 @@ import { onLongPress } from '@vueuse/core'
 import CreateBreedingNavigationDrawer from '@/components/CreateBreedingNavigationDrawer.vue'
 import FlockManagerFilters from '@/components/FlockManagerFilters.vue'
 
-const mdAndUp = inject('mdAndDown')
+const mdAndUp = inject('mdAndUp')
 const entryFormStore = useEntryFormStore()
-const { entries, selectionIds, isLoadingEntries, showBottomSheet } = storeToRefs(entryFormStore)
+const {
+  entries,
+  selectionIds,
+  isLoadingEntries,
+  showBottomSheet,
+  disableBottomSheetButton
+} = storeToRefs(entryFormStore)
 const entryRefs = ref([])
 
 const highlightThisCard = (id) => {
@@ -115,6 +123,22 @@ onMounted(() => {
   top: 5.5rem;
 }
 .v-btn--right {
-  right: .5rem;
+  right: 0.5rem;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.hover-spin-continuous {
+  animation: spin 5s linear infinite;
+}
+.cust-o {
+  overflow: visible !important;
 }
 </style>

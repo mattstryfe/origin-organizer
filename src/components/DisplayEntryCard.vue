@@ -77,7 +77,7 @@ import DisplayEntryCardTopBar from '@/components/DisplayEntryCardTopBar.vue'
 import { storeToRefs } from 'pinia'
 const mdAndUp = inject('mdAndUp')
 
-const props = defineProps({
+const { entryId, isSelected } = defineProps({
   entryId: {
     type: String,
     default: 'xxx'
@@ -95,7 +95,7 @@ const allEntryDetails = ref([])
 
 const showOverlay = computed(() => {
   if (selectionIds.value.length === 0) return false
-  return selectionIds.value.has(props.entryId)
+  return selectionIds.value.has(entryId)
 })
 
 // short press, ONLY for deselection
@@ -108,7 +108,7 @@ const deselectThisCard = (id) => {
 // Once mounted, do query for card details...
 onMounted(() => {
   // Use entryID prop to lookup entries in pinia store
-  allEntryDetails.value = getEntryById(props.entryId)
+  allEntryDetails.value = getEntryById(entryId)
 })
 </script>
 

@@ -1,27 +1,20 @@
 <template>
-  <v-bottom-sheet v-model="showBottomSheet" class="border-md"  :scrim="false" persistent>
+  <v-bottom-sheet v-model="showBottomSheet"  :scrim="false" persistent>
     <v-btn
       variant="flat"
       size="small"
       icon="mdi-close"
-      class="position-absolute right-0 mt-n5 bg-surface"
+      class="position-absolute right-0 mt-n9 bg-surface border-thin"
       @click="showBottomSheet = false"
     >
     </v-btn>
-    <v-row class="bg-surface pa-2 align-center" no-gutters>
-<!--      <display-entry-card
-        v-for="selection in selectionIds"
-        :key="selection[0]"
-        :entry-id="selection[0]"
-        class="mx-2"
-      >
-      </display-entry-card>-->
+    <v-row class="bg-surface pa-2 align-center border-t-thin " no-gutters>
       <create-breeding-display-entry-card></create-breeding-display-entry-card>
       <v-btn
         variant="outlined"
         color="success"
         class="mx-auto justify-end"
-        :class="mdAndUp ? '' : 'mt-2'"
+        :class="mdAndUp ? '' : ''"
         height="50"
         :disabled="selectionIds.size !== 2"
       >
@@ -31,14 +24,7 @@
         >
       </v-btn>
       <create-breeding-display-entry-card></create-breeding-display-entry-card>
-
     </v-row>
-
-<!--
-    <v-row no-gutters class=" bg-surface">
-      <v-btn icon="mdi-chevron-down" variant="plain"></v-btn>
-    </v-row>
--->
   </v-bottom-sheet>
 </template>
 
@@ -46,7 +32,6 @@
 import { inject, shallowRef, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useEntryFormStore } from '@/stores/entryFormStore'
-import DisplayEntryCard from '@/components/DisplayEntryCard.vue'
 import CreateBreedingDisplayEntryCard from '@/components/CreateBreedingDisplayEntryCard.vue'
 const mdAndUp = inject('mdAndUp')
 

@@ -12,7 +12,9 @@ export const useEntryFormStore = defineStore('entryFormStore', {
     isLoadingEntries: false,
     showBottomSheet: false,
   }),
-  getters: {},
+  getters: {
+    disableBottomSheetButton: state => state.selectionIds.size !== 2
+  },
   actions: {
     getEntryById(entryId) {
       return this.entries.find(entry => entry.id === entryId)
