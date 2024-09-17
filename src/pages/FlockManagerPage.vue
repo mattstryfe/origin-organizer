@@ -10,8 +10,7 @@
         height="400"
         class="v-card ma-1 pa-1 border-sm"
         type="card-avatar, article, actions"
-      >
-      </v-skeleton-loader>
+      ></v-skeleton-loader>
     </v-col>
 
     <display-entry-card
@@ -24,18 +23,18 @@
       :class="highlightThisCard(entry.id)"
     ></display-entry-card>
 
-    <create-breeding-navigation-drawer> </create-breeding-navigation-drawer>
+    <create-breeding-navigation-drawer></create-breeding-navigation-drawer>
     <v-btn
+      @click="showBottomSheet = !showBottomSheet"
       fab
       :variant="disableBottomSheetButton ? 'outlined' : 'elevated'"
       :disabled="disableBottomSheetButton"
       icon="mdi-atom"
       class="v-btn--fixed v-btn--top v-btn--right border-thin"
-      @click="showBottomSheet = !showBottomSheet"
     >
       <v-icon size="30" color="success" class="hover-spin-continuous">
-        mdi-atom</v-icon
-      >
+        mdi-atom
+      </v-icon>
     </v-btn>
   </v-row>
 </template>
