@@ -11,58 +11,45 @@
       class="bg-surface pa-2 align-center border-t-thin justify-space-around"
       no-gutters
     >
-
-<!-- TODO, need to add template v-for from gippity to iterate over this and
-      avoid the static targeting-->
-      <create-breeding-display-entry-card
-        :entry-id="sel1"
-      ></create-breeding-display-entry-card>
-      <v-btn
-        variant="outlined"
-        color="success"
-        class=" "
-        :class="mdAndUp ? '' : ''"
-        height="50"
-        :disabled="selectionIds.size !== 2"
-      >
-        Generate
-        <v-icon size="35" color="success" class="hover-spin-continuous ml-3">
-          mdi-atom
-        </v-icon>
-      </v-btn>
-      <create-breeding-display-entry-card
-        :entry-id="sel2"
-      ></create-breeding-display-entry-card>
+      <template v-for="(selectionId, ind) in selectionIds" :key="ind">
+        <v-col cols="3" lg="2">
+          <create-breeding-display-entry-card :entry-id="selectionId[0]"></create-breeding-display-entry-card>
+        </v-col>
+        <v-btn
+          v-if="ind === 0"
+          variant="outlined"
+          color="success"
+          class=" "
+          :class="mdAndUp ? '' : ''"
+          height="50"
+          :disabled="selectionIds.size !== 2"
+        >
+          Generate
+          <v-icon size="35" color="success" class="hover-spin-continuous ml-3">
+            mdi-atom
+          </v-icon>
+        </v-btn>
+      </template>
     </v-row>
   </v-bottom-sheet>
 </template>
 
 <script setup>
-import { computed, inject, ref, shallowRef, watch } from 'vue'
+import { inject, shallowRef, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 import CreateBreedingDisplayEntryCard from '@/components/CreateBreedingDisplayEntryCard.vue'
 const mdAndUp = inject('mdAndUp')
 
 const entryFormStore = useEntryFormStore()
-const { showBottomSheet, selectionIds } = storeToRefs(entryFormStore)
+const { showBottomSheet, selectionIds, entries } = storeToRefs(entryFormStore)
 const oldSize = shallowRef() // used because Map() in pinia is stupid and won't provide oldVal
-// const selection1 = computed(() => {
-//   console.log('runs!', selectionIds.value.keys().next().value)
-//   return selectionIds.value.keys().next().value
-// })
-// const selection2 = computed(() => selectionIds.value[1])
-const sel1 = ref()
-const sel2 = ref()
 watch(selectionIds.value, (newValue) => {
   // Only popup the navigation drawer the first time the user
   // adds 1, then 2.
   if (oldSize.value === 1 && newValue.size === 2) {
     showBottomSheet.value = true
   }
-  const iter = selectionIds.value.keys()
-  sel1.value = iter.next().value
-  sel2.value = iter.next().value
   oldSize.value = newValue.size
 })
 </script>
