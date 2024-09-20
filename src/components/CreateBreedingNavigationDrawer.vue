@@ -1,54 +1,56 @@
 <template>
-  <v-bottom-sheet v-model="showBottomSheet" class="border-md">
-    <!--    <v-row no-gutters class="bg-surface">
-      <v-btn variant="plain" icon="mdi-close" @click="showBottomSheet = false" class="ml-auto">
-      </v-btn>
-      &lt;!&ndash; close button &ndash;&gt;
-    </v-row>-->
-    <v-row class="flex-wrap bg-surface pa-2 align-center" no-gutters>
-      <display-entry-card
-        v-for="selection in selectionIds"
-        :key="selection[0]"
-        :entry-id="selection[0]"
-        class="mx-2"
-      >
-      </display-entry-card>
-      <v-btn
-        variant="outlined"
-        color="success"
-        class="mx-auto justify-end"
-        height="50"
-        :disabled="selectionIds.size !== 2"
-      >
-        Generate
-        <v-icon size="35" color="success" class="hover-spin-continuous ml-3"
-          >mdi-atom</v-icon
+  <v-bottom-sheet v-model="showBottomSheet" :scrim="false" persistent>
+    <v-btn
+      @click="showBottomSheet = false"
+      variant="flat"
+      size="small"
+      icon="mdi-close"
+      class="position-absolute right-0 mt-n9 bg-surface border-thin"
+    ></v-btn>
+    <v-row
+      class="bg-surface pa-2 align-center border-t-thin justify-space-around"
+      no-gutters
+    >
+      <template v-for="(selectionId, ind) in selectionIds" :key="ind">
+        <v-col cols="3" lg="2">
+          <create-breeding-display-entry-card :entry-id="selectionId[0]"></create-breeding-display-entry-card>
+        </v-col>
+        <v-btn
+          v-if="ind === 0"
+          variant="outlined"
+          color="success"
+          class=" "
+          :class="mdAndUp ? '' : ''"
+          height="50"
+          :disabled="selectionIds.size !== 2"
         >
-      </v-btn>
-      <v-btn
-        variant="plain"
-        icon="mdi-close"
-        class="ml-auto mb-auto mt-n4 mr-n3"
-        @click="showBottomSheet = false"
-      >
-      </v-btn>
+          Generate
+          <v-icon size="35" color="success" class="hover-spin-continuous ml-3">
+            mdi-atom
+          </v-icon>
+        </v-btn>
+      </template>
     </v-row>
   </v-bottom-sheet>
 </template>
 
 <script setup>
-import { watch } from 'vue'
+import { inject, shallowRef, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useEntryFormStore } from '@/stores/entryFormStore'
-import DisplayEntryCard from '@/components/DisplayEntryCard.vue'
+import CreateBreedingDisplayEntryCard from '@/components/CreateBreedingDisplayEntryCard.vue'
+const mdAndUp = inject('mdAndUp')
 
 const entryFormStore = useEntryFormStore()
-const { selectionIds, showBottomSheet } = storeToRefs(entryFormStore)
-
+const { showBottomSheet, selectionIds, entries } = storeToRefs(entryFormStore)
+const oldSize = shallowRef() // used because Map() in pinia is stupid and won't provide oldVal
 watch(selectionIds.value, (newValue) => {
-  if (newValue.size > 1) {
+  // Only popup the navigation drawer the first time the user
+  // adds 1, then 2.
+  if (oldSize.value === 1 && newValue.size === 2) {
     showBottomSheet.value = true
   }
+  oldSize.value = newValue.size
 })
 </script>
 

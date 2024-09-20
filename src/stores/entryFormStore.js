@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { useUserStore } from '@/stores/userStore'
 import { collection, doc, getDocs, addDoc } from 'firebase/firestore'
 import db from '@/plugins/firebase'
+import { reactive } from 'vue'
 
 export const useEntryFormStore = defineStore('entryFormStore', {
   state: () => ({
@@ -11,7 +12,9 @@ export const useEntryFormStore = defineStore('entryFormStore', {
     isLoadingEntries: false,
     showBottomSheet: false,
   }),
-  getters: {},
+  getters: {
+    disableBottomSheetButton: state => state.selectionIds.size !== 2
+  },
   actions: {
     getEntryById(entryId) {
       return this.entries.find(entry => entry.id === entryId)
@@ -24,7 +27,6 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       if (!userStore.userInfo)
         return
 
-      console.log('got here...')
       const flockId = userStore.getUserUid
 
       // get snapshot of entries
@@ -37,10 +39,8 @@ export const useEntryFormStore = defineStore('entryFormStore', {
     async saveEntryToDb() {
       const userStore = useUserStore()
 
-      console.log('saving entry... ', userStore.getUserUid)
       const flockId = userStore.getUserUid
       // const entryName =
-      console.log('flockId ', flockId)
       const flockDocRef = await doc(db, "flocks", flockId);
       // await setDoc(flockDocRef)
       const entriesCollectionRef = collection(flockDocRef, 'entries');

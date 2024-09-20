@@ -29,6 +29,32 @@ module.exports = {
         order: [['template', 'script'], 'style']
       }
     ],
-    'vue/padding-line-between-blocks': ['error', 'always']
+    'vue/padding-line-between-blocks': ['error', 'always'],
+    // Additional rules
+    "vue/html-closing-bracket-newline": [
+      "error",
+      {
+        "singleline": "never",
+        "multiline": "always",
+        "selfClosingTag": {
+          "singleline": "never",
+          "multiline": "always"
+        }
+      }
+    ],
+    'vue/attributes-order': ['error', {
+      'order': [
+        'DEFINITION',
+        'LIST_RENDERING',
+        'CONDITIONALS',
+        'RENDER_MODIFIERS',
+        'GLOBAL',
+        'UNIQUE',
+        'SLOT',
+        'EVENTS',
+        'OTHER_ATTR',
+        'CONTENT'
+      ]
+    }]
   }
 }

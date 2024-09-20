@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar :elevation="2" rounded title="Origin Organizer" class="cust-o">
+  <v-app-bar :elevation="2" rounded title="Origin Organizer" class="cust-o" density="compact">
     <template #prepend>
       <v-btn
         icon="mdi-orbit"
@@ -16,9 +16,8 @@
           v-for="w in routerLinksSchema"
           :key="w.name"
           :name="w.name"
-          class="pa-1 ma-1"
+          class="pa-1 ma-1 v-icon--size-x-small"
           :color="w.color"
-          size="x-large"
           :disabled="!w.routeName"
           @click="router.push({ name: w.routeName })"
         >
