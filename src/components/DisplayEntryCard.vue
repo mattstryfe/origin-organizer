@@ -1,6 +1,6 @@
 <template>
   <v-card
-    :width="mdAndUp ? 300 : 225"
+    :width="mdAndUp ? 300 : 210"
     :height="mdAndUp ? 400 : 300"
     class="border-sm ma-1 pa-1"
     :class="{
