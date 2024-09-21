@@ -1,6 +1,6 @@
 <template>
   <v-btn-toggle
-    v-model="formData['type']"
+    v-model="formData['phase']"
     color="green-darken-3"
     class="ma-4 flex-wrap fill-height"
   >
@@ -8,7 +8,7 @@
       v-for="(opt, index) in schemaPhaseOptions"
       :key="index"
       class="border mr-2 mb-2"
-      :value="opt.type"
+      :value="opt.phase"
       height="40"
     >
       <v-icon v-for="i in opt.icon" :key="i" :size="opt.iconSize" >

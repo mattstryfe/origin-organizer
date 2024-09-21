@@ -1,18 +1,27 @@
 import dayjs from 'dayjs'
+import chickenIcon from '@/assets/svgs/chicken-svgrepo-com.svg'
+import gooseIcon from '@/assets/svgs/goose-svgrepo-com.svg'
+import duckIcon from '@/assets/svgs/duck-svgrepo-com.svg'
+
+export const schemaSpeciesOptions = [
+  { label: 'chicken', species: 'chicken', component: chickenIcon, iconSize: '50'},
+  { label: 'goose', species: 'goose', component: gooseIcon, iconSize: '50'},
+  { label: 'duck', species: 'duck', component: duckIcon, iconSize: '50'},
+]
 
 export const schemaPhaseOptions = [
-  { label: 'egg', type: 'egg', icon: ['mdi-egg'], iconSize: '' },
-  { label: 'chick', type: 'chick', icon: ['mdi-bird'], iconSize: 'small' },
-  { label: 'adult', type: 'adult', icon: ['mdi-bird'], iconSize: 'xx-large' },
+  { label: 'egg', phase: 'egg', icon: ['mdi-egg'], iconSize: '' },
+  { label: 'chick', phase: 'chick', icon: ['mdi-bird'], iconSize: 'small' },
+  { label: 'adult', phase: 'adult', icon: ['mdi-bird'], iconSize: 'xx-large' },
   {
     label: 'hatchlings',
-    type: 'hatchlings',
+    phase: 'hatchlings',
     icon: ['mdi-bird', 'mdi-bird', 'mdi-bird'],
     iconSize: 'x-large'
   },
   {
     label: 'hatch',
-    type: 'hatch',
+    phase: 'hatch',
     icon: ['mdi-egg', 'mdi-egg', 'mdi-egg'],
     iconSize: 'x-large'
   }
