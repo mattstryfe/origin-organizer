@@ -9,6 +9,10 @@
       <v-card border class="pb-2 mb-2">
         <v-form>
 
+          <!-- Species Picker -->
+          <add-entry-species-picker></add-entry-species-picker>
+          <v-divider></v-divider>
+
           <!-- Entry Type Picker -->
           <add-entry-type-picker></add-entry-type-picker>
 
@@ -58,7 +62,7 @@ import AddEntryHeader from '@/components/AddEntryHeader.vue'
 import AddEntryTypePicker from '@/components/AddEntryTypePicker.vue'
 import AddEntryFormDetails from '@/components/AddEntryFormDetails.vue'
 import { onMounted } from 'vue'
-
+import AddEntrySpeciesPicker from '@/components/AddEntrySpeciesPicker.vue'
 const entryFormStore = useEntryFormStore()
 const { formData, entries } = storeToRefs(entryFormStore)
 
