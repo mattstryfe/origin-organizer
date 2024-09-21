@@ -8,7 +8,6 @@
       style="min-height: 300px"
     >
       <v-container fluid>
-
         <router-view></router-view>
       </v-container>
     </v-main>
