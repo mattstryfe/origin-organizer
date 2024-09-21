@@ -33,8 +33,8 @@
 
 <script setup>
 // TODO: Used w in routerLinksSchema to follow same pattern in MainWaffleMenu -> Easier refactor.
-import WaffleMenu from '@/components/MainWaffleMenu.vue'
-import UserAccountMenu from '@/components/MainUserAccountMenu.vue'
+import WaffleMenu from '@/components/navigation/MainWaffleMenu.vue'
+import UserAccountMenu from '@/components/navigation/MainUserAccountMenu.vue'
 import routerLinksSchema from '@/schemas/routerLinksSchema'
 import router from '@/plugins/router'
 import { ref } from 'vue'

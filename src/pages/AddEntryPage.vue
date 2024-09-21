@@ -5,30 +5,26 @@
     <v-divider class="mb-2"></v-divider>
 
     <v-col class="v-col-md-6">
-      <!-- Custom Entry Type Picker -->
       <v-card border class="pb-2 mb-2">
         <v-form>
-
           <!-- Species Picker -->
           <add-entry-species-picker></add-entry-species-picker>
           <v-divider></v-divider>
 
-          <!-- Entry Type Picker -->
           <add-entry-type-picker></add-entry-type-picker>
 
-          <!-- Basic Form -->
+          <!-- Form Body -->
           <add-entry-form-details></add-entry-form-details>
 
+          <!-- Form Controls -->
           <add-entry-form-controls></add-entry-form-controls>
         </v-form>
       </v-card>
 
       <!-- temporary entries display -->
-      <v-card class="border pa-4 mb-2">
-        <v-row class="flex-wrap">
-          <display-entry-card v-for="entry in entries" :key="entry" :entry-id="entry.id"></display-entry-card>
-        </v-row>
-      </v-card>
+      <v-row class="flex-wrap mt-2 justify-center">
+        <display-entry-card v-for="entry in entries" :key="entry" :entry-id="entry.id"></display-entry-card>
+      </v-row>
 
       <!-- some placeholder info -->
       <v-card class="border pb-2">
@@ -40,7 +36,7 @@
     </v-col>
 
     <!-- Right side widget to hold Object for DEV-ing -->
-    <v-col class="pl-3 v-col-md-6">
+    <v-col class="pl-3" cols="12" md="6">
       <v-card min-height="1000" class="overflow-auto">
         <v-card-title> Live Reactive/Object</v-card-title>
         <v-card-text>
