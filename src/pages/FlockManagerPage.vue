@@ -1,5 +1,5 @@
 <template>
-  <v-row class="flex-wrap" :class="mdAndUp ? '' : 'justify-center'">
+  <v-row class="flex-wrap" :class="smAndDown ? 'justify-center' : ''">
     <flock-manager-filters></flock-manager-filters>
 
     <v-col v-if="isLoadingEntries" class="v-row">
@@ -48,7 +48,7 @@ import { onLongPress } from '@vueuse/core'
 import CreateBreedingNavigationDrawer from '@/components/CreateBreedingNavigationDrawer.vue'
 import FlockManagerFilters from '@/components/FlockManagerFilters.vue'
 
-const mdAndUp = inject('mdAndUp')
+const smAndDown = inject('smAndDown')
 const entryFormStore = useEntryFormStore()
 const {
   entries,

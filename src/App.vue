@@ -22,10 +22,11 @@ import MainAppHeader from '@/components/MainAppHeader.vue'
 import { useDisplay } from 'vuetify';
 import { provide } from 'vue';
 // Destructure the specific breakpoint properties you want to provide
-const { mdAndUp } = useDisplay();
+const { mdAndUp, smAndDown } = useDisplay();
 
 // Provide these properties globally
 provide('mdAndUp', mdAndUp);
+provide('smAndDown', smAndDown);
 
 </script>
 
