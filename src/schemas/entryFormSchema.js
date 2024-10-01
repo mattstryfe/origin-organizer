@@ -3,6 +3,11 @@ import chickenIcon from '@/assets/svgs/chicken-svgrepo-com.svg'
 import gooseIcon from '@/assets/svgs/goose-svgrepo-com.svg'
 import duckIcon from '@/assets/svgs/duck-svgrepo-com.svg'
 
+export const schemaSexOptions = [
+  { label: 'male', sex: 'male', icon: 'mdi-gender-male', iconSize: '50'},
+  { label: 'female', sex: 'female', icon: 'mdi-gender-female', iconSize: '50'},
+  { label: 'unknown', sex: 'unknown', icon: 'mdi-help', iconSize: '50'},
+]
 export const schemaSpeciesOptions = [
   { label: 'chicken', species: 'chicken', component: chickenIcon, iconSize: '50'},
   { label: 'goose', species: 'goose', component: gooseIcon, iconSize: '50'},
@@ -13,18 +18,18 @@ export const schemaPhaseOptions = [
   { label: 'egg', phase: 'egg', icon: ['mdi-egg'], iconSize: '' },
   { label: 'chick', phase: 'chick', icon: ['mdi-bird'], iconSize: 'small' },
   { label: 'adult', phase: 'adult', icon: ['mdi-bird'], iconSize: 'xx-large' },
-  {
-    label: 'hatchlings',
-    phase: 'hatchlings',
-    icon: ['mdi-bird', 'mdi-bird', 'mdi-bird'],
-    iconSize: 'x-large'
-  },
-  {
-    label: 'hatch',
-    phase: 'hatch',
-    icon: ['mdi-egg', 'mdi-egg', 'mdi-egg'],
-    iconSize: 'x-large'
-  }
+  // {
+  //   label: 'hatchlings',
+  //   phase: 'hatchlings',
+  //   icon: ['mdi-bird', 'mdi-bird', 'mdi-bird'],
+  //   iconSize: 'x-large'
+  // },
+  // {
+  //   label: 'hatch',
+  //   phase: 'hatch',
+  //   icon: ['mdi-egg', 'mdi-egg', 'mdi-egg'],
+  //   iconSize: 'x-large'
+  // }
 ]
 
 export const baseSchema = [
@@ -43,14 +48,14 @@ export const baseSchema = [
     chips: true,
     class: 'v-col-6'
   },
-  {
-    label: 'Sex',
-    type: 'dropdown',
-    model: 'sex',
-    items: ['male', 'female', 'unknown'],
-    chips: true,
-    class: 'v-col-5 mr-2'
-  },
+  // {
+  //   label: 'Sex',
+  //   type: 'dropdown',
+  //   model: 'sex',
+  //   items: ['male', 'female', 'unknown'],
+  //   chips: true,
+  //   class: 'v-col-5 mr-2'
+  // },
   {
     label: 'DoB',
     type: 'date',

@@ -1,19 +1,22 @@
 <template>
-  <v-col cols="12" class="mb-4">
-    <v-card border class="pb-2">
-      <v-card-title>Add Entry</v-card-title>
-      <v-card-subtitle>Advanced Add/Expansion</v-card-subtitle>
-      <v-card-subtitle>Add multiple?</v-card-subtitle>
-      <v-card-subtitle>How many?</v-card-subtitle>
-      <v-card-subtitle>Display them and edit manually?</v-card-subtitle>
-    </v-card>
-  </v-col>
+  <v-sheet class="border rounded">
+    <v-stepper alt-labels>
+      <v-stepper-header>
+        <template v-for="(step, ind) in steps" :key="step">
+          <v-stepper-item class="pa-2">
+            <template #title>
+              <p class="mt-n3">{{ step }}</p>
+            </template>
+          </v-stepper-item>
+          <v-divider v-if="ind !== 2" class="mt-4" thickness="6"></v-divider>
+        </template>
+      </v-stepper-header>
+    </v-stepper>
+  </v-sheet>
 </template>
 
 <script setup>
-
+const steps = ['species', 'sex', 'phase']
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

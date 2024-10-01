@@ -1,6 +1,9 @@
 <template>
   <v-row dense no-gutters>
-    <add-entry-header></add-entry-header>
+    <v-col cols="12">
+      <add-entry-header></add-entry-header>
+
+    </v-col>
 
     <v-divider class="mb-2"></v-divider>
 
@@ -10,6 +13,8 @@
           <!-- Species Picker -->
           <add-entry-species-picker></add-entry-species-picker>
           <v-divider></v-divider>
+
+          <add-entry-sex-picker></add-entry-sex-picker>
 
           <add-entry-type-picker></add-entry-type-picker>
 
@@ -59,6 +64,7 @@ import AddEntryTypePicker from '@/components/AddEntryPhasePicker.vue'
 import AddEntryFormDetails from '@/components/AddEntryFormDetails.vue'
 import { onMounted } from 'vue'
 import AddEntrySpeciesPicker from '@/components/AddEntrySpeciesPicker.vue'
+import AddEntrySexPicker from '@/components/AddEntrySexPicker.vue'
 const entryFormStore = useEntryFormStore()
 const { formData, entries } = storeToRefs(entryFormStore)
 
