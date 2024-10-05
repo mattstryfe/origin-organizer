@@ -16,8 +16,9 @@
 
           <add-entry-sex-picker></add-entry-sex-picker>
 
-          <add-entry-type-picker></add-entry-type-picker>
+          <add-entry-phase-picker></add-entry-phase-picker>
 
+          <add-entry-breed-picker></add-entry-breed-picker>
           <!-- Form Body -->
           <add-entry-form-details></add-entry-form-details>
 
@@ -60,11 +61,12 @@ import { useEntryFormStore } from '@/stores/entryFormStore'
 import AddEntryFormControls from '@/components/AddEntryFormControls.vue'
 import DisplayEntryCard from '@/components/DisplayEntryCard.vue'
 import AddEntryHeader from '@/components/AddEntryHeader.vue'
-import AddEntryTypePicker from '@/components/AddEntryPhasePicker.vue'
+import AddEntryPhasePicker from '@/components/AddEntryPhasePicker.vue'
 import AddEntryFormDetails from '@/components/AddEntryFormDetails.vue'
 import { onMounted } from 'vue'
 import AddEntrySpeciesPicker from '@/components/AddEntrySpeciesPicker.vue'
 import AddEntrySexPicker from '@/components/AddEntrySexPicker.vue'
+import AddEntryBreedPicker from '@/components/AddEntryBreedPicker.vue'
 const entryFormStore = useEntryFormStore()
 const { formData, entries } = storeToRefs(entryFormStore)
 
