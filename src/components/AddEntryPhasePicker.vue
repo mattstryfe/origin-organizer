@@ -2,7 +2,7 @@
   <v-btn-toggle
     v-model="formData['phase']"
     color="green-darken-3"
-    class="flex-wrap fill-height"
+    class="fill-height flex-column "
   >
     <v-btn
       v-for="(opt, index) in schemaPhaseOptions"

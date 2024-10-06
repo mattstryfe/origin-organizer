@@ -10,22 +10,25 @@
       <v-card border class="pb-2 mb-2">
         <v-form>
           <!-- Species Picker -->
-          <v-row no-gutters dense class="ma-2">
-            <v-col>
-              <add-entry-species-picker></add-entry-species-picker>
+          <v-row no-gutters class="mt-2">
+            <v-col cols="8">
+              <v-col class="d-flex justify-space-around">
+                <add-entry-species-picker></add-entry-species-picker>
+                <add-entry-phase-picker></add-entry-phase-picker>
+                <add-entry-sex-picker></add-entry-sex-picker>
+              </v-col>
+
+              <!-- Form Body -->
+              <v-divider></v-divider>
+              <add-entry-form-details></add-entry-form-details>
             </v-col>
-            <v-col><add-entry-sex-picker></add-entry-sex-picker></v-col>
-            <v-col>
-              <add-entry-phase-picker></add-entry-phase-picker>
+
+            <v-col cols="4">
+              <add-entry-breed-picker></add-entry-breed-picker>
             </v-col>
           </v-row>
 
           <v-divider></v-divider>
-
-          <add-entry-breed-picker></add-entry-breed-picker>
-          <!-- Form Body -->
-          <add-entry-form-details></add-entry-form-details>
-
           <!-- Form Controls -->
           <add-entry-form-controls></add-entry-form-controls>
         </v-form>

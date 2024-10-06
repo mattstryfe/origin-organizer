@@ -16,6 +16,7 @@
 </template>
 
 <script setup>
+// TODO switch these icons to match the selections made in the pickers
 const steps = ['species', 'sex', 'phase']
 </script>
 

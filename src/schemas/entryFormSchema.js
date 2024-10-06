@@ -22,25 +22,25 @@ export const schemaSpeciesOptions = [
 
 export const schemaPhaseOptions = [
   { label: 'egg', phase: 'egg', icon: 'mdi-egg', iconSize: '50' },
-  { label: 'chick', phase: 'chick', component: chickIcon, iconSize: '50', },
+  { label: 'chick', phase: 'chick', component: chickIcon, iconSize: '50' },
   { label: 'adult', phase: 'adult', icon: 'mdi-bird', iconSize: '50' }
 ]
 
 export const baseSchema = [
   {
-    label: 'Name',
-    type: 'text',
-    model: 'name',
-    class: 'v-col-5 mr-2'
-  },
-  {
     label: 'DoB',
     type: 'date',
     model: 'DoB',
-    class: 'v-col-5',
+    class: 'v-col-8',
     placeholder: dayjs().format('YYYY-MM-DD'),
     appendIcon: 'mdi-calendar-today',
     appendInnerAction: 'autoPopulateToToday'
+  },
+  {
+    label: 'Name',
+    type: 'text',
+    model: 'name',
+    class: 'v-col-8 mr-2'
   },
   {
     label: 'Notes',
@@ -49,26 +49,26 @@ export const baseSchema = [
   }
 ]
 export const schemaChickenBreedOptions = [
-  "Rhode Island Red",
-  "Leghorn",
-  "Plymouth Rock (Barred Rock)",
-  "Sussex",
-  "Orpington",
-  "Wyandotte",
-  "Australorp",
-  "Easter Egger",
-  "Silkie",
-  "Cochin",
-  "Brahma",
-  "New Hampshire Red",
-  "Buff Orpington",
-  "Isa Brown",
-  "Marans",
-  "Ancona",
-  "Delaware",
-  "Faverolles",
-  "Welsummer",
-  "Dominique"
+  'Rhode Island Red',
+  'Leghorn',
+  'Plymouth Rock (Barred Rock)',
+  'Sussex',
+  'Orpington',
+  'Wyandotte',
+  'Australorp',
+  'Easter Egger',
+  'Silkie',
+  'Cochin',
+  'Brahma',
+  'New Hampshire Red',
+  'Buff Orpington',
+  'Isa Brown',
+  'Marans',
+  'Ancona',
+  'Delaware',
+  'Faverolles',
+  'Welsummer',
+  'Dominique'
 ]
 export const schemaCharacteristicOptions = [
   'flighty',
