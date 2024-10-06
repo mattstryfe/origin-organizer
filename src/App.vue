@@ -27,11 +27,9 @@ const { mdAndUp, smAndDown } = useDisplay();
 // Provide these properties globally
 provide('mdAndUp', mdAndUp);
 provide('smAndDown', smAndDown);
-
 </script>
 
 <style>
-
 /* MOBILE - prevents swiping down from refreshing the app*/
 html, body {
   overscroll-behavior: none;

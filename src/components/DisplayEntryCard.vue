@@ -21,7 +21,7 @@
 
     <!-- top bar -->
     <display-entry-card-top-bar
-      :entry-id="entryId"
+      :all-entry-details="allEntryDetails"
     ></display-entry-card-top-bar>
 
     <!-- background image -->

@@ -20,6 +20,7 @@
 
               <!-- Form Body -->
               <v-divider></v-divider>
+              <add-entry-parent-picker></add-entry-parent-picker>
               <add-entry-form-details></add-entry-form-details>
               <add-entry-characteristics-picker></add-entry-characteristics-picker>
             </v-col>
@@ -80,6 +81,7 @@ import AddEntrySexPicker from '@/components/AddEntrySexPicker.vue'
 import AddEntryBreedPicker from '@/components/AddEntryBreedPicker.vue'
 import AddEntryCharacteristicsPicker from '@/components/AddEntryCharacteristicsPicker.vue'
 import AddEntryProgressTracker from '@/components/AddEntryProgressTracker.vue'
+import AddEntryParentPicker from '@/components/AddEntryParentPicker.vue'
 const entryFormStore = useEntryFormStore()
 const { formData, entries } = storeToRefs(entryFormStore)
 

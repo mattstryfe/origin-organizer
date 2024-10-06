@@ -1,7 +1,7 @@
 <template>
   <v-row no-gutters dense>
     <v-col>
-      <v-icon size="small" class="pb-2">mdi-gender-male</v-icon>
+      <v-icon size="small" class="pb-2" :color="sexIconColor">{{ sexIcon }}</v-icon>
     </v-col>
 
     <!-- actions -->
@@ -11,6 +11,13 @@
         size="medium"
         variant="text"
         color="red-darken-3"
+        density="compact"
+      ></v-btn>
+      <v-btn
+        icon="mdi-flask"
+        size="medium"
+        variant="text"
+        color="orange-darken-3"
         density="compact"
       ></v-btn>
       <v-btn
@@ -41,12 +48,17 @@
 
 <script setup>
 import router from '@/plugins/router'
-defineProps({
-  entryId: {
-    type: String,
-    default: 'xxx'
+import { computed } from 'vue'
+
+const { allEntryDetails } = defineProps({
+  allEntryDetails: {
+    type: Object,
+    default: () => {}
   }
 })
+
+const sexIcon = computed(() => allEntryDetails.sex === 'male' ? 'mdi-gender-male' : 'mdi-gender-female' )
+const sexIconColor = computed(() => allEntryDetails.sex === 'male' ? 'blue-lighten-2' : 'pink-lighten-2' )
 </script>
 
 <style scoped></style>
