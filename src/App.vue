@@ -31,4 +31,8 @@ provide('smAndDown', smAndDown);
 </script>
 
 <style scoped>
+/* MOBILE - prevents swiping down from refreshing the app*/
+html, body {
+  overscroll-behavior: none;
+}
 </style>
