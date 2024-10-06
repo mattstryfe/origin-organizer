@@ -1,7 +1,7 @@
 <template>
   <v-row dense no-gutters>
     <v-col cols="12">
-      <add-entry-header></add-entry-header>
+      <add-entry-progress-tracker></add-entry-progress-tracker>
     </v-col>
 
     <v-divider class="mb-2"></v-divider>
@@ -21,6 +21,7 @@
               <!-- Form Body -->
               <v-divider></v-divider>
               <add-entry-form-details></add-entry-form-details>
+              <add-entry-characteristics-picker></add-entry-characteristics-picker>
             </v-col>
 
             <v-col cols="4">
@@ -71,13 +72,14 @@ import { storeToRefs } from 'pinia'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 import AddEntryFormControls from '@/components/AddEntryFormControls.vue'
 import DisplayEntryCard from '@/components/DisplayEntryCard.vue'
-import AddEntryHeader from '@/components/AddEntryHeader.vue'
 import AddEntryPhasePicker from '@/components/AddEntryPhasePicker.vue'
 import AddEntryFormDetails from '@/components/AddEntryFormDetails.vue'
 import { onMounted } from 'vue'
 import AddEntrySpeciesPicker from '@/components/AddEntrySpeciesPicker.vue'
 import AddEntrySexPicker from '@/components/AddEntrySexPicker.vue'
 import AddEntryBreedPicker from '@/components/AddEntryBreedPicker.vue'
+import AddEntryCharacteristicsPicker from '@/components/AddEntryCharacteristicsPicker.vue'
+import AddEntryProgressTracker from '@/components/AddEntryProgressTracker.vue'
 const entryFormStore = useEntryFormStore()
 const { formData, entries } = storeToRefs(entryFormStore)
 

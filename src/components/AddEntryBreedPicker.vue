@@ -1,7 +1,7 @@
 <template>
   <v-fab
     :active="true"
-    class="ms-1"
+    class="pl-4"
     icon="mdi-plus"
     location="bottom start"
     size="xx-small"
@@ -17,8 +17,9 @@
       density="compact"
       :value="breed"
       color="green-darken-3"
+      class="text-no-wrap text-truncate"
     >
-      <span class="grey">{{ breed }}</span>
+      <p class="grey">{{ breed }}</p>
     </v-chip>
   </v-chip-group>
 </template>
@@ -33,4 +34,8 @@ const sortedBreeds = computed(() => schemaChickenBreedOptions.sort())
 const { formData } = storeToRefs(entryFormStore)
 </script>
 
-<style scoped></style>
+<style scoped>
+.cust-width {
+  max-width: 99%;
+}
+</style>

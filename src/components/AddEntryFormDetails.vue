@@ -21,14 +21,14 @@
   </v-row>
 
   <!-- special/ complex components -->
-  <v-card-title>Characteristics</v-card-title>
+<!--  <v-card-title>Characteristics</v-card-title>
   <v-chip-group
     v-model="formData['characteristics']"
     column
     class="pl-4"
     multiple
   >
-    <!-- TODO: this v-for target is trash. need to make better -->
+    &lt;!&ndash; TODO: this v-for target is trash. need to make better &ndash;&gt;
     <v-chip
       v-for="(field, index) in schemaCharacteristicOptions"
       :key="index"
@@ -37,12 +37,12 @@
       :value="field"
       color="green-darken-3"
     >
-      <!-- customise the filter slot, which in our case is when they're selected -->
-      <!-- #filter is same(shorthand) for v-slot:filter -->
+      &lt;!&ndash; customise the filter slot, which in our case is when they're selected &ndash;&gt;
+      &lt;!&ndash; #filter is same(shorthand) for v-slot:filter &ndash;&gt;
       <template #filter> </template>
       <span class="grey">{{ field }}</span>
     </v-chip>
-  </v-chip-group>
+  </v-chip-group>-->
 </template>
 
 <script setup>
