@@ -2,7 +2,7 @@
   <v-btn-toggle
     v-model="formData['sex']"
     color="green-darken-3"
-    class="ma-4 flex-wrap fill-height"
+    class="flex-wrap fill-height"
   >
     <v-btn
       v-for="(opt, index) in schemaSexOptions"

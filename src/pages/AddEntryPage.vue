@@ -2,7 +2,6 @@
   <v-row dense no-gutters>
     <v-col cols="12">
       <add-entry-header></add-entry-header>
-
     </v-col>
 
     <v-divider class="mb-2"></v-divider>
@@ -11,12 +10,17 @@
       <v-card border class="pb-2 mb-2">
         <v-form>
           <!-- Species Picker -->
-          <add-entry-species-picker></add-entry-species-picker>
+          <v-row no-gutters dense class="ma-2">
+            <v-col>
+              <add-entry-species-picker></add-entry-species-picker>
+            </v-col>
+            <v-col><add-entry-sex-picker></add-entry-sex-picker></v-col>
+            <v-col>
+              <add-entry-phase-picker></add-entry-phase-picker>
+            </v-col>
+          </v-row>
+
           <v-divider></v-divider>
-
-          <add-entry-sex-picker></add-entry-sex-picker>
-
-          <add-entry-phase-picker></add-entry-phase-picker>
 
           <add-entry-breed-picker></add-entry-breed-picker>
           <!-- Form Body -->
@@ -29,7 +33,11 @@
 
       <!-- temporary entries display -->
       <v-row class="flex-wrap mt-2 justify-center">
-        <display-entry-card v-for="entry in entries" :key="entry" :entry-id="entry.id"></display-entry-card>
+        <display-entry-card
+          v-for="entry in entries"
+          :key="entry"
+          :entry-id="entry.id"
+        ></display-entry-card>
       </v-row>
 
       <!-- some placeholder info -->
@@ -44,7 +52,7 @@
     <!-- Right side widget to hold Object for DEV-ing -->
     <v-col class="pl-3" cols="12" md="6">
       <v-card min-height="1000" class="overflow-auto">
-        <v-card-title> Live Reactive/Object</v-card-title>
+        <v-card-title>Live Reactive/Object</v-card-title>
         <v-card-text>
           <pre>
             {{ formData }}

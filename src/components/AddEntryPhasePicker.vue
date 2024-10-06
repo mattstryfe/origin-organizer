@@ -2,18 +2,25 @@
   <v-btn-toggle
     v-model="formData['phase']"
     color="green-darken-3"
-    class="ma-4 flex-wrap fill-height"
+    class="flex-wrap fill-height"
   >
     <v-btn
       v-for="(opt, index) in schemaPhaseOptions"
       :key="index"
       class="border mr-2 mb-2"
       :value="opt.phase"
-      height="40"
     >
-      <v-icon v-for="i in opt.icon" :key="i" :size="opt.iconSize" >
-        {{ i }}
-      </v-icon>
+      <template v-if="opt.component">
+        <v-icon :size="opt.iconSize" class="px-2">
+          <component :is="opt.component"></component>
+        </v-icon>
+      </template>
+
+      <template v-else>
+        <v-icon :size="opt.iconSize">
+          {{ opt.icon }}
+        </v-icon>
+      </template>
     </v-btn>
   </v-btn-toggle>
 </template>

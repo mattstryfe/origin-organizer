@@ -2,6 +2,7 @@ import dayjs from 'dayjs'
 import chickenIcon from '@/assets/svgs/chicken-svgrepo-com.svg'
 import gooseIcon from '@/assets/svgs/goose-svgrepo-com.svg'
 import duckIcon from '@/assets/svgs/duck-svgrepo-com.svg'
+import chickIcon from '@/assets/svgs/chick-hatched-from-egg-svgrepo-com.svg'
 
 export const schemaSexOptions = [
   { label: 'male', sex: 'male', icon: 'mdi-gender-male', iconSize: '50' },
@@ -20,9 +21,9 @@ export const schemaSpeciesOptions = [
 ]
 
 export const schemaPhaseOptions = [
-  { label: 'egg', phase: 'egg', icon: ['mdi-egg'], iconSize: '' },
-  { label: 'chick', phase: 'chick', icon: ['mdi-bird'], iconSize: 'small' },
-  { label: 'adult', phase: 'adult', icon: ['mdi-bird'], iconSize: 'xx-large' }
+  { label: 'egg', phase: 'egg', icon: 'mdi-egg', iconSize: '50' },
+  { label: 'chick', phase: 'chick', component: chickIcon, iconSize: '50', },
+  { label: 'adult', phase: 'adult', icon: 'mdi-bird', iconSize: '50' }
 ]
 
 export const baseSchema = [
@@ -31,15 +32,6 @@ export const baseSchema = [
     type: 'text',
     model: 'name',
     class: 'v-col-5 mr-2'
-  },
-  {
-    label: 'Breed(s)',
-    type: 'dropdown',
-    model: 'breed',
-    items: ['breed1', 'breed2', 'breed3', 'breed4'],
-    multiple: true,
-    chips: true,
-    class: 'v-col-6'
   },
   {
     label: 'DoB',
