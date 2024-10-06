@@ -68,6 +68,11 @@ const highlightThisCard = (id) => {
 
 // Long press logic - applied in watch()
 const handleLongPress = (entry) => {
+  // This should work but there's no way of testing it until this is deployed...
+  if (navigator.vibrate) {
+    navigator.vibrate([100, 50, 100]) // Vibrate pattern
+  }
+
   // Manually set deselction back to false.  Will currently impact ALL cards.
   // This is acceptable for now.
   allowCardDeselection.value = false
