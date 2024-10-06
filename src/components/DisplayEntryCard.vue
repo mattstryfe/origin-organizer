@@ -1,7 +1,7 @@
 <template>
   <v-card
-    :width="mdAndUp ? 300 : 210"
-    :height="mdAndUp ? 400 : 300"
+    :width="smAndDown ? 210 : 300"
+    :height="smAndDown ? 300 : 400"
     class="border-sm ma-1 pa-1"
     :class="{
       'opacity-80': showOverlay
@@ -26,7 +26,7 @@
 
     <!-- background image -->
     <v-img
-      :height="mdAndUp ? 150 : 100"
+      :height="smAndDown ? 100 : 150"
       src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
       cover
       class="text-black align-end mb-1"
@@ -77,7 +77,7 @@ import { computed, inject, onMounted, ref } from 'vue'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 import DisplayEntryCardTopBar from '@/components/DisplayEntryCardTopBar.vue'
 import { storeToRefs } from 'pinia'
-const mdAndUp = inject('mdAndUp')
+const smAndDown = inject('smAndDown')
 
 const { entryId, allowCardDeselection } = defineProps({
   entryId: {

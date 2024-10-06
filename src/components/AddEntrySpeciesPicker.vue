@@ -1,31 +1,28 @@
 <template>
   <v-btn-toggle
-    v-model="formData['type']"
+    v-model="formData['species']"
     color="green-darken-3"
-    class="ma-4 flex-wrap fill-height"
+    class="fill-height flex-column"
   >
     <v-btn
-      v-for="(opt, index) in schemaPhaseOptions"
+      v-for="(opt, index) in schemaSpeciesOptions"
       :key="index"
       class="border mr-2 mb-2"
-      :value="opt.type"
-      height="40"
+      :value="opt.species"
     >
-      <v-icon v-for="i in opt.icon" :key="i" :size="opt.iconSize" >
-        {{ i }}
+      <v-icon :size="opt.iconSize" >
+        <component :is="opt.component"></component>
       </v-icon>
     </v-btn>
   </v-btn-toggle>
 </template>
 
 <script setup>
-import { schemaPhaseOptions } from '@/schemas/entryFormSchema'
-import { storeToRefs } from 'pinia'
+import { schemaSpeciesOptions } from '@/schemas/entryFormSchema'
 import { useEntryFormStore } from '@/stores/entryFormStore'
-
+import { storeToRefs } from 'pinia'
 const entryFormStore = useEntryFormStore()
 const { formData } = storeToRefs(entryFormStore)
-
 </script>
 
 <style scoped>

@@ -19,8 +19,6 @@
           v-if="ind === 0"
           variant="outlined"
           color="success"
-          class=" "
-          :class="mdAndUp ? '' : ''"
           height="50"
           :disabled="selectionIds.size !== 2"
         >
@@ -39,7 +37,6 @@ import { inject, shallowRef, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 import CreateBreedingDisplayEntryCard from '@/components/CreateBreedingDisplayEntryCard.vue'
-const mdAndUp = inject('mdAndUp')
 
 const entryFormStore = useEntryFormStore()
 const { showBottomSheet, selectionIds, entries } = storeToRefs(entryFormStore)
