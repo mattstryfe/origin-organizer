@@ -1,27 +1,44 @@
 <template>
   <v-card
-:width="smAndDown ? 210 : 300" :height="smAndDown ? 300 : 400" class="border-sm ma-1 pa-1" :class="{
+    :width="smAndDown ? 210 : 300"
+    :height="smAndDown ? 300 : 400"
+    class="border-sm ma-1 pa-1"
+    :class="{
       'opacity-80': showOverlay
     }"
->
+  >
     <v-sheet v-if="showOverlay" height="100" width="100" class="cust-overlay">
       <v-icon
-@click="deselectThisCard(entryId)" size="100" color="blue-darken-2" class="ma-0 pa-0"
+        @click="deselectThisCard(entryId)"
+        size="100"
+        color="blue-darken-2"
+        class="ma-0 pa-0"
         :disabled="!allowCardDeselection"
->
+      >
         mdi-trash-can
       </v-icon>
     </v-sheet>
 
     <!-- top bar -->
-    <display-entry-card-top-bar :entry-id="entryId" :sex="sex"></display-entry-card-top-bar>
+    <display-entry-card-top-bar
+      :entry-id="entryId"
+      :sex="sex"
+    ></display-entry-card-top-bar>
 
     <!-- background image -->
     <v-img
-:height="smAndDown ? 100 : 150" src="https://cdn.vuetifyjs.com/images/cards/docks.jpg" cover
+      :height="smAndDown ? 100 : 150"
+      src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+      cover
       class="text-black align-end mb-1"
->
-      <v-rating density="compact" size="small" readonly :model-value="3" color="amber"></v-rating>
+    >
+      <v-rating
+        density="compact"
+        size="small"
+        readonly
+        :model-value="3"
+        color="amber"
+      ></v-rating>
     </v-img>
 
     <v-divider class="my-2"></v-divider>
@@ -46,9 +63,12 @@
     <v-divider class="my-1"></v-divider>
     <v-row no-gutters class="px-2 mt-2">
       <v-chip
-v-for="c in allEntryDetails.characteristics" :key="c" class="mr-1 text-grey lighten-2 mb-1"
-        variant="outlined" size="x-small"
->
+        v-for="c in allEntryDetails.characteristics"
+        :key="c"
+        class="mr-1 text-grey lighten-2 mb-1"
+        variant="outlined"
+        size="x-small"
+      >
         {{ c }}
       </v-chip>
     </v-row>
