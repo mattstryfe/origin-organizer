@@ -14,29 +14,46 @@
   </v-row>
 
   <v-row>
+    <v-col v-if="!isDoneLoadingEntries">
+      <v-skeleton-loader
+        v-for="i in 1"
+        :key="i"
+        width="300"
+        height="400"
+        class="v-card ma-1 pa-1 border-sm"
+        type="card-avatar, article, actions"
+      ></v-skeleton-loader>
+    </v-col>
+
+    <!-- displayEntryCard expects entry-id to be populated -->
     <display-entry-card
-      :entry-id="birdDetails?.id"
-      sex="birdDetails?.sex"
+      v-if="isDoneLoadingEntries"
+      :entry-id="entry.id"
     ></display-entry-card>
   </v-row>
 </template>
 
 <script setup>
-import { onBeforeMount, ref } from 'vue'
+import { computed } from 'vue'
 import router from '@/plugins/router'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 import DisplayEntryCard from '@/components/DisplayEntryCard.vue'
 
 import { useRoute } from 'vue-router'
+import { storeToRefs } from 'pinia'
 
 const entryFormStore = useEntryFormStore()
-const birdDetails = ref()
-const route = useRoute()
+const { isDoneLoadingEntries } = storeToRefs(entryFormStore)
 
-onBeforeMount(() => {
-  // // Use entryID prop to lookup entries in pinia store
-  birdDetails.value = entryFormStore.getEntryById(route.params.id)
-})
+const route = useRoute()
+// a few components need to gracefully handle direct navigation.  This is one of them.
+// because of that, we have 2 hooks which need to be de-conflicted
+
+// This mostly handles direct navigation by watching for the query to come back
+// When the user is within the app, this information is already available so rendering can
+// be handled via mounted
+// the router finishes before the queries do.
+const entry = computed(() => entryFormStore.getEntryById(route.params.id))
 </script>
 
 <style scoped></style>

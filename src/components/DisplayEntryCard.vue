@@ -22,7 +22,7 @@
     <!-- top bar -->
     <display-entry-card-top-bar
       :entry-id="entryId"
-      :sex="sex"
+      :sex="allEntryDetails.sex"
     ></display-entry-card-top-bar>
 
     <!-- background image -->
@@ -76,13 +76,14 @@
 </template>
 
 <script setup>
-import { computed, inject, onMounted, ref } from 'vue'
+import { computed, inject } from 'vue'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 import DisplayEntryCardTopBar from '@/components/DisplayEntryCardTopBar.vue'
 import { storeToRefs } from 'pinia'
 const smAndDown = inject('smAndDown')
 
-const { entryId, allowCardDeselection, sex } = defineProps({
+// New way to do props. both work
+const { entryId, allowCardDeselection } = defineProps({
   entryId: {
     type: String,
     default: 'xxx'
@@ -90,17 +91,11 @@ const { entryId, allowCardDeselection, sex } = defineProps({
   allowCardDeselection: {
     type: Boolean,
     default: false
-  },
-  sex: {
-    type: String,
-    default: 'xxx'
   }
 })
 
 const entryFormStore = useEntryFormStore()
-const { getEntryById } = entryFormStore
 const { selectionIds } = storeToRefs(entryFormStore)
-const allEntryDetails = ref([])
 
 const showOverlay = computed(() => {
   if (selectionIds.value.length === 0) return false
@@ -114,11 +109,7 @@ const deselectThisCard = (id) => {
   }
 }
 
-// Once mounted, do query for card details...
-onMounted(() => {
-  // Use entryID prop to lookup entries in pinia store
-  allEntryDetails.value = getEntryById(entryId)
-})
+const allEntryDetails = computed(() => entryFormStore.getEntryById(entryId))
 </script>
 
 <style scoped>
@@ -129,7 +120,5 @@ onMounted(() => {
   top: 35%;
   margin: auto auto;
   background: transparent;
-  //background-color: white;
-  //opacity: 0.32;
 }
 </style>

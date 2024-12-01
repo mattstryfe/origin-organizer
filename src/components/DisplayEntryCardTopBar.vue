@@ -1,13 +1,11 @@
 <template>
   <v-row no-gutters dense>
     <v-col>
-      <v-col>
-        <v-icon
-          size="small"
-          class="pb-2"
-          :icon="sex === 'male' ? 'mdi-gender-male' : 'mdi-gender-female'"
-        ></v-icon>
-      </v-col>
+      <v-icon
+        size="small"
+        class="mb-1"
+        :icon="sex === 'male' ? 'mdi-gender-male' : 'mdi-gender-female'"
+      ></v-icon>
     </v-col>
 
     <!-- actions -->
@@ -46,6 +44,8 @@
 
 <script setup>
 import router from '@/plugins/router'
+
+// Old way to do props. both work
 defineProps({
   entryId: {
     type: String,
