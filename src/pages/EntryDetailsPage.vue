@@ -14,17 +14,6 @@
   </v-row>
 
   <v-row  class="flex-wrap" :class="smAndDown ? 'justify-center' : ''">
-    <v-col v-if="!isDoneLoadingEntries">
-      <v-skeleton-loader
-        v-for="i in 1"
-        :key="i"
-        width="300"
-        height="400"
-        class="v-card ma-1 pa-1 border-sm"
-        type="card-avatar, article, actions"
-      ></v-skeleton-loader>
-    </v-col>
-
     <!-- displayEntryCard expects entry-id to be populated -->
     <display-entry-card
       v-if="isDoneLoadingEntries"
@@ -37,7 +26,7 @@
 import { computed, inject } from 'vue'
 import router from '@/plugins/router'
 import { useEntryFormStore } from '@/stores/entryFormStore'
-import DisplayEntryCard from '@/components/DisplayEntryCard.vue'
+import DisplayEntryCard from '@/components/Cards/DisplayEntryCard.vue'
 
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'

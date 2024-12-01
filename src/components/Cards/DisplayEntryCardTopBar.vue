@@ -11,7 +11,16 @@
     <!-- actions -->
     <v-col class="d-flex justify-end mb-1">
       <v-btn
-        icon="mdi-heart-outline"
+        @click="entryFormStore.foundationThisEntry(entryId, isFoundation)"
+        icon="mdi-wall"
+        size="medium"
+        variant="text"
+        :color="isFoundation ? 'yellow' : 'white'"
+        density="compact"
+      ></v-btn>
+      <v-btn
+        @click="entryFormStore.favoriteThisEntry(entryId, isFavorited)"
+        :icon="isFavorited ? 'mdi-heart' : 'mdi-heart-outline'"
         size="medium"
         variant="text"
         color="red-darken-3"
@@ -22,13 +31,15 @@
         size="medium"
         variant="text"
         density="compact"
+        disabled
       ></v-btn>
       <v-btn
-        icon="mdi-plus"
+        icon="mdi-graph-outline"
         size="medium"
         variant="text"
-        color="green-darken-3"
         density="compact"
+        color="orange-darken-3"
+        disabled
       ></v-btn>
       <v-btn
         @click="router.push({ name: 'EntryDetails', params: { id: entryId } })"
@@ -44,9 +55,10 @@
 
 <script setup>
 import router from '@/plugins/router'
+import { useEntryFormStore } from '@/stores/entryFormStore'
+const entryFormStore = useEntryFormStore()
 
-// Old way to do props. both work
-defineProps({
+const { entryId, sex, isFavorited, isFoundation } = defineProps({
   entryId: {
     type: String,
     default: 'xxx'
@@ -54,6 +66,14 @@ defineProps({
   sex: {
     type: String,
     default: 'xxx'
+  },
+  isFavorited: {
+    type: Boolean,
+    default: false
+  },
+  isFoundation: {
+    type: Boolean,
+    default: false
   }
 })
 </script>

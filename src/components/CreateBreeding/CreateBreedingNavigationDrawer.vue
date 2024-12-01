@@ -36,7 +36,7 @@
 import { inject, shallowRef, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useEntryFormStore } from '@/stores/entryFormStore'
-import CreateBreedingDisplayEntryCard from '@/components/CreateBreedingDisplayEntryCard.vue'
+import CreateBreedingDisplayEntryCard from '@/components/CreateBreeding/CreateBreedingDisplayEntryCard.vue'
 
 const entryFormStore = useEntryFormStore()
 const { showBottomSheet, selectionIds, entries } = storeToRefs(entryFormStore)

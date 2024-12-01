@@ -23,6 +23,8 @@
     <display-entry-card-top-bar
       :entry-id="entryId"
       :sex="allEntryDetails.sex"
+      :is-favorited="allEntryDetails.isFavorited"
+      :is-foundation="allEntryDetails.isFoundation"
     ></display-entry-card-top-bar>
 
     <!-- background image -->
@@ -78,7 +80,7 @@
 <script setup>
 import { computed, inject } from 'vue'
 import { useEntryFormStore } from '@/stores/entryFormStore'
-import DisplayEntryCardTopBar from '@/components/DisplayEntryCardTopBar.vue'
+import DisplayEntryCardTopBar from '@/components/Cards/DisplayEntryCardTopBar.vue'
 import { storeToRefs } from 'pinia'
 const smAndDown = inject('smAndDown')
 

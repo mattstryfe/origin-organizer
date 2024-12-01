@@ -40,12 +40,12 @@
 </template>
 
 <script setup>
-import DisplayEntryCard from '@/components/DisplayEntryCard.vue'
+import DisplayEntryCard from '@/components/Cards/DisplayEntryCard.vue'
 import { storeToRefs } from 'pinia'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 import { inject, nextTick, onMounted, ref, watch } from 'vue'
 import { onLongPress } from '@vueuse/core'
-import CreateBreedingNavigationDrawer from '@/components/CreateBreedingNavigationDrawer.vue'
+import CreateBreedingNavigationDrawer from '@/components/CreateBreeding/CreateBreedingNavigationDrawer.vue'
 import FlockManagerFilters from '@/components/FlockManagerFilters.vue'
 
 const smAndDown = inject('smAndDown')
