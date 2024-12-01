@@ -2,14 +2,13 @@ import { defineStore } from 'pinia'
 import { useUserStore } from '@/stores/userStore'
 import { collection, doc, getDocs, addDoc } from 'firebase/firestore'
 import db from '@/plugins/firebase'
-import { reactive } from 'vue'
 
 export const useEntryFormStore = defineStore('entryFormStore', {
   state: () => ({
     formData: {},
     entries: [],
     selectionIds: new Map(), // Putting selections here because it might be used for multiple features (breeding, comparison, etc)
-    isLoadingEntries: false,
+    isDoneLoadingEntries: null,
     showBottomSheet: false,
   }),
   getters: {
@@ -20,7 +19,7 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       return this.entries.find(entry => entry.id === entryId)
     },
     async getExistingEntries() {
-      this.isLoadingEntries = true
+      this.isDoneLoadingEntries = false
       const userStore = useUserStore()
 
       // prevents firing before logged in
@@ -34,7 +33,7 @@ export const useEntryFormStore = defineStore('entryFormStore', {
 
       // map over entries
       this.entries = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
-      this.isLoadingEntries = false
+      this.isDoneLoadingEntries = true
     },
     async saveEntryToDb() {
       const userStore = useUserStore()
@@ -48,7 +47,7 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       await addDoc(entriesCollectionRef, this.formData);
       // }
 
-      // Now also requery to resync everything
+      // Now also re-query to re-sync everything
       await this.getExistingEntries()
     },
     updateField(field, value) {

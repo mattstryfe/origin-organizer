@@ -1,7 +1,11 @@
 <template>
   <v-row no-gutters dense>
     <v-col>
-      <v-icon size="small" class="pb-2">mdi-gender-male</v-icon>
+      <v-icon
+        size="small"
+        class="mb-1"
+        :icon="sex === 'male' ? 'mdi-gender-male' : 'mdi-gender-female'"
+      ></v-icon>
     </v-col>
 
     <!-- actions -->
@@ -27,22 +31,27 @@
         density="compact"
       ></v-btn>
       <v-btn
+        @click="router.push({ name: 'EntryDetails', params: { id: entryId } })"
         icon="mdi-information-outline"
         size="medium"
         variant="text"
         color="blue-darken-3"
         density="compact"
-        @click="router.push({ name: 'EntryDetails', params: { id: entryId } })"
-      >
-      </v-btn>
+      ></v-btn>
     </v-col>
   </v-row>
 </template>
 
 <script setup>
 import router from '@/plugins/router'
+
+// Old way to do props. both work
 defineProps({
   entryId: {
+    type: String,
+    default: 'xxx'
+  },
+  sex: {
     type: String,
     default: 'xxx'
   }

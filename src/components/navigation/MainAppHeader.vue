@@ -2,10 +2,10 @@
   <v-app-bar :elevation="2" rounded title="Origin Organizer" class="cust-o" density="compact">
     <template #prepend>
       <v-btn
+        @click="router.push({ name: 'LandingPage' })"
         icon="mdi-orbit"
         color="primary"
         class="mr-2 hover-spin-continuous"
-        @click="$router.push({ name: 'landingPage' })"
       ></v-btn>
       <v-divider vertical></v-divider>
     </template>
@@ -15,11 +15,11 @@
         <v-icon
           v-for="w in routerLinksSchema"
           :key="w.name"
+          @click="router.push({ name: w.routeName })"
           :name="w.name"
           class="pa-1 ma-1 v-icon--size-x-small"
           :color="w.color"
           :disabled="!w.routeName"
-          @click="router.push({ name: w.routeName })"
         >
           {{ w.icon }}
         </v-icon>

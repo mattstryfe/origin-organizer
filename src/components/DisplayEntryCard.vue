@@ -22,6 +22,7 @@
     <!-- top bar -->
     <display-entry-card-top-bar
       :entry-id="entryId"
+      :sex="allEntryDetails.sex"
     ></display-entry-card-top-bar>
 
     <!-- background image -->
@@ -43,16 +44,18 @@
     <v-divider class="my-2"></v-divider>
 
     <!-- Breed area -->
-    <v-row v-if="allEntryDetails?.breed?.length > 1" no-gutters>
+    <v-row v-if="allEntryDetails?.breed" no-gutters>
       <v-col cols="5" class="text-right pr-2">
         {{ allEntryDetails.breed[0] }}
       </v-col>
-      <v-col>
-        <v-icon size="xx-large">mdi-compare-horizontal</v-icon>
-      </v-col>
-      <v-col cols="5" class="text-left">
-        {{ allEntryDetails.breed[1] }}
-      </v-col>
+      <template v-if="allEntryDetails?.breed?.length > 1">
+        <v-col>
+          <v-icon size="xx-large">mdi-compare-horizontal</v-icon>
+        </v-col>
+        <v-col cols="5" class="text-left">
+          {{ allEntryDetails.breed[1] }}
+        </v-col>
+      </template>
     </v-row>
     <v-card-subtitle>Name: {{ allEntryDetails.name }}</v-card-subtitle>
     <v-card-subtitle>Age: {{ allEntryDetails.DoB }}</v-card-subtitle>
@@ -73,12 +76,13 @@
 </template>
 
 <script setup>
-import { computed, inject, onMounted, ref } from 'vue'
+import { computed, inject } from 'vue'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 import DisplayEntryCardTopBar from '@/components/DisplayEntryCardTopBar.vue'
 import { storeToRefs } from 'pinia'
 const smAndDown = inject('smAndDown')
 
+// New way to do props. both work
 const { entryId, allowCardDeselection } = defineProps({
   entryId: {
     type: String,
@@ -91,9 +95,7 @@ const { entryId, allowCardDeselection } = defineProps({
 })
 
 const entryFormStore = useEntryFormStore()
-const { getEntryById } = entryFormStore
 const { selectionIds } = storeToRefs(entryFormStore)
-const allEntryDetails = ref([])
 
 const showOverlay = computed(() => {
   if (selectionIds.value.length === 0) return false
@@ -107,11 +109,7 @@ const deselectThisCard = (id) => {
   }
 }
 
-// Once mounted, do query for card details...
-onMounted(() => {
-  // Use entryID prop to lookup entries in pinia store
-  allEntryDetails.value = getEntryById(entryId)
-})
+const allEntryDetails = computed(() => entryFormStore.getEntryById(entryId))
 </script>
 
 <style scoped>
@@ -122,7 +120,5 @@ onMounted(() => {
   top: 35%;
   margin: auto auto;
   background: transparent;
-  //background-color: white;
-  //opacity: 0.32;
 }
 </style>
