@@ -37,7 +37,7 @@
 import { computed, inject } from 'vue'
 import router from '@/plugins/router'
 import { useEntryFormStore } from '@/stores/entryFormStore'
-import DisplayEntryCard from '@/components/DisplayEntryCard.vue'
+import DisplayEntryCard from '@/components/Cards/DisplayEntryCard.vue'
 
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'

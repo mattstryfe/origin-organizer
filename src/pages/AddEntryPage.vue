@@ -71,16 +71,16 @@
 <script setup>
 import { storeToRefs } from 'pinia'
 import { useEntryFormStore } from '@/stores/entryFormStore'
-import AddEntryFormControls from '@/components/AddEntryFormControls.vue'
-import DisplayEntryCard from '@/components/DisplayEntryCard.vue'
-import AddEntryPhasePicker from '@/components/AddEntryPhasePicker.vue'
-import AddEntryFormDetails from '@/components/AddEntryFormDetails.vue'
+import AddEntryFormControls from '@/components/AddEntry/FormControls.vue'
+import DisplayEntryCard from '@/components/Cards/DisplayEntryCard.vue'
+import AddEntryPhasePicker from '@/components/AddEntry/PickerPhase.vue'
+import AddEntryFormDetails from '@/components/AddEntry/FormDetails.vue'
 import { onMounted } from 'vue'
-import AddEntrySpeciesPicker from '@/components/AddEntrySpeciesPicker.vue'
-import AddEntrySexPicker from '@/components/AddEntrySexPicker.vue'
-import AddEntryBreedPicker from '@/components/AddEntryBreedPicker.vue'
-import AddEntryCharacteristicsPicker from '@/components/AddEntryCharacteristicsPicker.vue'
-import AddEntryProgressTracker from '@/components/AddEntryProgressTracker.vue'
+import AddEntrySpeciesPicker from '@/components/AddEntry/PickerSpecies.vue'
+import AddEntrySexPicker from '@/components/AddEntry/PickerSex.vue'
+import AddEntryBreedPicker from '@/components/AddEntry/PickerBreed.vue'
+import AddEntryCharacteristicsPicker from '@/components/AddEntry/PickerCharacteristics.vue'
+import AddEntryProgressTracker from '@/components/AddEntry/ProgressTracker.vue'
 const entryFormStore = useEntryFormStore()
 const { formData, entries } = storeToRefs(entryFormStore)
 
