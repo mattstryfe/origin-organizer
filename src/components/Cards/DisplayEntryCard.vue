@@ -23,6 +23,7 @@
     <display-entry-card-top-bar
       :entry-id="entryId"
       :sex="allEntryDetails.sex"
+      :is-favorited="allEntryDetails.isFavorited"
     ></display-entry-card-top-bar>
 
     <!-- background image -->
