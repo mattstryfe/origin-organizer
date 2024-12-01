@@ -24,6 +24,7 @@
       :entry-id="entryId"
       :sex="allEntryDetails.sex"
       :is-favorited="allEntryDetails.isFavorited"
+      :is-foundation="allEntryDetails.isFoundation"
     ></display-entry-card-top-bar>
 
     <!-- background image -->

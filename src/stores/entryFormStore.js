@@ -15,6 +15,21 @@ export const useEntryFormStore = defineStore('entryFormStore', {
     disableBottomSheetButton: (state) => state.selectionIds.size !== 2
   },
   actions: {
+    async foundationThisEntry(entryId, isFoundation) {
+      const userStore = useUserStore()
+      const flockId = userStore.getUserUid
+
+      // Create reference to the nested document
+      const entryRef = doc(db, 'flocks', flockId, 'entries', entryId)
+
+      await updateDoc(entryRef, {
+        isFoundation: !isFoundation,
+        updatedAt: new Date()
+      })
+
+      // Now also re-query to re-sync everything
+      await this.getExistingEntries()
+    },
     async favoriteThisEntry(entryId, isFavorite) {
       const userStore = useUserStore()
       const flockId = userStore.getUserUid
