@@ -1,15 +1,14 @@
 <template>
-  <v-row no-gutters dense>
-    <v-col>
+  <v-row class="flex-grow-0 pb-1">
+    <v-col class="d-flex justify-start align-start">
       <v-icon
         size="small"
-        class="mb-1"
         :icon="sex === 'male' ? 'mdi-gender-male' : 'mdi-gender-female'"
       ></v-icon>
     </v-col>
 
     <!-- actions -->
-    <v-col class="d-flex justify-end mb-1">
+    <v-col class="d-flex justify-end align-start">
       <v-btn
         @click="entryFormStore.foundationThisEntry(entryId, isFoundation)"
         icon="mdi-wall"

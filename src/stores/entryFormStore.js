@@ -1,6 +1,13 @@
 import { defineStore } from 'pinia'
 import { useUserStore } from '@/stores/userStore'
-import { collection, doc, getDocs, addDoc, updateDoc } from 'firebase/firestore'
+import {
+  collection,
+  doc,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc
+} from 'firebase/firestore'
 import db from '@/plugins/firebase'
 
 export const useEntryFormStore = defineStore('entryFormStore', {
@@ -15,6 +22,18 @@ export const useEntryFormStore = defineStore('entryFormStore', {
     disableBottomSheetButton: (state) => state.selectionIds.size !== 2
   },
   actions: {
+    async removeThisEntry(entryId) {
+      const userStore = useUserStore()
+      const flockId = userStore.getUserUid
+
+      // Create reference to the nested document
+      const entryRef = doc(db, 'flocks', flockId, 'entries', entryId)
+
+      await deleteDoc(entryRef)
+
+      // Now also re-query to re-sync everything
+      await this.getExistingEntries()
+    },
     async foundationThisEntry(entryId, isFoundation) {
       const userStore = useUserStore()
       const flockId = userStore.getUserUid
