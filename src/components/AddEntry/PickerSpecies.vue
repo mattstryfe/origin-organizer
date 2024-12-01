@@ -10,7 +10,7 @@
       class="border mr-2 mb-2"
       :value="opt.species"
     >
-      <v-icon :size="opt.iconSize" >
+      <v-icon :size="opt.iconSize">
         <component :is="opt.component"></component>
       </v-icon>
     </v-btn>
@@ -25,6 +25,4 @@ const entryFormStore = useEntryFormStore()
 const { formData } = storeToRefs(entryFormStore)
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

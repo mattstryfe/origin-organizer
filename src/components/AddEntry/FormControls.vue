@@ -1,7 +1,12 @@
 <template>
   <v-row no-gutters class="px-4 mt-2 justify-end">
-    <v-btn variant="outlined" color="success" @click="entryFormStore.saveEntryToDb()">Save</v-btn>
-
+    <v-btn
+      @click="entryFormStore.saveEntryToDb()"
+      variant="outlined"
+      color="success"
+    >
+      Save
+    </v-btn>
   </v-row>
 </template>
 
@@ -9,9 +14,6 @@
 import { useEntryFormStore } from '@/stores/entryFormStore'
 
 const entryFormStore = useEntryFormStore()
-
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

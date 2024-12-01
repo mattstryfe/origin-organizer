@@ -13,7 +13,7 @@
     </v-col>
   </v-row>
 
-  <v-row  class="flex-wrap" :class="smAndDown ? 'justify-center' : ''">
+  <v-row class="flex-wrap" :class="smAndDown ? 'justify-center' : ''">
     <!-- displayEntryCard expects entry-id to be populated -->
     <display-entry-card
       v-if="isDoneLoadingEntries"

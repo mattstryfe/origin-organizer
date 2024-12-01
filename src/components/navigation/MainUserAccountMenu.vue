@@ -7,9 +7,9 @@
     <template #activator="{ props }">
       <v-chip
         v-if="!userStore.userInfo"
+        @click="userStore.handleLogin()"
         variant="outlined"
         color="primary"
-        @click="userStore.handleLogin()"
       >
         <v-icon start>mdi-account-outline</v-icon>
         Sign in
@@ -29,12 +29,12 @@
         >
           <template #append>
             <v-btn
+              @click="userStore.handleLogout()"
               size="small"
               variant="tonal"
               color="error"
               icon="mdi-logout"
               class="ml-2"
-              @click="userStore.handleLogout()"
             ></v-btn>
           </template>
         </v-list-item>
@@ -47,8 +47,8 @@
       <v-card-actions>
         <v-spacer></v-spacer>
 
-        <v-btn variant="tonal" @click="accountMenu = false"> Cancel </v-btn>
-        <v-btn color="primary" variant="tonal" @click="accountMenu = false">
+        <v-btn @click="accountMenu = false" variant="tonal">Cancel</v-btn>
+        <v-btn @click="accountMenu = false" color="primary" variant="tonal">
           Save
         </v-btn>
       </v-card-actions>

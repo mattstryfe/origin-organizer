@@ -30,9 +30,6 @@
 import { ref } from 'vue'
 
 const filter = ref([])
-
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

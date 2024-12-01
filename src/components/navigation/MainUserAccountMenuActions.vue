@@ -46,8 +46,8 @@
     <v-list-item
       v-for="(item, i) in dangerZoneEntries"
       :key="i"
-      :value="item"
       @click="item.action"
+      :value="item"
     >
       <template #prepend>
         <v-icon
@@ -56,9 +56,9 @@
           :loading="true"
         ></v-icon>
       </template>
-      <v-list-item-title class="text-capitalize v-label">{{
-        item.name
-      }}</v-list-item-title>
+      <v-list-item-title class="text-capitalize v-label">
+        {{ item.name }}
+      </v-list-item-title>
     </v-list-item>
   </v-list>
 </template>

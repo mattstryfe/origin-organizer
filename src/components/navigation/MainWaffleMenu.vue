@@ -6,8 +6,7 @@
         v-bind="props"
         class="cursor-pointer mr-1"
         color="green-darken-3"
-      >
-      </v-btn>
+      ></v-btn>
     </template>
 
     <v-card>
@@ -31,11 +30,11 @@
             <v-hover>
               <template #default="{ isHovering, props }">
                 <v-card
+                  @click="router.push({ name: w.routeName })"
                   :variant="isHovering ? 'tonal' : 'flat'"
                   v-bind="props"
                   class="pa-2"
                   link
-                  @click="router.push({ name: w.routeName })"
                 >
                   <v-icon
                     size="2em"
@@ -67,7 +66,6 @@ const userStore = useUserStore()
 const { userIsAuthenticated } = storeToRefs(userStore)
 
 const waffleMenu = ref()
-
 </script>
 
 <style scoped>
