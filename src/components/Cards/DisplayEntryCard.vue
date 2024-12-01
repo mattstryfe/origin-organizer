@@ -32,7 +32,7 @@
       :height="smAndDown ? 100 : 150"
       src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
       cover
-      class="text-black align-end"
+      class="text-black align-end mb-1"
     >
       <v-rating
         density="compact"
@@ -44,24 +44,30 @@
     </v-img>
 
     <!-- Breed area -->
-    <v-row v-if="allEntryDetails?.breed" no-gutters dense>
-      <v-col cols="5" class="text-right pr-2">
-        {{ allEntryDetails.breed[0] }}
-      </v-col>
-      <template v-if="allEntryDetails?.breed?.length > 1">
-        <v-col>
-          <v-icon size="large">mdi-compare-horizontal</v-icon>
-        </v-col>
-        <v-col cols="5" class="text-left">
-          {{ allEntryDetails.breed[1] }}
-        </v-col>
-      </template>
+    <v-row no-gutters dense class="my-1">
+      <v-chip
+        v-for="breed in allEntryDetails.breed"
+        :key="breed"
+        class="mx-1"
+        variant="tonal"
+        label
+        size="small"
+        density="compact"
+      >
+        <span class="text-caption text-grey">{{ breed }}</span>
+      </v-chip>
     </v-row>
 
     <v-row dense no-gutters>
-      <v-col>
-        <v-card-subtitle>Name: {{ allEntryDetails.name }}</v-card-subtitle>
-        <v-card-subtitle>Age: {{ allEntryDetails.DoB }}</v-card-subtitle>
+      <v-col class="pl-1">
+        <p class="text-subtitle-2 text-blue-grey">
+          Name:
+          <span class="text-white">{{ allEntryDetails.name }}</span>
+        </p>
+        <p class="text-subtitle-2 text-blue-grey">
+          Age:
+          <span class="text-white">{{ allEntryDetails.DoB }}</span>
+        </p>
       </v-col>
     </v-row>
 
