@@ -5,6 +5,7 @@
       v-for="(field, index) in schemaToUse"
       :key="index"
       v-model="formData[field.model]"
+      @click:append-inner="genericAppendAction(field)"
       :items="field.items"
       :label="field.label"
       persistent-placeholder
@@ -15,13 +16,11 @@
       :class="field.class || 'v-col-12'"
       :placeholder="field.placeholder"
       :append-inner-icon="field.appendIcon"
-      @click:append-inner="genericAppendAction(field)"
-    >
-    </component>
+    ></component>
   </v-row>
 
   <!-- special/ complex components -->
-<!--  <v-card-title>Characteristics</v-card-title>
+  <!--  <v-card-title>Characteristics</v-card-title>
   <v-chip-group
     v-model="formData['characteristics']"
     column

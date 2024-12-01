@@ -6,7 +6,7 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import { aliases, mdi } from 'vuetify/iconsets/mdi'
 
-export const vuetify= createVuetify({
+export const vuetify = createVuetify({
   directives,
   components,
   theme: {
@@ -16,7 +16,7 @@ export const vuetify= createVuetify({
     defaultSet: 'mdi',
     aliases,
     sets: {
-      mdi,
-    },
-  },
+      mdi
+    }
+  }
 })

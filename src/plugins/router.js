@@ -13,8 +13,12 @@ const routes = [
   },
   { name: 'AddEntry', path: '/addentry', component: AddEntryPage },
   { name: 'FlockManager', path: '/flockmanager', component: FlockManagerPage },
-  { name: 'EntryDetails', path: '/entrydetails/:id', component: EntryDetailsPage, props: true }
-
+  {
+    name: 'EntryDetails',
+    path: '/entrydetails/:id',
+    component: EntryDetailsPage,
+    props: true
+  }
 ]
 // 3. Create the router instance and pass the `routes` option
 // You can pass in additional options here, but let's
@@ -22,7 +26,7 @@ const routes = [
 const router = createRouter({
   // 4. Provide the history implementation to use. We are using the hash history for simplicity here.
   history: createWebHistory(),
-  routes, // short for `routes: routes`
+  routes // short for `routes: routes`
 })
 
 router.beforeEach(async (to) => {

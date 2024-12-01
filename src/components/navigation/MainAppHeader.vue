@@ -1,5 +1,11 @@
 <template>
-  <v-app-bar :elevation="2" rounded title="Origin Organizer" class="cust-o" density="compact">
+  <v-app-bar
+    :elevation="2"
+    rounded
+    title="Origin Organizer"
+    class="cust-o"
+    density="compact"
+  >
     <template #prepend>
       <v-btn
         @click="router.push({ name: 'LandingPage' })"

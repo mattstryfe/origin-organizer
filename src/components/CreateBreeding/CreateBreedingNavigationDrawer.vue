@@ -13,7 +13,9 @@
     >
       <template v-for="(selectionId, ind) in selectionIds" :key="ind">
         <v-col cols="3" lg="2">
-          <create-breeding-display-entry-card :entry-id="selectionId[0]"></create-breeding-display-entry-card>
+          <create-breeding-display-entry-card
+            :entry-id="selectionId[0]"
+          ></create-breeding-display-entry-card>
         </v-col>
         <v-btn
           v-if="ind === 0"

@@ -7,11 +7,7 @@ import './assets/css/style.css'
 import { vuetify } from '@/plugins/vuetify'
 import { useUserStore } from '@/stores/userStore'
 
-createApp(App)
-  .use(pinia)
-  .use(router)
-  .use(vuetify)
-  .mount('#app')
+createApp(App).use(pinia).use(router).use(vuetify).mount('#app')
 
 if (import.meta.env.MODE === 'development') {
   const userStore = useUserStore()

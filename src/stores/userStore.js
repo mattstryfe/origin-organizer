@@ -1,5 +1,11 @@
 import { defineStore } from 'pinia'
-import { getAuth, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth'
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut
+} from 'firebase/auth'
 import { doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore'
 import db from '@/plugins/firebase'
 import { useEntryFormStore } from '@/stores/entryFormStore'
@@ -9,16 +15,24 @@ export const useUserStore = defineStore('userStore', {
     userIsAuthenticated: false,
     accountMenu: false,
     userInfo: null,
-    hasProfileBeenRepaired: {},  // empty but truthy.  Important for loader to have 3 states
-    userInfoKeysToTrack: ['displayName', 'photoURL', 'email', 'enableAutoSave', 'enableDarkMode']
+    hasProfileBeenRepaired: {}, // empty but truthy.  Important for loader to have 3 states
+    userInfoKeysToTrack: [
+      'displayName',
+      'photoURL',
+      'email',
+      'enableAutoSave',
+      'enableDarkMode'
+    ]
   }),
 
   getters: {
     // ?. is used to prevent logout from throwing console errors for now.
     getUserDisplayName: (state) => state.userInfo?.displayName,
-    getUserPhotoURL: (state) => state.userInfo?.photoURL || 'https://randomuser.me/api/portraits/lego/1.jpg',
+    getUserPhotoURL: (state) =>
+      state.userInfo?.photoURL ||
+      'https://randomuser.me/api/portraits/lego/1.jpg',
     getUserUid: (state) => state.userInfo?.uid,
-    getUserEmail: (state) => state.userInfo?.email,
+    getUserEmail: (state) => state.userInfo?.email
   },
 
   actions: {
@@ -26,9 +40,11 @@ export const useUserStore = defineStore('userStore', {
       this.hasProfileBeenRepaired = false
       // the idea here is to gracefully fix/update keys and objects as they change.
       const userDoc = await getDoc(doc(db, 'users', this.userInfo.uid))
-      const hasAllKeys = this.userInfoKeysToTrack.every(key => key in userDoc.data())
+      const hasAllKeys = this.userInfoKeysToTrack.every(
+        (key) => key in userDoc.data()
+      )
       // Fake promise
-      await new Promise(resolve => setTimeout(resolve, 3000));
+      await new Promise((resolve) => setTimeout(resolve, 3000))
       this.hasProfileBeenRepaired = true
     },
     async nukeUserAccount() {
@@ -52,17 +68,19 @@ export const useUserStore = defineStore('userStore', {
       let userDoc, authResponse
 
       if (useTestAccount) {
-        const testEmail = import.meta.env.VITE_TEST_USER_EMAIL;
-        const testPassword = import.meta.env.VITE_TEST_USER_PASSWORD;
-        authResponse = await signInWithEmailAndPassword(auth, testEmail, testPassword)
-      }
-      else {
+        const testEmail = import.meta.env.VITE_TEST_USER_EMAIL
+        const testPassword = import.meta.env.VITE_TEST_USER_PASSWORD
+        authResponse = await signInWithEmailAndPassword(
+          auth,
+          testEmail,
+          testPassword
+        )
+      } else {
         const provider = new GoogleAuthProvider()
         //initialize firebase auth
         authResponse = await signInWithPopup(auth, provider)
         // Pull this outside scope to use as SoT
       }
-
 
       try {
         userDoc = await getDoc(doc(db, 'users', authResponse.user.uid))
@@ -89,8 +107,7 @@ export const useUserStore = defineStore('userStore', {
 
         // Also init entry query
         await useEntryFormStore().getExistingEntries()
-      }
-      catch (e) {
+      } catch (e) {
         console.log('no worky', e)
       }
     }

@@ -2,7 +2,7 @@
   <v-btn-toggle
     v-model="formData['phase']"
     color="green-darken-3"
-    class="fill-height flex-column "
+    class="fill-height flex-column"
   >
     <v-btn
       v-for="(opt, index) in schemaPhaseOptions"
@@ -32,9 +32,6 @@ import { useEntryFormStore } from '@/stores/entryFormStore'
 
 const entryFormStore = useEntryFormStore()
 const { formData } = storeToRefs(entryFormStore)
-
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
