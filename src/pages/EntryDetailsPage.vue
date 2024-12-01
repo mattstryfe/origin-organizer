@@ -1,5 +1,5 @@
 <template>
-  <v-row no-gutters>
+  <v-row class="flex-wrap" :class="smAndDown ? 'justify-center' : ''">
     <v-col cols="12" class="mb-1">
       <v-btn
         @click="router.push({ name: 'FlockManager' })"
@@ -13,7 +13,7 @@
     </v-col>
   </v-row>
 
-  <v-row>
+  <v-row  class="flex-wrap" :class="smAndDown ? 'justify-center' : ''">
     <v-col v-if="!isDoneLoadingEntries">
       <v-skeleton-loader
         v-for="i in 1"
@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
 import router from '@/plugins/router'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 import DisplayEntryCard from '@/components/DisplayEntryCard.vue'
@@ -42,6 +42,7 @@ import DisplayEntryCard from '@/components/DisplayEntryCard.vue'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 
+const smAndDown = inject('smAndDown')
 const entryFormStore = useEntryFormStore()
 const { isDoneLoadingEntries } = storeToRefs(entryFormStore)
 
