@@ -19,27 +19,33 @@
       </v-icon>
     </v-sheet>
 
-    <!-- top bar -->
-    <display-entry-card-top-bar
-      :entry-id="entryId"
-      :sex="allEntryDetails.sex"
-      :is-favorited="allEntryDetails.isFavorited"
-      :is-foundation="allEntryDetails.isFoundation"
-    ></display-entry-card-top-bar>
+
 
     <!-- background image -->
     <v-img
       :height="smAndDown ? 100 : 150"
       src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
       cover
-      class="text-black align-end mb-1"
+      class="text-black mb-1 d-flex"
     >
+      <!-- top bar -->
+      <display-entry-card-top-bar
+        class="justify-start bg-grey-darken-4 opacity-60 mt-2 border-b-sm"
+        :entry-id="entryId"
+        :sex="allEntryDetails.sex"
+        :is-favorited="allEntryDetails.isFavorited"
+        :is-foundation="allEntryDetails.isFoundation"
+      ></display-entry-card-top-bar>
+
+      <v-spacer :class="smAndDown ? 'cust-spacer-60' : 'cust-spacer-120'"></v-spacer>
+
       <v-rating
         density="compact"
         size="small"
         readonly
         :model-value="3"
         color="amber"
+        class="align-self-end justify-end"
       ></v-rating>
     </v-img>
 
@@ -143,6 +149,12 @@ const allEntryDetails = computed(() => entryFormStore.getEntryById(entryId))
 </script>
 
 <style scoped>
+.cust-spacer-60 {
+  height: 60px;
+}
+.cust-spacer-120 {
+  height: 120px;
+}
 .cust-overlay {
   z-index: 2400;
   position: absolute;
