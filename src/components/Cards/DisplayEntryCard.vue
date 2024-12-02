@@ -19,8 +19,6 @@
       </v-icon>
     </v-sheet>
 
-
-
     <!-- background image -->
     <v-img
       :height="smAndDown ? 100 : 150"
@@ -30,14 +28,16 @@
     >
       <!-- top bar -->
       <display-entry-card-top-bar
-        class="justify-start bg-grey-darken-4 opacity-60 mt-2 border-b-sm"
+        class="bg-grey-darken-4 opacity-60 mt-0 border-b-sm"
         :entry-id="entryId"
         :sex="allEntryDetails.sex"
         :is-favorited="allEntryDetails.isFavorited"
         :is-foundation="allEntryDetails.isFoundation"
       ></display-entry-card-top-bar>
 
-      <v-spacer :class="smAndDown ? 'cust-spacer-60' : 'cust-spacer-120'"></v-spacer>
+      <v-spacer
+        :class="smAndDown ? 'cust-spacer-60' : 'cust-spacer-120'"
+      ></v-spacer>
 
       <v-rating
         density="compact"
@@ -93,11 +93,9 @@
       </v-col>
     </v-row>
 
-    <v-spacer class=""></v-spacer>
-
     <!-- bottom Controls -->
-    <v-row dense no-gutters class=" ">
-      <v-col class="d-flex justify-end">
+    <v-row dense no-gutters>
+      <v-col class="d-flex justify-end py-0">
         <v-btn
           @click="entryFormStore.removeThisEntry(entryId)"
           icon="mdi-delete-outline"

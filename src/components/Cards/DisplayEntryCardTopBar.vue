@@ -1,5 +1,5 @@
 <template>
-  <v-row class="flex-grow-0 cust-height ">
+  <v-row class="flex-grow-0 cust-height">
     <v-col class="d-flex py-0">
       <v-icon
         size="small"
