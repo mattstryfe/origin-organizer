@@ -49,13 +49,17 @@ export const baseSchema = [
   }
 ]
 export const schemaChickenBreedOptions = [
-  'Rhode Island Red',
-  'Leghorn',
+  'Marans - Black Copper',
+  'Marans - Black Silver',
+  'Marans - Blue Silver',
+  'Olive Egger',
+  'Cream Legbar',
+  'Bielefelder',
   'Plymouth Rock (Barred Rock)',
-  'Sussex',
-  'Orpington',
-  'Wyandotte',
-  'Australorp',
+  'Ameraucana - Lavender',
+  'Turken',
+  'Ayam Cemani',
+  'Ameraucana - Chocolate',
   'Easter Egger',
   'Silkie',
   'Cochin',
