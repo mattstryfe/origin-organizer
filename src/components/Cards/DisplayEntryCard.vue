@@ -1,46 +1,24 @@
 <template>
-  <v-card
-    :width="smAndDown ? 210 : 300"
-    :height="smAndDown ? 300 : 400"
-    class="border-sm ma-1 pa-1 d-flex flex-column"
+  <v-card :width="smAndDown ? 210 : 300" :height="smAndDown ? 300 : 400" class="border-sm ma-1 pa-1 d-flex flex-column"
     :class="{
       'opacity-80': showOverlay
-    }"
-  >
+    }">
     <v-sheet v-if="showOverlay" height="100" width="100" class="cust-overlay">
-      <v-icon
-        @click="deselectThisCard(entryId)"
-        size="100"
-        color="blue-darken-2"
-        class="ma-0 pa-0"
-        :disabled="!allowCardDeselection"
-      >
+      <v-icon @click="deselectThisCard(entryId)" size="100" color="blue-darken-2" class="ma-0 pa-0"
+        :disabled="!allowCardDeselection">
         mdi-trash-can
       </v-icon>
     </v-sheet>
 
     <!-- top bar -->
-    <display-entry-card-top-bar
-      :entry-id="entryId"
-      :sex="allEntryDetails.sex"
+    <display-entry-card-top-bar :entry-id="entryId" :sex="allEntryDetails.sex"
       :is-favorited="allEntryDetails.isFavorited"
-      :is-foundation="allEntryDetails.isFoundation"
-    ></display-entry-card-top-bar>
+      :is-foundation="allEntryDetails.isFoundation"></display-entry-card-top-bar>
 
     <!-- background image -->
-    <v-img
-      :height="smAndDown ? 100 : 150"
-      src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-      cover
-      class="text-black align-end"
-    >
-      <v-rating
-        density="compact"
-        size="small"
-        readonly
-        :model-value="3"
-        color="amber"
-      ></v-rating>
+    <v-img :height="smAndDown ? 100 : 150" src="https://cdn.vuetifyjs.com/images/cards/docks.jpg" cover
+      class="text-black align-end">
+      <v-rating density="compact" size="small" readonly :model-value="3" color="amber"></v-rating>
     </v-img>
 
     <!-- Breed area -->
@@ -69,13 +47,8 @@
 
     <v-row dense no-gutters>
       <v-col class="overflow-y-auto" style="max-height: 60px">
-        <v-chip
-          v-for="c in allEntryDetails.characteristics"
-          :key="c"
-          class="mr-1 text-grey lighten-2 mb-1"
-          variant="outlined"
-          size="x-small"
-        >
+        <v-chip v-for="c in allEntryDetails.characteristics" :key="c" class="mr-1 text-grey lighten-2 mb-1"
+          variant="outlined" size="x-small">
           {{ c }}
         </v-chip>
       </v-col>
@@ -86,14 +59,8 @@
     <!-- bottom Controls -->
     <v-row dense no-gutters class=" ">
       <v-col class="d-flex justify-end">
-        <v-btn
-          @click="entryFormStore.removeThisEntry(entryId)"
-          icon="mdi-delete-outline"
-          size="medium"
-          variant="text"
-          density="compact"
-          color="blue-darken-2"
-        ></v-btn>
+        <v-btn @click="entryFormStore.removeThisEntry(entryId)" icon="mdi-delete-outline" size="medium" variant="text"
+          density="compact" color="blue-darken-2"></v-btn>
       </v-col>
     </v-row>
   </v-card>

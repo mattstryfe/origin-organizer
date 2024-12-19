@@ -1,12 +1,7 @@
 <template>
   <v-row class="flex-wrap" :class="smAndDown ? 'justify-center' : ''">
     <v-col cols="12" class="mb-1">
-      <v-btn
-        @click="router.push({ name: 'FlockManager' })"
-        variant="outlined"
-        color="info"
-        density="compact"
-      >
+      <v-btn @click="router.push({ name: 'FlockManager' })" variant="outlined" color="info" density="compact">
         <v-icon>mdi-arrow-left</v-icon>
         Flock Manager
       </v-btn>
@@ -14,11 +9,9 @@
   </v-row>
 
   <v-row class="flex-wrap" :class="smAndDown ? 'justify-center' : ''">
+   <!----Bird photo -->
     <!-- displayEntryCard expects entry-id to be populated -->
-    <display-entry-card
-      v-if="isDoneLoadingEntries"
-      :entry-id="entry.id"
-    ></display-entry-card>
+    <display-entry-card v-if="isDoneLoadingEntries" :entry-id="entry.id"></display-entry-card>
   </v-row>
 </template>
 
@@ -44,6 +37,7 @@ const route = useRoute()
 // be handled via mounted
 // the router finishes before the queries do.
 const entry = computed(() => entryFormStore.getEntryById(route.params.id))
+console.log('entry', entry.value.name)
 </script>
 
 <style scoped></style>
