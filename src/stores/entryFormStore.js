@@ -8,7 +8,8 @@ import {
   updateDoc,
   deleteDoc
 } from 'firebase/firestore'
-import { db } from '@/plugins/firebase'
+import { db, storage } from '@/plugins/firebase'
+import { ref, uploadBytes } from "firebase/storage";
 
 export const useEntryFormStore = defineStore('entryFormStore', {
   state: () => ({
@@ -16,7 +17,8 @@ export const useEntryFormStore = defineStore('entryFormStore', {
     entries: [],
     selectionIds: new Map(), // Putting selections here because it might be used for multiple features (breeding, comparison, etc)
     isDoneLoadingEntries: null,
-    showBottomSheet: false
+    showBottomSheet: false,
+    attachments: []
   }),
   getters: {
     disableBottomSheetButton: (state) => state.selectionIds.size !== 2
@@ -88,23 +90,42 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       }))
       this.isDoneLoadingEntries = true
     },
-    async saveEntryToDb() {
+    async saveEntryToDb(attachment) {
       const userStore = useUserStore()
 
       const flockId = userStore.getUserUid
-      // const entryName =
       const flockDocRef = await doc(db, 'flocks', flockId)
-      // await setDoc(flockDocRef)
       const entriesCollectionRef = collection(flockDocRef, 'entries')
-      // for (const entry of entriesData) {
-      await addDoc(entriesCollectionRef, this.formData)
-      // }
+      const { id: entryId } = await addDoc(entriesCollectionRef, this.formData)
+
+      console.log('entryId',entryId)
+      this.uploadImages(flockId, entryId)
+
+      // Now upload file
+      // const storageRef = ref(storage, `${flockId}/test.jpg`)
+      // // 'file' comes from the Blob or File API
+      // uploadBytes(storageRef, attachment).then((snapshot) => {
+      //   console.log('Uploaded a blob or file!');
+      // });
 
       // Now also re-query to re-sync everything
       await this.getExistingEntries()
     },
     updateField(field, value) {
       this.formData[field] = value
+    },
+    uploadImages(flockId, entryId) {
+      console.log('this attachments', this.attachments[0])
+      // const userStore = useUserStore()
+      //
+      // const flockId = userStore.getUserUid
+      const uniqueId = crypto.randomUUID()
+      // Now upload file
+      const storageRef = ref(storage, `${flockId}/${entryId}/${uniqueId}.jpg`)
+      // 'file' comes from the Blob or File API
+      uploadBytes(storageRef, this.attachments[0]).then((snapshot) => {
+        console.log('Uploaded a blob or file!');
+      });
     }
   }
 })
