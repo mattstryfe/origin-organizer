@@ -8,7 +8,7 @@ import {
   updateDoc,
   deleteDoc
 } from 'firebase/firestore'
-import db from '@/plugins/firebase'
+import { db } from '@/plugins/firebase'
 
 export const useEntryFormStore = defineStore('entryFormStore', {
   state: () => ({
