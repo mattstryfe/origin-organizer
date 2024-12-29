@@ -6,7 +6,7 @@
       class="d-flex align-center justify-center"
       style="min-height: 300px"
     >
-      <v-container fluid :class="{ 'px-1': smAndDown }">
+      <v-container fluid>
         <router-view></router-view>
       </v-container>
     </v-main>
@@ -21,11 +21,11 @@ import MainAppHeader from '@/components/navigation/MainAppHeader.vue'
 import { useDisplay } from 'vuetify'
 import { provide } from 'vue'
 // Destructure the specific breakpoint properties you want to provide
-const { mdAndUp, smAndDown } = useDisplay()
+const { mdAndUp, smAndUp } = useDisplay()
 
 // Provide these properties globally
 provide('mdAndUp', mdAndUp)
-provide('smAndDown', smAndDown)
+provide('smAndUp', smAndUp)
 </script>
 
 <style>

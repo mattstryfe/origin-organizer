@@ -1,7 +1,7 @@
 <template>
   <v-card
-    :width="smAndDown ? 210 : 300"
-    :height="smAndDown ? 300 : 400"
+    :width="smAndUp ? 300: 210"
+    :height="smAndUp ? 400: 300"
     class="border-sm ma-1 pa-1 d-flex flex-column"
     :class="{
       'opacity-80': showOverlay
@@ -21,22 +21,21 @@
 
     <!-- background image -->
     <v-img
-      :height="smAndDown ? 100 : 150"
+      :height="smAndUp ? 150 : 100"
       src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
       cover
       class="text-black mb-1 d-flex"
     >
       <!-- top bar -->
       <display-entry-card-top-bar
-        class="bg-grey-darken-4 opacity-60 mt-0 border-b-sm"
+        class="mt-0 border-b-md border-surface"
         :entry-id="entryId"
         :sex="allEntryDetails.sex"
         :is-favorited="allEntryDetails.isFavorited"
         :is-foundation="allEntryDetails.isFoundation"
       ></display-entry-card-top-bar>
-
       <v-spacer
-        :class="smAndDown ? 'cust-spacer-60' : 'cust-spacer-120'"
+        :class="smAndUp ? 'cust-spacer-120' : 'cust-spacer-60'"
       ></v-spacer>
 
       <v-rating
@@ -114,7 +113,7 @@ import { computed, inject } from 'vue'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 import DisplayEntryCardTopBar from '@/components/Cards/DisplayEntryCardTopBar.vue'
 import { storeToRefs } from 'pinia'
-const smAndDown = inject('smAndDown')
+const smAndUp = inject('smAndUp')
 
 // New way to do props. both work
 const { entryId, allowCardDeselection } = defineProps({
