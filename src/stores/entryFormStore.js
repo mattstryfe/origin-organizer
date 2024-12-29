@@ -90,23 +90,24 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       }))
       this.isDoneLoadingEntries = true
     },
-    async saveEntryToDb(attachment) {
+    async saveEntryToDb() {
       const userStore = useUserStore()
 
+      // check to see if attachments are being added
+      // We need to break this up and do this now in order to insert this value into the entriesCollection DB
+      // If we don't do this before & after we would have to make 2 queries.
+      if (this.attachments.length > 0) {
+        this.formData.photoIds = [crypto.randomUUID()]
+      }
       const flockId = userStore.getUserUid
       const flockDocRef = await doc(db, 'flocks', flockId)
       const entriesCollectionRef = collection(flockDocRef, 'entries')
       const { id: entryId } = await addDoc(entriesCollectionRef, this.formData)
 
-      console.log('entryId',entryId)
-      this.uploadImages(flockId, entryId)
-
       // Now upload file
-      // const storageRef = ref(storage, `${flockId}/test.jpg`)
-      // // 'file' comes from the Blob or File API
-      // uploadBytes(storageRef, attachment).then((snapshot) => {
-      //   console.log('Uploaded a blob or file!');
-      // });
+      if (this.attachments.length > 0) {
+        this.uploadImages(flockId, entryId, this.formData.photoIds[0])
+      }
 
       // Now also re-query to re-sync everything
       await this.getExistingEntries()
@@ -114,15 +115,11 @@ export const useEntryFormStore = defineStore('entryFormStore', {
     updateField(field, value) {
       this.formData[field] = value
     },
-    uploadImages(flockId, entryId) {
-      console.log('this attachments', this.attachments[0])
-      // const userStore = useUserStore()
-      //
-      // const flockId = userStore.getUserUid
-      const uniqueId = crypto.randomUUID()
+    uploadImages(flockId, entryId, uniqueId) {
       // Now upload file
       const storageRef = ref(storage, `${flockId}/${entryId}/${uniqueId}.jpg`)
-      // 'file' comes from the Blob or File API
+
+      // For now, only handle 1 gracefully...
       uploadBytes(storageRef, this.attachments[0]).then((snapshot) => {
         console.log('Uploaded a blob or file!');
       });
