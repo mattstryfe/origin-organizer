@@ -84,10 +84,27 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       )
 
       // map over entries
-      this.entries = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data()
-      }))
+      this.entries = querySnapshot.docs.map( async (doc) => {
+        const docData = doc.data();
+        const entryId = doc.id;
+        const imageId = docData?.photoIds[0] || ''
+
+        // Modify this logic to match your storage structure
+        const storageRef = ref(storage, `${flockId}/${entryId}/${imageId}.jpg`);
+        let url = '';
+        try {
+          url = await getDownloadURL(storageRef);
+          console.log('worked... ', url)
+        } catch (error) {
+          console.error('Error fetching image URL:', error);
+        }
+
+        return {
+          id: entryId,
+          ...docData,
+          imageUrl: url, // Add the image URL to the entry data
+        };
+      })
       console.log('this.entries', this.entries)
       this.isDoneLoadingEntries = true
     },
@@ -108,9 +125,7 @@ export const useEntryFormStore = defineStore('entryFormStore', {
 
       // Now upload file
       if (this.attachments.length > 0) {
-        const urls = await this.uploadImages(flockId, entryId, this.formData.photoIds[0])
-        // update doc with URLs here...
-        console.log('urls', urls)
+        await this.uploadImages(flockId, entryId, this.formData.photoIds[0])
       }
 
       // Now also re-query to re-sync everything
@@ -121,6 +136,7 @@ export const useEntryFormStore = defineStore('entryFormStore', {
     },
     async uploadImages(flockId, entryId, uniqueId) {
       // Now upload file
+      // TODO: Convert this to unpacking method to hydrate the apps cards
       const storageRef = ref(storage, `${flockId}/${entryId}/${uniqueId}.jpg`)
 
       // For now, only handle 1 gracefully...
