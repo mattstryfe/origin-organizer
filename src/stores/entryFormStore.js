@@ -9,7 +9,7 @@ import {
   deleteDoc
 } from 'firebase/firestore'
 import { db, storage } from '@/plugins/firebase'
-import { ref , uploadBytes, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
 export const useEntryFormStore = defineStore('entryFormStore', {
   state: () => ({
@@ -67,7 +67,11 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       await this.getExistingEntries()
     },
     getEntryById(entryId) {
-      return this.entries.find((entry) => entry.id === entryId)
+      // This was added to keep the
+      // const allEntryDetails = computed(() => entryFormStore.getEntryById(entryId))
+      // from throwing an error on render. there has to be a better way to do this and
+      // this was working fine until the nested docs.map() async/await in getExistingEntries()
+      return this.entries.find((entry) => entry.id === entryId) || {}
     },
     async getExistingEntries() {
       this.isDoneLoadingEntries = false
@@ -84,28 +88,32 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       )
 
       // map over entries
-      this.entries = querySnapshot.docs.map( async (doc) => {
-        const docData = doc.data();
-        const entryId = doc.id;
-        const imageId = docData?.photoIds[0] || ''
+      this.entries = querySnapshot.docs.map(async (doc) => {
+        const docData = doc.data()
+        const entryId = doc.id
+        const imageId = docData?.photoIds?.[0] ?? null
 
-        // Modify this logic to match your storage structure
-        const storageRef = ref(storage, `${flockId}/${entryId}/${imageId}.jpg`);
-        let url = '';
-        try {
-          url = await getDownloadURL(storageRef);
-          console.log('worked... ', url)
-        } catch (error) {
-          console.error('Error fetching image URL:', error);
+        let url = ''
+
+        if (imageId) {
+          const storageRef = ref(
+            storage,
+            `${flockId}/${entryId}/${imageId}.jpg`
+          )
+
+          try {
+            url = await getDownloadURL(storageRef)
+          } catch (error) {
+            console.error('Error fetching image URL:', error)
+          }
         }
 
         return {
-          id: entryId,
+          entryId,
           ...docData,
-          imageUrl: url, // Add the image URL to the entry data
-        };
+          imageUrl: url // Add the image URL to the entry data
+        }
       })
-      console.log('this.entries', this.entries)
       this.isDoneLoadingEntries = true
     },
     async saveEntryToDb() {
@@ -144,7 +152,6 @@ export const useEntryFormStore = defineStore('entryFormStore', {
 
       // const ref = storageRef(storage, `${flockId}/${entryId}/${this.formData.photoIds[0]}`)
       const url = await getDownloadURL(storageRef)
-      console.log('url', url)
     }
   }
 })
