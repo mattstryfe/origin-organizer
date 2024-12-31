@@ -14,10 +14,10 @@
   </v-row>
 
   <v-row class="flex-wrap">
-    <!-- displayEntryCard expects entry-id to be populated -->
+    <!-- displayEntryCard expects entry-entryId to be populated -->
     <display-entry-card
       v-if="isDoneLoadingEntries"
-      :entry-id="entry.id"
+      :entry-id="entry.entryId"
     ></display-entry-card>
   </v-row>
 </template>

@@ -42,7 +42,7 @@
         <display-entry-card
           v-for="entry in entries"
           :key="entry"
-          :entry-id="entry.id"
+          :entry-id="entry.entryId"
           :sex="entry.sex"
         ></display-entry-card>
       </v-row>

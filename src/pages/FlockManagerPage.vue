@@ -15,12 +15,12 @@
 
     <display-entry-card
       v-for="entry in entries"
-      :key="entry.id"
+      :key="entry.entryId"
       ref="entryRefs"
-      :entry-id="entry.id"
+      :entry-id="entry.entryId"
       :allow-card-deselection="allowCardDeselection"
       class="cust-border-trans"
-      :class="highlightThisCard(entry.id)"
+      :class="highlightThisCard(entry.entryId)"
     ></display-entry-card>
 
     <create-breeding-navigation-drawer></create-breeding-navigation-drawer>
@@ -43,7 +43,7 @@
 import DisplayEntryCard from '@/components/Cards/DisplayEntryCard.vue'
 import { storeToRefs } from 'pinia'
 import { useEntryFormStore } from '@/stores/entryFormStore'
-import { inject, nextTick, onMounted, ref, watch } from 'vue'
+import { nextTick, onMounted, ref, watch } from 'vue'
 import { onLongPress } from '@vueuse/core'
 import CreateBreedingNavigationDrawer from '@/components/CreateBreeding/CreateBreedingNavigationDrawer.vue'
 import FlockManagerFilters from '@/components/FlockManagerFilters.vue'
@@ -72,17 +72,17 @@ const handleLongPress = (entry) => {
     navigator.vibrate([100, 50, 100]) // Vibrate pattern
   }
 
-  // Manually set deselction back to false.  Will currently impact ALL cards.
+  // Manually set deselection back to false.  Will currently impact ALL cards.
   // This is acceptable for now.
   allowCardDeselection.value = false
 
   // If exists, delete and exit
-  if (selectionIds.value.has(entry.id)) {
-    selectionIds.value.delete(entry.id)
+  if (selectionIds.value.has(entry.entryId)) {
+    selectionIds.value.delete(entry.entryId)
     return
   }
   // passing in the ACTUAL entry here.  [entry.value === entries[0]] is true
-  selectionIds.value.set(entry.id)
+  selectionIds.value.set(entry.entryId)
 
   // Also start a timeout to prevent collision with
   setTimeout(() => {

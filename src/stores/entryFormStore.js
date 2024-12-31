@@ -71,7 +71,7 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       // const allEntryDetails = computed(() => entryFormStore.getEntryById(entryId))
       // from throwing an error on render. there has to be a better way to do this and
       // this was working fine until the nested docs.map() async/await in getExistingEntries()
-      return this.entries.find((entry) => entry.id === entryId)
+      return this.entries.find((entry) => entry.entryId === entryId)
     },
     async getExistingEntries() {
       this.isDoneLoadingEntries = false
@@ -88,25 +88,27 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       )
 
       // map over entries
-      this.entries = querySnapshot.docs.map(async (doc) => {
+      this.entries = querySnapshot.docs.map((doc) => {
         const docData = doc.data()
         const entryId = doc.id
-        const imageId = docData?.photoIds?.[0] ?? null
-
+        // TODO: this needs to move out of here an into a parrallel path. right now it's blocking
+        //   and adding async returns promises instead of objects.  And i dont want to use promise.all
+        // const imageId = docData?.photoIds?.[0] ?? null
+        //
         let url = ''
-
-        if (imageId) {
-          const storageRef = ref(
-            storage,
-            `${flockId}/${entryId}/${imageId}.jpg`
-          )
-
-          try {
-            url = await getDownloadURL(storageRef)
-          } catch (error) {
-            console.error('Error fetching image URL:', error)
-          }
-        }
+        //
+        // if (imageId) {
+        //   const storageRef = ref(
+        //     storage,
+        //     `${flockId}/${entryId}/${imageId}.jpg`
+        //   )
+        //
+        //   try {
+        //     url = await getDownloadURL(storageRef)
+        //   } catch (error) {
+        //     console.error('Error fetching image URL:', error)
+        //   }
+        // }
 
         return {
           entryId,
@@ -130,7 +132,7 @@ export const useEntryFormStore = defineStore('entryFormStore', {
 
       const flockDocRef = await doc(db, 'flocks', flockId)
       const entriesCollectionRef = collection(flockDocRef, 'entries')
-      const { id: entryId } = await addDoc(entriesCollectionRef, this.formData)
+      const { entryId } = await addDoc(entriesCollectionRef, this.formData)
 
       // Now upload file
       if (this.attachments.length > 0) {
