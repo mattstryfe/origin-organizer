@@ -1,7 +1,7 @@
 <template>
   <v-card
-    :width="smAndUp ? 300: 210"
-    :height="smAndUp ? 400: 300"
+    :width="smAndUp ? 300 : 210"
+    :height="smAndUp ? 400 : 300"
     class="border-sm ma-1 pa-1 d-flex flex-column"
     :class="{
       'opacity-80': showOverlay
