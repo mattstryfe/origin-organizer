@@ -71,7 +71,7 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       // const allEntryDetails = computed(() => entryFormStore.getEntryById(entryId))
       // from throwing an error on render. there has to be a better way to do this and
       // this was working fine until the nested docs.map() async/await in getExistingEntries()
-      return this.entries.find((entry) => entry.id === entryId) || {}
+      return this.entries.find((entry) => entry.id === entryId)
     },
     async getExistingEntries() {
       this.isDoneLoadingEntries = false
@@ -114,6 +114,7 @@ export const useEntryFormStore = defineStore('entryFormStore', {
           imageUrl: url // Add the image URL to the entry data
         }
       })
+      console.log('this.entries', this.entries)
       this.isDoneLoadingEntries = true
     },
     async saveEntryToDb() {
