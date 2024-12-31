@@ -1,15 +1,15 @@
 import { defineStore } from 'pinia'
 import { useUserStore } from '@/stores/userStore'
 import {
+  addDoc,
   collection,
+  deleteDoc,
   doc,
   getDocs,
-  addDoc,
-  updateDoc,
-  deleteDoc
+  updateDoc
 } from 'firebase/firestore'
 import { db, storage } from '@/plugins/firebase'
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 
 export const useEntryFormStore = defineStore('entryFormStore', {
   state: () => ({
@@ -67,11 +67,23 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       await this.getExistingEntries()
     },
     getEntryById(entryId) {
-      // This was added to keep the
-      // const allEntryDetails = computed(() => entryFormStore.getEntryById(entryId))
-      // from throwing an error on render. there has to be a better way to do this and
-      // this was working fine until the nested docs.map() async/await in getExistingEntries()
       return this.entries.find((entry) => entry.entryId === entryId)
+    },
+    async getEntryImageUrls(entry) {
+      const userStore = useUserStore()
+      const flockId = userStore.getUserUid
+      const { entryId } = entry
+      const imageId = entry?.photoIds?.[0] ?? null
+
+      if (!imageId) return
+
+      try {
+        const storageRef = ref(storage, `${flockId}/${entryId}/${imageId}.jpg`)
+        entry.imageUrl = await getDownloadURL(storageRef)
+      } catch (error) {
+        console.error('Error fetching image URL:', error)
+        return ''
+      }
     },
     async getExistingEntries() {
       this.isDoneLoadingEntries = false
@@ -91,29 +103,10 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       this.entries = querySnapshot.docs.map((doc) => {
         const docData = doc.data()
         const entryId = doc.id
-        // TODO: this needs to move out of here an into a parrallel path. right now it's blocking
-        //   and adding async returns promises instead of objects.  And i dont want to use promise.all
-        // const imageId = docData?.photoIds?.[0] ?? null
-        //
-        let url = ''
-        //
-        // if (imageId) {
-        //   const storageRef = ref(
-        //     storage,
-        //     `${flockId}/${entryId}/${imageId}.jpg`
-        //   )
-        //
-        //   try {
-        //     url = await getDownloadURL(storageRef)
-        //   } catch (error) {
-        //     console.error('Error fetching image URL:', error)
-        //   }
-        // }
-
         return {
           entryId,
           ...docData,
-          imageUrl: url // Add the image URL to the entry data
+          imageUrlGetter: (entry) => this.getEntryImageUrls(entry)
         }
       })
       console.log('this.entries', this.entries)

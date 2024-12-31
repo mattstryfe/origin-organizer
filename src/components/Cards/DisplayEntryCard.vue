@@ -22,7 +22,7 @@
     <!-- background image -->
     <v-img
       :height="smAndUp ? 150 : 100"
-      src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+      :src="allEntryDetails.imageUrl"
       cover
       class="text-black mb-1 d-flex"
     >
@@ -109,7 +109,7 @@
 </template>
 
 <script setup>
-import { computed, inject } from 'vue'
+import { computed, inject, onMounted, watch } from 'vue'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 import DisplayEntryCardTopBar from '@/components/Cards/DisplayEntryCardTopBar.vue'
 import { storeToRefs } from 'pinia'
@@ -143,6 +143,10 @@ const deselectThisCard = (id) => {
 }
 
 const allEntryDetails = computed(() => entryFormStore.getEntryById(entryId))
+
+onMounted(async () => {
+  await allEntryDetails.value.imageUrlGetter(allEntryDetails.value)
+})
 </script>
 
 <style scoped>
