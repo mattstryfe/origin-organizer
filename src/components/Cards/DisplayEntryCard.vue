@@ -109,7 +109,7 @@
 </template>
 
 <script setup>
-import { computed, inject, onMounted, watch } from 'vue'
+import { computed, inject, onMounted } from 'vue'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 import DisplayEntryCardTopBar from '@/components/Cards/DisplayEntryCardTopBar.vue'
 import { storeToRefs } from 'pinia'

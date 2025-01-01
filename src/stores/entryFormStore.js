@@ -18,7 +18,8 @@ export const useEntryFormStore = defineStore('entryFormStore', {
     selectionIds: new Map(), // Putting selections here because it might be used for multiple features (breeding, comparison, etc)
     isDoneLoadingEntries: null,
     showBottomSheet: false,
-    attachments: []
+    attachments: [],
+
   }),
   getters: {
     disableBottomSheetButton: (state) => state.selectionIds.size !== 2

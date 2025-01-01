@@ -18,6 +18,11 @@
                 <picker-sex />
               </v-col>
 
+              <v-col>
+                Parents:
+                <drop-down-parents/>
+              </v-col>
+
               <!-- Form Body -->
               <v-divider></v-divider>
               <form-details />
@@ -84,7 +89,8 @@ import PickerSex from '@/components/AddEntry/PickerSex.vue'
 import PickerBreed from '@/components/AddEntry/PickerBreed.vue'
 import PickerCharacteristics from '@/components/AddEntry/PickerCharacteristics.vue'
 import ProgressTracker from '@/components/AddEntry/ProgressTracker.vue'
-import UploadImage from '@/components/AddEntry/upload-image.vue'
+import UploadImage from '@/components/AddEntry/UploadImage.vue'
+import DropDownParents from '@/components/AddEntry/DropDownParents.vue'
 
 const entryFormStore = useEntryFormStore()
 const { formData, entries } = storeToRefs(entryFormStore)
