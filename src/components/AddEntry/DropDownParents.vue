@@ -1,22 +1,24 @@
 <template>
-  show only foundation & favorites
   <v-switch
     v-model="filterByFavoriteAndFoundation"
     class="mt-0 ms-2"
     color="green-lighten-2"
     density="compact"
-    label="Favorites & Foundation Only"
     hide-details
   ></v-switch>
   <v-autocomplete
     v-model="formData['parents']"
-    :items="entries"
+    :items="filteredEntriesForParentDropdown"
     item-title="name"
     item-value="name"
-    label="Select"
+    label="Parents"
     chips
     closable-chips
     multiple
+    density="compact"
+    variant="outlined"
+    persistent-placeholder
+    placeholder="Select Parent(s)"
   >
     <template #chip="{ props, item }">
       <v-chip
@@ -36,14 +38,19 @@
         :title="nameDisplayText(item.raw.name)"
       >
         <template #append>
+          <span v-tooltip="'age in months...'">
+            {{ determineAgeOfEntry(item.raw) }}
+          </span>
           <v-btn
             v-if="item.raw.isFoundation"
+            v-tooltip="'Foundational'"
             color="yellow"
             icon="mdi-wall"
             variant="text"
           ></v-btn>
           <v-btn
             v-if="item.raw.isFavorited"
+            v-tooltip="'Favorited'"
             color="red-darken-3"
             icon="mdi-heart"
             variant="text"
@@ -55,25 +62,35 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useEntryFormStore } from '@/stores/entryFormStore'
-const entryFormStore = useEntryFormStore()
+import dayjs from 'dayjs'
+import duration from 'dayjs/plugin/duration'
+dayjs.extend(duration)
 
-const { formData, entries } = storeToRefs(entryFormStore)
-const filterByFavoriteAndFoundation = ref(false)
+const entryFormStore = useEntryFormStore()
+const { formData, entries, filterByFavoriteAndFoundation, filteredEntriesForParentDropdown } = storeToRefs(entryFormStore)
 
 const determineBorderColor = (entry) => {
   if (entry.isFoundation) return 'cust-border-yellow'
   if (entry.isFavorited) return 'cust-border-red '
 }
+
 const breedDisplayText = (breeds) => {
   if (!breeds) return 'n/a'
   return breeds.join(', ')
 }
 
+const determineAgeOfEntry = (entry) => {
+  if (!entry.DoB) return ''
+  const today = dayjs()
+  const DoB = dayjs(entry.DoB)
+  const durr = dayjs.duration(today.diff(DoB)).asMonths()
+  return Math.floor(durr) + 'mo'
+}
+
 const nameDisplayText = (name) => {
-  console.log('name', name)
   if (!name) return 'nameless'
   return name
 }

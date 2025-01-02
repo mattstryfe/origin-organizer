@@ -19,7 +19,6 @@
               </v-col>
 
               <v-col>
-                Parents:
                 <drop-down-parents/>
               </v-col>
 

@@ -19,10 +19,14 @@ export const useEntryFormStore = defineStore('entryFormStore', {
     isDoneLoadingEntries: null,
     showBottomSheet: false,
     attachments: [],
-
+    filterByFavoriteAndFoundation: false
   }),
   getters: {
-    disableBottomSheetButton: (state) => state.selectionIds.size !== 2
+    disableBottomSheetButton: (state) => state.selectionIds.size !== 2,
+    filteredEntriesForParentDropdown: (state) =>
+      state.filterByFavoriteAndFoundation
+        ? state.entries.filter((e) => e.isFoundation || e.isFavorited)
+        : state.entries
   },
   actions: {
     async removeThisEntry(entryId) {
@@ -76,7 +80,10 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       const { entryId } = entry
       const imageId = entry?.photoIds?.[0] ?? null
 
-      if (!imageId) return
+      if (!imageId) {
+        entry.imageUrl = 'https://cdn.vuetifyjs.com/images/cards/docks.jpg'
+        return
+      }
 
       try {
         const storageRef = ref(storage, `${flockId}/${entryId}/${imageId}.jpg`)
@@ -135,9 +142,6 @@ export const useEntryFormStore = defineStore('entryFormStore', {
 
       // Now also re-query to re-sync everything
       await this.getExistingEntries()
-    },
-    updateField(field, value) {
-      this.formData[field] = value
     },
     async uploadImages(flockId, entryId, uniqueId) {
       // Now upload file
