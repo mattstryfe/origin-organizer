@@ -1,7 +1,7 @@
 <template>
   <v-card
-    :width="smAndDown ? 210 : 300"
-    :height="smAndDown ? 300 : 400"
+    :width="smAndUp ? 300 : 210"
+    :height="smAndUp ? 400 : 300"
     class="border-sm ma-1 pa-1 d-flex flex-column"
     :class="{
       'opacity-80': showOverlay
@@ -19,49 +19,60 @@
       </v-icon>
     </v-sheet>
 
-    <!-- top bar -->
-    <display-entry-card-top-bar
-      :entry-id="entryId"
-      :sex="allEntryDetails.sex"
-      :is-favorited="allEntryDetails.isFavorited"
-      :is-foundation="allEntryDetails.isFoundation"
-    ></display-entry-card-top-bar>
-
     <!-- background image -->
     <v-img
-      :height="smAndDown ? 100 : 150"
-      src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+      :height="smAndUp ? 150 : 100"
+      :src="allEntryDetails.imageUrl"
       cover
-      class="text-black align-end"
+      class="text-black mb-1 d-flex"
     >
+      <!-- top bar -->
+      <display-entry-card-top-bar
+        class="mt-0 border-b-md border-surface"
+        :entry-id="entryId"
+        :sex="allEntryDetails.sex"
+        :is-favorited="allEntryDetails.isFavorited"
+        :is-foundation="allEntryDetails.isFoundation"
+      ></display-entry-card-top-bar>
+      <v-spacer
+        :class="smAndUp ? 'cust-spacer-120' : 'cust-spacer-60'"
+      ></v-spacer>
+
       <v-rating
         density="compact"
         size="small"
         readonly
         :model-value="3"
         color="amber"
+        class="align-self-end justify-end"
       ></v-rating>
     </v-img>
 
     <!-- Breed area -->
-    <v-row v-if="allEntryDetails?.breed" no-gutters dense>
-      <v-col cols="5" class="text-right pr-2">
-        {{ allEntryDetails.breed[0] }}
-      </v-col>
-      <template v-if="allEntryDetails?.breed?.length > 1">
-        <v-col>
-          <v-icon size="large">mdi-compare-horizontal</v-icon>
-        </v-col>
-        <v-col cols="5" class="text-left">
-          {{ allEntryDetails.breed[1] }}
-        </v-col>
-      </template>
+    <v-row no-gutters dense class="my-1">
+      <v-chip
+        v-for="breed in allEntryDetails.breed"
+        :key="breed"
+        class="mx-1"
+        variant="tonal"
+        label
+        size="small"
+        density="compact"
+      >
+        <span class="text-caption text-grey">{{ breed }}</span>
+      </v-chip>
     </v-row>
 
     <v-row dense no-gutters>
-      <v-col>
-        <v-card-subtitle>Name: {{ allEntryDetails.name }}</v-card-subtitle>
-        <v-card-subtitle>Age: {{ allEntryDetails.DoB }}</v-card-subtitle>
+      <v-col class="pl-1">
+        <p class="text-subtitle-2 text-blue-grey">
+          Name:
+          <span class="text-white">{{ allEntryDetails.name }}</span>
+        </p>
+        <p class="text-subtitle-2 text-blue-grey">
+          Age:
+          <span class="text-white">{{ allEntryDetails.DoB }}</span>
+        </p>
       </v-col>
     </v-row>
 
@@ -81,11 +92,9 @@
       </v-col>
     </v-row>
 
-    <v-spacer class=""></v-spacer>
-
     <!-- bottom Controls -->
-    <v-row dense no-gutters class=" ">
-      <v-col class="d-flex justify-end">
+    <v-row dense no-gutters>
+      <v-col class="d-flex justify-end py-0">
         <v-btn
           @click="entryFormStore.removeThisEntry(entryId)"
           icon="mdi-delete-outline"
@@ -100,11 +109,11 @@
 </template>
 
 <script setup>
-import { computed, inject } from 'vue'
+import { computed, inject, onMounted } from 'vue'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 import DisplayEntryCardTopBar from '@/components/Cards/DisplayEntryCardTopBar.vue'
 import { storeToRefs } from 'pinia'
-const smAndDown = inject('smAndDown')
+const smAndUp = inject('smAndUp')
 
 // New way to do props. both work
 const { entryId, allowCardDeselection } = defineProps({
@@ -134,9 +143,19 @@ const deselectThisCard = (id) => {
 }
 
 const allEntryDetails = computed(() => entryFormStore.getEntryById(entryId))
+
+onMounted(async () => {
+  await allEntryDetails.value.imageUrlGetter(allEntryDetails.value)
+})
 </script>
 
 <style scoped>
+.cust-spacer-60 {
+  height: 60px;
+}
+.cust-spacer-120 {
+  height: 120px;
+}
 .cust-overlay {
   z-index: 2400;
   position: absolute;

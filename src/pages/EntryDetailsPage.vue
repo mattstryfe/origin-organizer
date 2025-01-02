@@ -1,5 +1,5 @@
 <template>
-  <v-row class="flex-wrap" :class="smAndDown ? 'justify-center' : ''">
+  <v-row class="flex-wrap">
     <v-col cols="12" class="mb-1">
       <v-btn
         @click="router.push({ name: 'FlockManager' })"
@@ -13,11 +13,11 @@
     </v-col>
   </v-row>
 
-  <v-row class="flex-wrap" :class="smAndDown ? 'justify-center' : ''">
-    <!-- displayEntryCard expects entry-id to be populated -->
+  <v-row class="flex-wrap">
+    <!-- displayEntryCard expects entry-entryId to be populated -->
     <display-entry-card
       v-if="isDoneLoadingEntries"
-      :entry-id="entry.id"
+      :entry-id="entry.entryId"
     ></display-entry-card>
   </v-row>
 </template>
@@ -31,7 +31,6 @@ import DisplayEntryCard from '@/components/Cards/DisplayEntryCard.vue'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 
-const smAndDown = inject('smAndDown')
 const entryFormStore = useEntryFormStore()
 const { isDoneLoadingEntries } = storeToRefs(entryFormStore)
 

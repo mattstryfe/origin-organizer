@@ -1,6 +1,6 @@
 <template>
-  <v-row class="flex-grow-0 pb-1">
-    <v-col class="d-flex justify-start align-start">
+  <v-row class="flex-grow-0 cust-height">
+    <v-col class="d-flex py-0">
       <v-icon
         size="small"
         :icon="sex === 'male' ? 'mdi-gender-male' : 'mdi-gender-female'"
@@ -8,7 +8,7 @@
     </v-col>
 
     <!-- actions -->
-    <v-col class="d-flex justify-end align-start">
+    <v-col class="d-flex py-0">
       <v-btn
         @click="entryFormStore.foundationThisEntry(entryId, isFoundation)"
         icon="mdi-wall"
@@ -77,4 +77,8 @@ const { entryId, sex, isFavorited, isFoundation } = defineProps({
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.cust-height {
+  height:25px !important;
+}
+</style>

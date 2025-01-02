@@ -1,7 +1,7 @@
 <template>
   <v-row dense no-gutters>
     <v-col cols="12">
-      <add-entry-progress-tracker></add-entry-progress-tracker>
+      <progress-tracker />
     </v-col>
 
     <v-divider class="mb-2"></v-divider>
@@ -13,25 +13,31 @@
           <v-row no-gutters class="mt-2">
             <v-col cols="8">
               <v-col class="d-flex justify-space-around">
-                <add-entry-species-picker></add-entry-species-picker>
-                <add-entry-phase-picker></add-entry-phase-picker>
-                <add-entry-sex-picker></add-entry-sex-picker>
+                <picker-species />
+                <picker-phase />
+                <picker-sex />
+              </v-col>
+
+              <v-col>
+                <drop-down-parents/>
               </v-col>
 
               <!-- Form Body -->
               <v-divider></v-divider>
-              <add-entry-form-details></add-entry-form-details>
-              <add-entry-characteristics-picker></add-entry-characteristics-picker>
+              <form-details />
+              <upload-image />
+
+              <picker-characteristics />
             </v-col>
 
             <v-col cols="4">
-              <add-entry-breed-picker></add-entry-breed-picker>
+              <picker-breed />
             </v-col>
           </v-row>
 
           <v-divider></v-divider>
           <!-- Form Controls -->
-          <add-entry-form-controls></add-entry-form-controls>
+          <form-controls />
         </v-form>
       </v-card>
 
@@ -40,7 +46,7 @@
         <display-entry-card
           v-for="entry in entries"
           :key="entry"
-          :entry-id="entry.id"
+          :entry-id="entry.entryId"
           :sex="entry.sex"
         ></display-entry-card>
       </v-row>
@@ -71,16 +77,20 @@
 <script setup>
 import { storeToRefs } from 'pinia'
 import { useEntryFormStore } from '@/stores/entryFormStore'
-import AddEntryFormControls from '@/components/AddEntry/FormControls.vue'
-import DisplayEntryCard from '@/components/Cards/DisplayEntryCard.vue'
-import AddEntryPhasePicker from '@/components/AddEntry/PickerPhase.vue'
-import AddEntryFormDetails from '@/components/AddEntry/FormDetails.vue'
 import { onMounted } from 'vue'
-import AddEntrySpeciesPicker from '@/components/AddEntry/PickerSpecies.vue'
-import AddEntrySexPicker from '@/components/AddEntry/PickerSex.vue'
-import AddEntryBreedPicker from '@/components/AddEntry/PickerBreed.vue'
-import AddEntryCharacteristicsPicker from '@/components/AddEntry/PickerCharacteristics.vue'
-import AddEntryProgressTracker from '@/components/AddEntry/ProgressTracker.vue'
+
+import FormControls from '@/components/AddEntry/FormControls.vue'
+import DisplayEntryCard from '@/components/Cards/DisplayEntryCard.vue'
+import PickerPhase from '@/components/AddEntry/PickerPhase.vue'
+import FormDetails from '@/components/AddEntry/FormDetails.vue'
+import PickerSpecies from '@/components/AddEntry/PickerSpecies.vue'
+import PickerSex from '@/components/AddEntry/PickerSex.vue'
+import PickerBreed from '@/components/AddEntry/PickerBreed.vue'
+import PickerCharacteristics from '@/components/AddEntry/PickerCharacteristics.vue'
+import ProgressTracker from '@/components/AddEntry/ProgressTracker.vue'
+import UploadImage from '@/components/AddEntry/UploadImage.vue'
+import DropDownParents from '@/components/AddEntry/DropDownParents.vue'
+
 const entryFormStore = useEntryFormStore()
 const { formData, entries } = storeToRefs(entryFormStore)
 
