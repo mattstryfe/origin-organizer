@@ -13,9 +13,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: npm ci && npm run build
+      - run: npm ci
+
+      - name: Create .env file
+        run: |
+          cat << EOF > .env
+          VITE_FIREBASE_API_KEY=${{ secrets.FIREBASE_API_KEY }}
+          OEF
+      - name: Build
+        run: npm run build
+
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ORIGIN_ORGANIZER }}'
+          channelId: live
           projectId: origin-organizer
