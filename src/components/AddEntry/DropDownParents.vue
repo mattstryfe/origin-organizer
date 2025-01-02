@@ -62,7 +62,6 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 import dayjs from 'dayjs'
@@ -70,7 +69,11 @@ import duration from 'dayjs/plugin/duration'
 dayjs.extend(duration)
 
 const entryFormStore = useEntryFormStore()
-const { formData, entries, filterByFavoriteAndFoundation, filteredEntriesForParentDropdown } = storeToRefs(entryFormStore)
+const {
+  formData,
+  filterByFavoriteAndFoundation,
+  filteredEntriesForParentDropdown
+} = storeToRefs(entryFormStore)
 
 const determineBorderColor = (entry) => {
   if (entry.isFoundation) return 'cust-border-yellow'

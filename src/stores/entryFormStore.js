@@ -117,7 +117,6 @@ export const useEntryFormStore = defineStore('entryFormStore', {
           imageUrlGetter: (entry) => this.getEntryImageUrls(entry)
         }
       })
-      console.log('this.entries', this.entries)
       this.isDoneLoadingEntries = true
     },
     async saveEntryToDb() {
