@@ -2,10 +2,12 @@
   <v-app-bar
     :elevation="2"
     rounded
-    title="Origin Organizer"
     class="cust-o"
     density="compact"
   >
+    <template #title>
+      <span class="text-subtitle-1 text-sm-h6">Origin Organizer</span>
+    </template>
     <template #prepend>
       <v-btn
         @click="router.push({ name: 'LandingPage' })"
@@ -16,8 +18,10 @@
       <v-divider vertical></v-divider>
     </template>
 
+    <main-app-search-field/>
+
     <template #append>
-      <div v-if="mode">
+      <div v-if="smAndUp">
         <v-icon
           v-for="w in routerLinksSchema"
           :key="w.name"
@@ -31,8 +35,8 @@
         </v-icon>
       </div>
 
-      <waffle-menu></waffle-menu>
-      <user-account-menu></user-account-menu>
+      <waffle-menu v-if="smAndUp"></waffle-menu>
+      <user-account-menu v-if="smAndUp"></user-account-menu>
     </template>
   </v-app-bar>
 </template>
@@ -43,11 +47,20 @@ import WaffleMenu from '@/components/navigation/MainWaffleMenu.vue'
 import UserAccountMenu from '@/components/navigation/MainUserAccountMenu.vue'
 import routerLinksSchema from '@/schemas/routerLinksSchema'
 import router from '@/plugins/router'
-import { ref } from 'vue'
-const mode = ref(import.meta.env.MODE === 'development')
+import { inject, ref } from 'vue'
+import MainAppSearchField from '@/components/navigation/MainAppSearchField.vue'
+const smAndUp = inject('smAndUp')
 </script>
 
 <style scoped>
+/* Ensure text wraps and overrides flexbox constraints */
+.wrap-title {
+  white-space: normal; /* Allow wrapping */
+  word-break: break-word; /* Ensure breaking for long words */
+  text-align: left; /* Align text within the available space */
+  flex-shrink: 1; /* Shrink if necessary */
+  max-width: 150px; /* Set a maximum width to trigger wrapping */
+}
 @keyframes spin {
   0% {
     transform: rotate(0deg);

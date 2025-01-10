@@ -62,7 +62,6 @@ import { useUserStore } from '@/stores/userStore'
 import { storeToRefs } from 'pinia'
 const userStore = useUserStore()
 const { accountMenu } = storeToRefs(userStore)
-const mode = import.meta.env.MODE
 </script>
 
 <style scoped></style>
