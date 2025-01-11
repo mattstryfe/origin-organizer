@@ -4,6 +4,7 @@
     rounded
     class="cust-o"
     density="compact"
+    :scroll-behavior="smAndUp ? '' : 'hide'"
   >
     <template #prepend>
       <v-btn
@@ -47,7 +48,7 @@ import WaffleMenu from '@/components/navigation/MainWaffleMenu.vue'
 import UserAccountMenu from '@/components/navigation/MainUserAccountMenu.vue'
 import routerLinksSchema from '@/schemas/routerLinksSchema'
 import router from '@/plugins/router'
-import { inject, ref } from 'vue'
+import { inject } from 'vue'
 import MainAppSearchField from '@/components/navigation/MainAppSearchField.vue'
 const smAndUp = inject('smAndUp')
 </script>
