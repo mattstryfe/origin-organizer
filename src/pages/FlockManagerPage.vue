@@ -6,10 +6,10 @@
       <v-skeleton-loader
         v-for="i in 12"
         :key="i"
-        width="300"
-        height="400"
         class="v-card ma-1 pa-1 border-sm"
+        height="400"
         type="card-avatar, article, actions"
+        width="300"
       ></v-skeleton-loader>
     </v-col>
 
@@ -17,24 +17,24 @@
       v-for="entry in entries"
       :key="entry.entryId"
       ref="entryRefs"
-      :entry-id="entry.entryId"
       :allow-card-deselection="allowCardDeselection"
-      :card-width="smAndUp ? 300 : 210"
       :card-height="smAndUp ? 400 : 300"
+      :card-width="smAndUp ? 300 : 210"
       class="cust-border-trans"
       :class="highlightThisCard(entry.entryId)"
+      :entry-id="entry.entryId"
     ></display-entry-card>
 
     <create-breeding-navigation-drawer></create-breeding-navigation-drawer>
     <v-btn
-      @click="showBottomSheet = !showBottomSheet"
-      fab
-      :variant="disableBottomSheetButton ? 'outlined' : 'elevated'"
-      :disabled="disableBottomSheetButton"
-      icon="mdi-atom"
       class="v-btn--fixed v-btn--top v-btn--right border-thin"
+      :disabled="disableBottomSheetButton"
+      fab
+      icon="mdi-atom"
+      :variant="disableBottomSheetButton ? 'outlined' : 'elevated'"
+      @click="showBottomSheet = !showBottomSheet"
     >
-      <v-icon size="30" color="success" class="hover-spin-continuous">
+      <v-icon class="hover-spin-continuous" color="success" size="30">
         mdi-atom
       </v-icon>
     </v-btn>

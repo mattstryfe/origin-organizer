@@ -2,22 +2,22 @@
   <v-fab
     :active="true"
     class="pl-4"
+    color="green-darken-3"
     icon="mdi-plus"
     location="bottom start"
     size="xx-small"
-    color="green-darken-3"
     variant="outlined"
   ></v-fab>
 
-  <v-chip-group v-model="formData['breed']" column multiple class="pl-4">
+  <v-chip-group v-model="formData['breed']" class="pl-4" column multiple>
     <v-chip
       v-for="(breed, index) in sortedBreeds"
       :key="index"
-      variant="outlined"
+      class="text-no-wrap text-truncate"
+      color="green-darken-3"
       density="compact"
       :value="breed"
-      color="green-darken-3"
-      class="text-no-wrap text-truncate"
+      variant="outlined"
     >
       <p class="grey">{{ breed }}</p>
     </v-chip>

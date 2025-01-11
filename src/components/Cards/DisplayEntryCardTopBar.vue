@@ -1,52 +1,52 @@
 <template>
-  <v-row no-gutters class="cust-height flex-0-0-0">
+  <v-row class="cust-height flex-0-0-0" no-gutters>
     <v-col class="d-flex py-0">
       <v-icon
-        size="small"
         :icon="sex === 'male' ? 'mdi-gender-male' : 'mdi-gender-female'"
+        size="small"
       ></v-icon>
     </v-col>
 
     <!-- actions -->
     <v-col class="d-flex py-0 justify-end">
       <v-btn
-        @click="entryFormStore.foundationThisEntry(entryId, isFoundation)"
+        :color="isFoundation ? 'yellow' : 'white'"
+        density="compact"
         icon="mdi-wall"
         size="medium"
         variant="text"
-        :color="isFoundation ? 'yellow' : 'white'"
-        density="compact"
+        @click="entryFormStore.foundationThisEntry(entryId, isFoundation)"
       ></v-btn>
       <v-btn
-        @click="entryFormStore.favoriteThisEntry(entryId, isFavorited)"
+        color="red-darken-3"
+        density="compact"
         :icon="isFavorited ? 'mdi-heart' : 'mdi-heart-outline'"
         size="medium"
         variant="text"
-        color="red-darken-3"
-        density="compact"
+        @click="entryFormStore.favoriteThisEntry(entryId, isFavorited)"
       ></v-btn>
       <v-btn
+        density="compact"
+        disabled
         icon="mdi-share"
         size="medium"
         variant="text"
-        density="compact"
-        disabled
       ></v-btn>
       <v-btn
+        color="orange-darken-3"
+        density="compact"
+        disabled
         icon="mdi-graph-outline"
         size="medium"
         variant="text"
-        density="compact"
-        color="orange-darken-3"
-        disabled
       ></v-btn>
       <v-btn
-        @click="router.push({ name: 'EntryDetails', params: { id: entryId } })"
+        color="blue-darken-3"
+        density="compact"
         icon="mdi-information-outline"
         size="medium"
         variant="text"
-        color="blue-darken-3"
-        density="compact"
+        @click="router.push({ name: 'EntryDetails', params: { id: entryId } })"
       ></v-btn>
     </v-col>
   </v-row>

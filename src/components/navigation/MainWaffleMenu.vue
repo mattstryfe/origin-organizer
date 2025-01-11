@@ -2,10 +2,10 @@
   <v-menu v-model="waffleMenu" location="bottom" width="400">
     <template #activator="{ props }">
       <v-btn
-        icon="mdi-dots-grid"
         v-bind="props"
         class="cursor-pointer mr-1"
         color="green-darken-3"
+        icon="mdi-dots-grid"
       ></v-btn>
     </template>
 
@@ -22,22 +22,22 @@
             v-for="w in routerLinksSchema"
             :key="w.title"
             class="cursor-pointer text-center v-col-4 pa-1"
-            variant="flat"
             :disabled="!userIsAuthenticated || !w.routeName"
+            variant="flat"
           >
             <v-hover>
               <template #default="{ isHovering, props }">
                 <v-card
-                  @click="router.push({ name: w.routeName })"
-                  :variant="isHovering ? 'tonal' : 'flat'"
                   v-bind="props"
                   class="pa-2"
                   link
+                  :variant="isHovering ? 'tonal' : 'flat'"
+                  @click="router.push({ name: w.routeName })"
                 >
                   <v-icon
-                    size="2em"
-                    :color="isHovering ? 'success' : w.color"
                     :class="w.class"
+                    :color="isHovering ? 'success' : w.color"
+                    size="2em"
                   >
                     {{ w.icon }}
                   </v-icon>
