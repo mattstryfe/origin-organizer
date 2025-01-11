@@ -154,15 +154,6 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.cust-transparent {
-  background-color: rgba(0, 0, 0, 0.8)
-}
-.cust-spacer-60 {
-  height: 60px;
-}
-.cust-spacer-120 {
-  height: 120px;
-}
 .cust-overlay {
   z-index: 2400;
   position: absolute;

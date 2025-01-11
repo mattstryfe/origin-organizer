@@ -78,7 +78,4 @@ const { entryId, sex, isFavorited, isFoundation } = defineProps({
 </script>
 
 <style scoped>
-.cust-height {
-  //height:25px !important;
-}
 </style>
