@@ -1,17 +1,17 @@
 <template>
   <v-app-bar
-    :elevation="2"
-    rounded
     class="cust-o"
     density="compact"
+    :elevation="2"
+    rounded
     :scroll-behavior="smAndUp ? '' : 'hide'"
   >
     <template #prepend>
       <v-btn
-        @click="router.push({ name: 'LandingPage' })"
-        icon="mdi-orbit"
-        color="primary"
         class="ms-n1 hover-spin-continuous"
+        color="primary"
+        icon="mdi-orbit"
+        @click="router.push({ name: 'LandingPage' })"
       ></v-btn>
       <v-divider vertical></v-divider>
     </template>
@@ -19,18 +19,18 @@
     <template #title>
       <span class="ms-0 text-subtitle-1 text-sm-h6">Origin Organizer</span>
     </template>
-    <main-app-search-field/>
+    <main-app-search-field />
 
     <template #append>
       <div v-if="smAndUp">
         <v-icon
           v-for="w in routerLinksSchema"
           :key="w.name"
-          @click="router.push({ name: w.routeName })"
-          :name="w.name"
           class="pa-1 ma-1 v-icon--size-x-small"
           :color="w.color"
           :disabled="!w.routeName"
+          :name="w.name"
+          @click="router.push({ name: w.routeName })"
         >
           {{ w.icon }}
         </v-icon>
