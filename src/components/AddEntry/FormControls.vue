@@ -1,9 +1,9 @@
 <template>
-  <v-row no-gutters class="px-4 mt-2 justify-end">
+  <v-row class="px-4 mt-2 justify-end" no-gutters>
     <v-btn
-      @click="entryFormStore.saveEntryToDb()"
-      variant="outlined"
       color="success"
+      variant="outlined"
+      @click="entryFormStore.saveEntryToDb()"
     >
       Save
     </v-btn>

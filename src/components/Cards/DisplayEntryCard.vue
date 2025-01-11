@@ -1,19 +1,19 @@
 <template>
   <v-card
-    :width="cardWidth"
-    :height="cardHeight"
     class="border-sm ma-1 pa-1 d-flex flex-column"
     :class="{
       'opacity-80': showOverlay
     }"
+    :height="cardHeight"
+    :width="cardWidth"
   >
     <v-sheet v-if="showOverlay" class="cust-overlay">
       <v-icon
-        @click="deselectThisCard(entryId)"
-        size="100"
-        color="blue-darken-2"
         class="ma-0 pa-0"
+        color="blue-darken-2"
         :disabled="!allowCardDeselection"
+        size="100"
+        @click="deselectThisCard(entryId)"
       >
         mdi-trash-can
       </v-icon>
@@ -22,39 +22,39 @@
     <!-- top bar -->
     <display-entry-card-top-bar
       :entry-id="entryId"
-      :sex="allEntryDetails.sex"
       :is-favorited="allEntryDetails.isFavorited"
       :is-foundation="allEntryDetails.isFoundation"
+      :sex="allEntryDetails.sex"
     />
 
     <!-- background image -->
     <v-img
-      :height="cardWidth / 2"
-      :src="allEntryDetails.imageUrl"
-      cover
       class="text-black mb-1 border-sm"
+      cover
+      :height="cardWidth / 2"
       rounded
+      :src="allEntryDetails.imageUrl"
     >
       <v-rating
-        density="compact"
-        size="small"
-        readonly
-        :model-value="3"
-        color="amber"
         class="position-absolute bottom-0"
+        color="amber"
+        density="compact"
+        :model-value="3"
+        readonly
+        size="small"
       ></v-rating>
     </v-img>
 
     <!-- Breed area -->
-    <v-row no-gutters dense class="my-1">
+    <v-row class="my-1" dense no-gutters>
       <v-chip
         v-for="breed in allEntryDetails.breed"
         :key="breed"
         class="mx-1"
-        variant="tonal"
+        density="compact"
         label
         size="small"
-        density="compact"
+        variant="tonal"
       >
         <span class="text-caption text-grey">{{ breed }}</span>
       </v-chip>
@@ -81,8 +81,8 @@
           v-for="c in allEntryDetails.characteristics"
           :key="c"
           class="mr-1 text-grey lighten-2 mb-1"
-          variant="outlined"
           size="x-small"
+          variant="outlined"
         >
           {{ c }}
         </v-chip>
@@ -93,12 +93,12 @@
     <v-row dense no-gutters>
       <v-col class="d-flex justify-end align-end">
         <v-btn
-          @click="entryFormStore.removeThisEntry(entryId)"
+          color="blue-darken-2"
+          density="compact"
           icon="mdi-delete-outline"
           size="medium"
           variant="text"
-          density="compact"
-          color="blue-darken-2"
+          @click="entryFormStore.removeThisEntry(entryId)"
         ></v-btn>
       </v-col>
     </v-row>

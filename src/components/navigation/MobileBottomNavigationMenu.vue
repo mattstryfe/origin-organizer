@@ -1,20 +1,20 @@
 <template>
     <v-bottom-navigation
       v-model="nav"
-      color="primary"
-      horizontal
       :active="!smAndUp"
       class="border-t-sm"
-      mode="shift"
+      color="primary"
       grow
+      horizontal
+      mode="shift"
     >
       <!-- Bottom Navigation Pages.  Filtered by enabled for now-->
       <v-btn
         v-for="w in enabledPages"
         :key="w.title"
-        @click="router.push({ name: w.routeName })"
-        :name="w.title"
         :disabled="!w.routeName"
+        :name="w.title"
+        @click="router.push({ name: w.routeName })"
       >
         <v-icon :color="w.color">
           {{ w.icon }}

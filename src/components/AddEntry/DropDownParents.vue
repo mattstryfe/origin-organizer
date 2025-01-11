@@ -8,17 +8,17 @@
   ></v-switch>
   <v-autocomplete
     v-model="formData['parents']"
-    :items="filteredEntriesForParentDropdown"
-    item-title="name"
-    item-value="name"
-    label="Parents"
     chips
     closable-chips
-    multiple
     density="compact"
-    variant="outlined"
+    item-title="name"
+    item-value="name"
+    :items="filteredEntriesForParentDropdown"
+    label="Parents"
+    multiple
     persistent-placeholder
     placeholder="Select Parent(s)"
+    variant="outlined"
   >
     <template #chip="{ props, item }">
       <v-chip

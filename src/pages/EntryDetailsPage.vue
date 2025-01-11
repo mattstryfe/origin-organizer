@@ -1,11 +1,11 @@
 <template>
   <v-row class="flex-wrap">
-    <v-col cols="12" class="mb-1">
+    <v-col class="mb-1" cols="12">
       <v-btn
-        @click="router.push({ name: 'FlockManager' })"
-        variant="outlined"
         color="info"
         density="compact"
+        variant="outlined"
+        @click="router.push({ name: 'FlockManager' })"
       >
         <v-icon>mdi-arrow-left</v-icon>
         Flock Manager
@@ -16,8 +16,8 @@
   <v-row class="flex-wrap">
     <display-entry-card
       v-if="isDoneLoadingEntries"
-      :card-width="smAndUp ? 600 : 450"
       :card-height="smAndUp ? 800 : 600"
+      :card-width="smAndUp ? 600 : 450"
       :entry-id="entry.entryId"
     ></display-entry-card>
   </v-row>
