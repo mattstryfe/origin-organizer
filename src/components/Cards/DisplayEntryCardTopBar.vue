@@ -1,5 +1,5 @@
 <template>
-  <v-row class="flex-grow-0 cust-height">
+  <v-row no-gutters class="cust-height flex-0-0-0">
     <v-col class="d-flex py-0">
       <v-icon
         size="small"
@@ -8,7 +8,7 @@
     </v-col>
 
     <!-- actions -->
-    <v-col class="d-flex py-0">
+    <v-col class="d-flex py-0 justify-end">
       <v-btn
         @click="entryFormStore.foundationThisEntry(entryId, isFoundation)"
         icon="mdi-wall"
@@ -78,7 +78,4 @@ const { entryId, sex, isFavorited, isFoundation } = defineProps({
 </script>
 
 <style scoped>
-.cust-height {
-  height:25px !important;
-}
 </style>

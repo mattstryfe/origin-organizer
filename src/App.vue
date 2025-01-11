@@ -10,6 +10,7 @@
         <router-view></router-view>
       </v-container>
     </v-main>
+    <mobile-bottom-navigation-menu/>
   </v-layout>
 </template>
 
@@ -20,6 +21,7 @@ import MainAppHeader from '@/components/navigation/MainAppHeader.vue'
 import { useDisplay } from 'vuetify'
 import { onMounted, provide } from 'vue'
 import { useUserStore } from '@/stores/userStore'
+import MobileBottomNavigationMenu from '@/components/navigation/MobileBottomNavigationMenu.vue'
 // Destructure the specific breakpoint properties you want to provide
 const { mdAndUp, smAndUp } = useDisplay()
 

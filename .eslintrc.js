@@ -43,19 +43,38 @@ module.exports = {
         }
       }
     ],
-    'vue/attributes-order': ['error', {
-      'order': [
-        'DEFINITION',
-        'LIST_RENDERING',
-        'CONDITIONALS',
-        'RENDER_MODIFIERS',
-        'GLOBAL',
-        'UNIQUE',
-        'SLOT',
-        'EVENTS',
-        'OTHER_ATTR',
-        'CONTENT'
-      ]
-    }]
+    "vue/order-in-components": [
+      "error",
+      {
+        order: [
+          "name",
+          "props", // Position props near the top
+          "computed",
+          "data",
+          "methods",
+          "emits",
+          "watch",
+          "template",
+        ],
+      },
+    ],
+    // Enforce alphabetical order for props
+    'vue/attributes-order': [
+      'error',
+      {
+        order: [
+          'DEFINITION', // is, v-is
+          'LIST_RENDERING', // v-for
+          'CONDITIONALS', // v-if, v-else-if, v-else, v-show, v-cloak
+          'RENDER_MODIFIERS', // v-pre, v-once
+          'GLOBAL', // id
+          'UNIQUE', // ref, key, v-slot, slot
+          'OTHER_ATTR', // custom attributes
+          'EVENTS', // @click, v-on
+          'CONTENT', // v-text, v-html
+        ],
+        alphabetical: true, // Enforce alphabetical sorting within each group
+      },
+    ],
   }
 }

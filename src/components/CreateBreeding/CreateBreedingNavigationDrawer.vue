@@ -35,13 +35,13 @@
 </template>
 
 <script setup>
-import { inject, shallowRef, watch } from 'vue'
+import { shallowRef, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 import CreateBreedingDisplayEntryCard from '@/components/CreateBreeding/CreateBreedingDisplayEntryCard.vue'
 
 const entryFormStore = useEntryFormStore()
-const { showBottomSheet, selectionIds, entries } = storeToRefs(entryFormStore)
+const { showBottomSheet, selectionIds } = storeToRefs(entryFormStore)
 const oldSize = shallowRef() // used because Map() in pinia is stupid and won't provide oldVal
 watch(selectionIds.value, (newValue) => {
   // Only popup the navigation drawer the first time the user

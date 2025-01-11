@@ -18,8 +18,6 @@
             </v-alert>
           </v-col>
 
-          <!-- Wrap main card with another card to keep consistency with v-col-4
-              otherwise, an offset or indent needs to be used and it's annoying -->
           <v-card
             v-for="w in routerLinksSchema"
             :key="w.title"

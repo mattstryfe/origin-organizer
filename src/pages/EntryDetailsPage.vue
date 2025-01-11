@@ -14,9 +14,10 @@
   </v-row>
 
   <v-row class="flex-wrap">
-    <!-- displayEntryCard expects entry-entryId to be populated -->
     <display-entry-card
       v-if="isDoneLoadingEntries"
+      :card-width="smAndUp ? 600 : 450"
+      :card-height="smAndUp ? 800 : 600"
       :entry-id="entry.entryId"
     ></display-entry-card>
   </v-row>
@@ -27,9 +28,9 @@ import { computed, inject } from 'vue'
 import router from '@/plugins/router'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 import DisplayEntryCard from '@/components/Cards/DisplayEntryCard.vue'
-
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
+const smAndUp = inject('smAndUp')
 
 const entryFormStore = useEntryFormStore()
 const { isDoneLoadingEntries } = storeToRefs(entryFormStore)

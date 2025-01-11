@@ -15,7 +15,7 @@
         Sign in
       </v-chip>
       <!-- v-bind props opens menu -->
-      <v-avatar v-else v-bind="props" class="cursor-pointer">
+      <v-avatar v-else v-bind="props" class="cursor-pointer" size="30">
         <v-img :src="`${userStore.getUserPhotoURL}`"></v-img>
       </v-avatar>
     </template>
@@ -62,7 +62,6 @@ import { useUserStore } from '@/stores/userStore'
 import { storeToRefs } from 'pinia'
 const userStore = useUserStore()
 const { accountMenu } = storeToRefs(userStore)
-const mode = import.meta.env.MODE
 </script>
 
 <style scoped></style>
