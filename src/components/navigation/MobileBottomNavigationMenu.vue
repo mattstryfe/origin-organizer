@@ -21,7 +21,7 @@
 
     <!-- force (for now) the user menu to always be hard-right -->
     <v-spacer></v-spacer>
-    <v-btn class="">
+    <v-btn>
       <user-account-menu></user-account-menu>
     </v-btn>
   </v-bottom-navigation>

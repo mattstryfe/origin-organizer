@@ -2,18 +2,19 @@
   <!-- Search box -->
   <v-text-field
     v-model="searchParams"
-    placeholder="Search"
+    placeholder=" "
     prepend-inner-icon="mdi-magnify"
     density="compact"
-    variant="solo-filled"
+    variant="solo"
     hide-details
+    label="Search"
   ></v-text-field>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 
-const searchParams = ref()
+const searchParams = ref('')
 </script>
 
 <style scoped>
