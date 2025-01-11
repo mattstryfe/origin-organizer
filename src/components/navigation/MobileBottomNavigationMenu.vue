@@ -4,6 +4,7 @@
     color="primary"
     horizontal
     :active="!smAndUp"
+    class="border-t-sm"
   >
     <!-- Bottom Navigation Pages.  Filtered by enabled for now-->
     <v-btn

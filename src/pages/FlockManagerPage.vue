@@ -19,6 +19,8 @@
       ref="entryRefs"
       :entry-id="entry.entryId"
       :allow-card-deselection="allowCardDeselection"
+      :card-width="smAndUp ? 300 : 210"
+      :card-height="smAndUp ? 400 : 300"
       class="cust-border-trans"
       :class="highlightThisCard(entry.entryId)"
     ></display-entry-card>
@@ -43,10 +45,11 @@
 import DisplayEntryCard from '@/components/Cards/DisplayEntryCard.vue'
 import { storeToRefs } from 'pinia'
 import { useEntryFormStore } from '@/stores/entryFormStore'
-import { nextTick, onMounted, ref, watch } from 'vue'
+import { inject, nextTick, onMounted, ref, watch } from 'vue'
 import { onLongPress } from '@vueuse/core'
 import CreateBreedingNavigationDrawer from '@/components/CreateBreeding/CreateBreedingNavigationDrawer.vue'
 import FlockManagerFilters from '@/components/FlockManagerFilters.vue'
+const smAndUp = inject('smAndUp')
 
 const entryFormStore = useEntryFormStore()
 const {

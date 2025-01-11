@@ -1,13 +1,13 @@
 <template>
   <v-card
-    :width="smAndUp ? 300 : 210"
-    :height="smAndUp ? 400 : 300"
+    :width="cardWidth"
+    :height="cardHeight"
     class="border-sm ma-1 pa-1 d-flex flex-column"
     :class="{
       'opacity-80': showOverlay
     }"
   >
-    <v-sheet v-if="showOverlay" height="100" width="100" class="cust-overlay">
+    <v-sheet v-if="showOverlay" class="cust-overlay">
       <v-icon
         @click="deselectThisCard(entryId)"
         size="100"
@@ -19,32 +19,29 @@
       </v-icon>
     </v-sheet>
 
+    <!-- top bar -->
+    <display-entry-card-top-bar
+      :entry-id="entryId"
+      :sex="allEntryDetails.sex"
+      :is-favorited="allEntryDetails.isFavorited"
+      :is-foundation="allEntryDetails.isFoundation"
+    />
+
     <!-- background image -->
     <v-img
-      :height="smAndUp ? 150 : 100"
+      :height="cardWidth / 2"
       :src="allEntryDetails.imageUrl"
       cover
-      class="text-black mb-1 d-flex"
+      class="text-black mb-1 border-sm"
+      rounded
     >
-      <!-- top bar -->
-      <display-entry-card-top-bar
-        class="mt-0 cust-transparent"
-        :entry-id="entryId"
-        :sex="allEntryDetails.sex"
-        :is-favorited="allEntryDetails.isFavorited"
-        :is-foundation="allEntryDetails.isFoundation"
-      />
-      <v-spacer
-        :class="smAndUp ? 'cust-spacer-120' : 'cust-spacer-60'"
-      ></v-spacer>
-
       <v-rating
         density="compact"
         size="small"
         readonly
         :model-value="3"
         color="amber"
-        class="align-self-end justify-end"
+        class="position-absolute bottom-0"
       ></v-rating>
     </v-img>
 
@@ -94,7 +91,7 @@
 
     <!-- bottom Controls -->
     <v-row dense no-gutters>
-      <v-col class="d-flex justify-end py-0">
+      <v-col class="d-flex justify-end align-end">
         <v-btn
           @click="entryFormStore.removeThisEntry(entryId)"
           icon="mdi-delete-outline"
@@ -109,11 +106,10 @@
 </template>
 
 <script setup>
-import { computed, inject, onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 import DisplayEntryCardTopBar from '@/components/Cards/DisplayEntryCardTopBar.vue'
 import { storeToRefs } from 'pinia'
-const smAndUp = inject('smAndUp')
 
 // New way to do props. both work
 const { entryId, allowCardDeselection } = defineProps({
@@ -124,6 +120,14 @@ const { entryId, allowCardDeselection } = defineProps({
   allowCardDeselection: {
     type: Boolean,
     default: false
+  },
+  cardWidth: {
+    type: Number,
+    default: 300
+  },
+  cardHeight: {
+    type: Number,
+    default: 400
   }
 })
 
