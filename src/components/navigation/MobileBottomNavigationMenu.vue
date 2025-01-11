@@ -18,12 +18,6 @@
       </v-icon>
       {{ w.title }}
     </v-btn>
-
-    <!-- force (for now) the user menu to always be hard-right -->
-    <v-spacer></v-spacer>
-    <v-btn>
-      <user-account-menu></user-account-menu>
-    </v-btn>
   </v-bottom-navigation>
 </template>
 
@@ -31,7 +25,6 @@
 import routerLinksSchema from '@/schemas/routerLinksSchema'
 import router from '@/plugins/router'
 import { computed, inject, ref } from 'vue'
-import UserAccountMenu from '@/components/navigation/MainUserAccountMenu.vue'
 
 const smAndUp = inject('smAndUp')
 const nav = ref()

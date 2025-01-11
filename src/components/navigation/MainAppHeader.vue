@@ -5,19 +5,19 @@
     class="cust-o"
     density="compact"
   >
-    <template #title>
-      <span class="text-subtitle-1 text-sm-h6">Origin Organizer</span>
-    </template>
     <template #prepend>
       <v-btn
         @click="router.push({ name: 'LandingPage' })"
         icon="mdi-orbit"
         color="primary"
-        class="mr-2 hover-spin-continuous"
+        class="ms-n1 hover-spin-continuous"
       ></v-btn>
       <v-divider vertical></v-divider>
     </template>
 
+    <template #title>
+      <span class="ms-0 text-subtitle-1 text-sm-h6">Origin Organizer</span>
+    </template>
     <main-app-search-field/>
 
     <template #append>
@@ -36,7 +36,7 @@
       </div>
 
       <waffle-menu v-if="smAndUp"></waffle-menu>
-      <user-account-menu v-if="smAndUp"></user-account-menu>
+      <user-account-menu></user-account-menu>
     </template>
   </v-app-bar>
 </template>

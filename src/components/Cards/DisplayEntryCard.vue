@@ -28,12 +28,12 @@
     >
       <!-- top bar -->
       <display-entry-card-top-bar
-        class="mt-0 border-b-md border-surface"
+        class="mt-0 cust-transparent"
         :entry-id="entryId"
         :sex="allEntryDetails.sex"
         :is-favorited="allEntryDetails.isFavorited"
         :is-foundation="allEntryDetails.isFoundation"
-      ></display-entry-card-top-bar>
+      />
       <v-spacer
         :class="smAndUp ? 'cust-spacer-120' : 'cust-spacer-60'"
       ></v-spacer>
@@ -150,6 +150,9 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+.cust-transparent {
+  background-color: rgba(0, 0, 0, 0.8)
+}
 .cust-spacer-60 {
   height: 60px;
 }

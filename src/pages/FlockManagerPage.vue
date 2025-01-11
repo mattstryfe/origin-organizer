@@ -125,6 +125,8 @@ onMounted(() => {
   border-color: #1976d2 !important;
   border-width: 0.3em !important;
 }
+
+/*Needed to prevent bouncing when blue selection border is added */
 .cust-border-trans {
   border-color: blue;
   transition: border-width 0.1s ease;
