@@ -1,8 +1,8 @@
 <template>
   <v-btn-toggle
     v-model="formData['phase']"
-    color="green-darken-3"
     class="fill-height flex-column"
+    color="green-darken-3"
   >
     <v-btn
       v-for="(opt, index) in schemaPhaseOptions"
@@ -11,7 +11,7 @@
       :value="opt.phase"
     >
       <template v-if="opt.component">
-        <v-icon :size="opt.iconSize" class="px-2">
+        <v-icon class="px-2" :size="opt.iconSize">
           <component :is="opt.component"></component>
         </v-icon>
       </template>

@@ -10,7 +10,7 @@
       <v-card border class="pb-2 mb-2">
         <v-form>
           <!-- Species Picker -->
-          <v-row no-gutters class="mt-2">
+          <v-row class="mt-2" no-gutters>
             <v-col cols="8">
               <v-col class="d-flex justify-space-around">
                 <picker-species />
@@ -62,7 +62,7 @@
 
     <!-- Right side widget to hold Object for DEV-ing -->
     <v-col class="pl-3" cols="12" md="6">
-      <v-card min-height="1000" class="overflow-auto">
+      <v-card class="overflow-auto" min-height="1000">
         <v-card-title>Live Reactive/Object</v-card-title>
         <v-card-text>
           <pre>

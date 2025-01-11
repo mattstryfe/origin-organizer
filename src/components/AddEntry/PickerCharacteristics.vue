@@ -2,27 +2,27 @@
   <v-fab
     :active="true"
     class="pl-4"
+    color="green-darken-3"
     icon="mdi-plus"
     location="bottom start"
     size="xx-small"
-    color="green-darken-3"
     variant="outlined"
   ></v-fab>
 
   <v-chip-group
     v-model="formData['characteristics']"
-    column
     class="pl-4"
+    column
     multiple
   >
     <!-- TODO: this v-for target is trash. need to make better -->
     <v-chip
       v-for="(field, index) in schemaCharacteristicOptions"
       :key="index"
-      variant="outlined"
+      color="green-darken-3"
       density="compact"
       :value="field"
-      color="green-darken-3"
+      variant="outlined"
     >
       <!-- customise the filter slot, which in our case is when they're selected -->
       <!-- #filter is same(shorthand) for v-slot:filter -->

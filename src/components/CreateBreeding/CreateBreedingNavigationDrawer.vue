@@ -1,11 +1,11 @@
 <template>
-  <v-bottom-sheet v-model="showBottomSheet" :scrim="false" persistent>
+  <v-bottom-sheet v-model="showBottomSheet" persistent :scrim="false">
     <v-btn
-      @click="showBottomSheet = false"
-      variant="flat"
-      size="small"
-      icon="mdi-close"
       class="position-absolute right-0 mt-n9 bg-surface border-thin"
+      icon="mdi-close"
+      size="small"
+      variant="flat"
+      @click="showBottomSheet = false"
     ></v-btn>
     <v-row
       class="bg-surface pa-2 align-center border-t-thin justify-space-around"
@@ -19,13 +19,13 @@
         </v-col>
         <v-btn
           v-if="ind === 0"
-          variant="outlined"
           color="success"
-          height="50"
           :disabled="selectionIds.size !== 2"
+          height="50"
+          variant="outlined"
         >
           Generate
-          <v-icon size="35" color="success" class="hover-spin-continuous ml-3">
+          <v-icon class="hover-spin-continuous ml-3" color="success" size="35">
             mdi-atom
           </v-icon>
         </v-btn>

@@ -6,10 +6,10 @@
       <template #prepend>
         <v-switch
           v-model="enableDarkMode"
-          color="primary"
-          hide-details
           class="mr-8"
+          color="primary"
           density="compact"
+          hide-details
         ></v-switch>
       </template>
 
@@ -22,10 +22,10 @@
       <template #prepend>
         <v-switch
           v-model="enableAutoSave"
-          color="primary"
-          hide-details
           class="mr-8"
+          color="primary"
           density="compact"
+          hide-details
         ></v-switch>
       </template>
 
@@ -39,20 +39,20 @@
     <!-- example for now -->
     <v-progress-linear
       :active="!hasProfileBeenRepaired"
-      :indeterminate="!hasProfileBeenRepaired"
       color="green-darken-3"
+      :indeterminate="!hasProfileBeenRepaired"
     ></v-progress-linear>
 
     <v-list-item
       v-for="(item, i) in dangerZoneEntries"
       :key="i"
-      @click="item.action"
       :value="item"
+      @click="item.action"
     >
       <template #prepend>
         <v-icon
-          :icon="item.icon"
           :color="item.iconColor"
+          :icon="item.icon"
           :loading="true"
         ></v-icon>
       </template>

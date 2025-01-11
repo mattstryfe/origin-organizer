@@ -2,12 +2,12 @@
   <!-- Search box -->
   <v-text-field
     v-model="searchParams"
-    placeholder=" "
-    prepend-inner-icon="mdi-magnify"
     density="compact"
-    variant="solo"
     hide-details
     label="Search"
+    placeholder=" "
+    prepend-inner-icon="mdi-magnify"
+    variant="solo"
   ></v-text-field>
 </template>
 

@@ -1,8 +1,8 @@
 <template>
   <v-btn-toggle
     v-model="formData['sex']"
-    color="green-darken-3"
     class="fill-height flex-column"
+    color="green-darken-3"
   >
     <v-btn
       v-for="(opt, index) in schemaSexOptions"

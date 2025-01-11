@@ -14,8 +14,8 @@
         :key="n"
         class="mr-1"
         density="compact"
-        variant="outlined"
         filter
+        variant="outlined"
       >
         Criteria
       </v-chip>

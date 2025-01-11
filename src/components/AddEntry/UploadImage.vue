@@ -1,12 +1,12 @@
 <template>
-  <v-row no-gutters class="px-4 mb-3">
+  <v-row class="px-4 mb-3" no-gutters>
     <v-col cols="12">
       <v-file-upload
+        accept="image/*"
         density="compact"
         scrim="primary"
         v-model="attachments"
         show-size
-        accept="image/*"
       ></v-file-upload>
     </v-col>
   </v-row>
