@@ -39,7 +39,8 @@
         class="position-absolute bottom-0"
         color="amber"
         density="compact"
-        :model-value="3"
+        half-increments
+        :model-value="allEntryDetails.rating"
         readonly
         size="small"
       ></v-rating>
