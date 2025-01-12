@@ -6,18 +6,68 @@
     density="compact"
     hide-details
   ></v-switch>
+  <!-- Mother Autocomplete -->
   <v-autocomplete
-    v-model="formData['parents']"
-    chips
-    closable-chips
+    v-model="formData.mother"
     density="compact"
     item-title="name"
     item-value="name"
-    :items="filteredEntriesForParentDropdown"
-    label="Parents"
-    multiple
+    :items="filteredEntriesForMotherDropdown"
+    label="Mother"
     persistent-placeholder
-    placeholder="Select Parent(s)"
+    placeholder="Select Mother"
+    variant="outlined"
+  >
+    <template #chip="{ props, item }">
+      <v-chip
+        v-bind="props"
+        :prepend-avatar="item.raw.imageUrl"
+        :text="item.raw.name"
+      ></v-chip>
+    </template>
+
+    <template #item="{ props, item }">
+      <v-list-item
+        class="my-1 mr-2"
+        :class="determineBorderColor(item.raw)"
+        v-bind="props"
+        :prepend-avatar="item.raw.imageUrl"
+        :subtitle="breedDisplayText(item.raw.breed)"
+        :title="nameDisplayText(item.raw.name)"
+      >
+        <template #append>
+          <span v-tooltip="'age in months...'">
+            {{ determineAgeOfEntry(item.raw) }}
+          </span>
+          <v-btn
+            v-if="item.raw.isFoundation"
+            v-tooltip="'Foundational'"
+            color="yellow"
+            icon="mdi-wall"
+            variant="text"
+          ></v-btn>
+          <v-btn
+            v-if="item.raw.isFavorited"
+            v-tooltip="'Favorited'"
+            color="red-darken-3"
+            icon="mdi-heart"
+            variant="text"
+          ></v-btn>
+        </template>
+      </v-list-item>
+    </template>
+  </v-autocomplete>
+
+  <!-- Father Autocomplete -->
+  <v-autocomplete
+    v-model="formData.father"
+    density="compact"
+    item-title="name"
+    item-value="name"
+    :items="filteredEntriesForFatherDropdown"
+    label="Father"
+    persistent-placeholder
+    placeholder="Select Father"
     variant="outlined"
   >
     <template #chip="{ props, item }">
@@ -72,7 +122,8 @@ const entryFormStore = useEntryFormStore()
 const {
   formData,
   filterByFavoriteAndFoundation,
-  filteredEntriesForParentDropdown
+  filteredEntriesForFatherDropdown,
+  filteredEntriesForMotherDropdown
 } = storeToRefs(entryFormStore)
 
 const determineBorderColor = (entry) => {
@@ -103,6 +154,7 @@ const nameDisplayText = (name) => {
 .cust-border-red {
   border: 2px solid rgba(212, 62, 62, 0.41);
 }
+
 .cust-border-yellow {
   border: 2px solid rgba(255, 204, 62, 0.41);
 }
