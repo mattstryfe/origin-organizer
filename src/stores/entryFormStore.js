@@ -29,6 +29,9 @@ export const useEntryFormStore = defineStore('entryFormStore', {
         : state.entries
   },
   actions: {
+    clearFormData() {
+      this.formData = {}
+    },
     async removeThisEntry(entryId) {
       const userStore = useUserStore()
       const flockId = userStore.getUserUid
