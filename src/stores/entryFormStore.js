@@ -38,6 +38,9 @@ filteredEntriesForFatherDropdown: (state) => {
   return baseFilter.filter((e) => e.sex === 'male');
 }},
   actions: {
+    clearFormData() {
+      this.formData = {}
+    },
     async removeThisEntry(entryId) {
       const userStore = useUserStore()
       const flockId = userStore.getUserUid
