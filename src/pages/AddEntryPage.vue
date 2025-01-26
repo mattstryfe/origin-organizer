@@ -17,6 +17,7 @@
                 <picker-phase />
                 <picker-sex />
               </v-col>
+              <v-col><star-rating /></v-col>
 
               <v-col>
                 <drop-down-parents/>
@@ -88,6 +89,7 @@ import PickerSex from '@/components/AddEntry/PickerSex.vue'
 import PickerBreed from '@/components/AddEntry/PickerBreed.vue'
 import PickerCharacteristics from '@/components/AddEntry/PickerCharacteristics.vue'
 import ProgressTracker from '@/components/AddEntry/ProgressTracker.vue'
+import StarRating from '@/components/AddEntry/StarRating.vue'
 import UploadImage from '@/components/AddEntry/UploadImage.vue'
 import DropDownParents from '@/components/AddEntry/DropDownParents.vue'
 
