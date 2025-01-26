@@ -23,11 +23,20 @@ export const useEntryFormStore = defineStore('entryFormStore', {
   }),
   getters: {
     disableBottomSheetButton: (state) => state.selectionIds.size !== 2,
-    filteredEntriesForParentDropdown: (state) =>
-      state.filterByFavoriteAndFoundation
-        ? state.entries.filter((e) => e.isFoundation || e.isFavorited)
-        : state.entries
-  },
+    filteredEntriesForMotherDropdown: (state) => {
+  const baseFilter = state.filterByFavoriteAndFoundation
+    ? state.entries.filter((e) => e.isFoundation || e.isFavorited)
+    : state.entries;
+    
+  return baseFilter.filter((e) => e.sex === 'female');
+},
+filteredEntriesForFatherDropdown: (state) => {
+  const baseFilter = state.filterByFavoriteAndFoundation
+    ? state.entries.filter((e) => e.isFoundation || e.isFavorited)
+    : state.entries;
+    
+  return baseFilter.filter((e) => e.sex === 'male');
+}},
   actions: {
     async removeThisEntry(entryId) {
       const userStore = useUserStore()
