@@ -10,6 +10,12 @@
         <v-icon>mdi-arrow-left</v-icon>
         Flock Manager
       </v-btn>
+      <v-btn class="ml-2" color="info" density="compact" @click="editModeToggle = !editModeToggle">
+        <v-icon>mdi-note-edit</v-icon>
+      </v-btn>
+    </v-col>
+    <v-col>
+      Editing? - {{ editModeToggle }}
     </v-col>
   </v-row>
 
@@ -33,7 +39,7 @@ import { storeToRefs } from 'pinia'
 const smAndUp = inject('smAndUp')
 
 const entryFormStore = useEntryFormStore()
-const { isDoneLoadingEntries } = storeToRefs(entryFormStore)
+const { isDoneLoadingEntries, editModeToggle } = storeToRefs(entryFormStore)
 
 const route = useRoute()
 // a few components need to gracefully handle direct navigation.  This is one of them.

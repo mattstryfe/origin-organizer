@@ -15,6 +15,8 @@ export const useEntryFormStore = defineStore('entryFormStore', {
   state: () => ({
     formData: {},
     entries: [],
+    selectedEntry: {},
+    editModeToggle: false,
     selectionIds: new Map(), // Putting selections here because it might be used for multiple features (breeding, comparison, etc)
     isDoneLoadingEntries: null,
     showBottomSheet: false,
@@ -24,19 +26,20 @@ export const useEntryFormStore = defineStore('entryFormStore', {
   getters: {
     disableBottomSheetButton: (state) => state.selectionIds.size !== 2,
     filteredEntriesForMotherDropdown: (state) => {
-  const baseFilter = state.filterByFavoriteAndFoundation
-    ? state.entries.filter((e) => e.isFoundation || e.isFavorited)
-    : state.entries;
-    
-  return baseFilter.filter((e) => e.sex === 'female');
-},
-filteredEntriesForFatherDropdown: (state) => {
-  const baseFilter = state.filterByFavoriteAndFoundation
-    ? state.entries.filter((e) => e.isFoundation || e.isFavorited)
-    : state.entries;
-    
-  return baseFilter.filter((e) => e.sex === 'male');
-}},
+      const baseFilter = state.filterByFavoriteAndFoundation
+        ? state.entries.filter((e) => e.isFoundation || e.isFavorited)
+        : state.entries
+
+      return baseFilter.filter((e) => e.sex === 'female')
+    },
+    filteredEntriesForFatherDropdown: (state) => {
+      const baseFilter = state.filterByFavoriteAndFoundation
+        ? state.entries.filter((e) => e.isFoundation || e.isFavorited)
+        : state.entries
+
+      return baseFilter.filter((e) => e.sex === 'male')
+    }
+  },
   actions: {
     clearFormData() {
       this.formData = {}

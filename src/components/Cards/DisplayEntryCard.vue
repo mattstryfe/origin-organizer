@@ -76,18 +76,10 @@
 
     <v-divider class="my-1"></v-divider>
 
+    <!-- Characteristics Area -->
     <v-row dense no-gutters>
-      <v-col class="overflow-y-auto" style="max-height: 60px">
-        <v-chip
-          v-for="c in allEntryDetails.characteristics"
-          :key="c"
-          class="mr-1 text-grey lighten-2 mb-1"
-          size="x-small"
-          variant="outlined"
-        >
-          {{ c }}
-        </v-chip>
-      </v-col>
+      <picker-characteristics/>
+
     </v-row>
 
     <!-- bottom Controls -->
@@ -111,6 +103,7 @@ import { computed, onMounted } from 'vue'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 import DisplayEntryCardTopBar from '@/components/Cards/DisplayEntryCardTopBar.vue'
 import { storeToRefs } from 'pinia'
+import PickerCharacteristics from '@/components/AddEntry/PickerCharacteristics.vue'
 
 // New way to do props. both work
 const { entryId, allowCardDeselection } = defineProps({
@@ -151,6 +144,7 @@ const allEntryDetails = computed(() => entryFormStore.getEntryById(entryId))
 
 onMounted(async () => {
   await allEntryDetails.value.imageUrlGetter(allEntryDetails.value)
+  console.log('allEntryDetails', allEntryDetails.value)
 })
 </script>
 
