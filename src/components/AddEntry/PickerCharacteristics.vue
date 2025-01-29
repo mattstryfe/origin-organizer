@@ -1,4 +1,5 @@
 <template>
+  characteristicsToUse {{ characteristicsToUse }}
   <v-chip-group
     v-model="formData['characteristics']"
     class="pl-4 d-block"
@@ -49,6 +50,8 @@ watch(
       : [...characteristics]
 
     formData.value['characteristics'] = [...characteristics]
+    console.log('formData.value[\'characteristics\']', formData.value['characteristics'])
+
   },
   { immediate: true }
 )

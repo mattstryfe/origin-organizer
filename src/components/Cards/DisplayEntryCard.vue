@@ -100,7 +100,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 import DisplayEntryCardTopBar from '@/components/Cards/DisplayEntryCardTopBar.vue'
 import { storeToRefs } from 'pinia'
@@ -140,15 +140,13 @@ const deselectThisCard = (id) => {
     selectionIds.value.delete(id)
   }
 }
-console.log('entryId', entryId)
 
-const allEntryDetails = computed(() => entryFormStore.getEntryById(entryId))
+const allEntryDetails = ref(entryFormStore.getEntryById(entryId))
 
 onMounted(() => {
-
   allEntryDetails.value.imageUrlGetter(allEntryDetails.value)
-  console.log('allEntryDetails', allEntryDetails.value)
 })
+
 </script>
 
 <style scoped>
