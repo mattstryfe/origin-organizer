@@ -13,6 +13,7 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 
 export const useEntryFormStore = defineStore('entryFormStore', {
   state: () => ({
+    // schemaCharacteristicOptions: structuredClone(schemaCharacteristicOptions),
     formData: {},
     entries: [],
     // selectedEntry: {},

@@ -2,7 +2,7 @@
   <v-row class="flex-wrap">
     <flock-manager-filters></flock-manager-filters>
 
-    <v-col v-if="isLoadingEntries" class="v-row">
+    <template v-if="isLoadingEntries" >
       <v-skeleton-loader
         v-for="i in 12"
         :key="i"
@@ -11,19 +11,22 @@
         type="card-avatar, article, actions"
         width="300"
       ></v-skeleton-loader>
-    </v-col>
+    </template>
 
-    <display-entry-card
-      v-for="entry in entries"
-      :key="entry.entryId"
-      ref="entryRefs"
-      :allow-card-deselection="allowCardDeselection"
-      :card-height="smAndUp ? 400 : 300"
-      :card-width="smAndUp ? 300 : 210"
-      class="cust-border-trans"
-      :class="highlightThisCard(entry.entryId)"
-      :entry-id="entry.entryId"
-    ></display-entry-card>
+    <template v-if="!isLoadingEntries">
+      <display-entry-card
+        v-for="entry in entries"
+        :key="entry.entryId"
+        ref="entryRefs"
+        :allow-card-deselection="allowCardDeselection"
+        :card-height="smAndUp ? 400 : 300"
+        :card-width="smAndUp ? 300 : 210"
+        class="cust-border-trans"
+        :class="highlightThisCard(entry.entryId)"
+        :entry-id="entry.entryId"
+      ></display-entry-card>
+    </template>
+
 
     <create-breeding-navigation-drawer></create-breeding-navigation-drawer>
     <v-btn

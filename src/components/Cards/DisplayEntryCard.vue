@@ -78,8 +78,9 @@
 
     <!-- Characteristics Area -->
     <v-row dense no-gutters>
-      <picker-characteristics :characteristics="allEntryDetails.characteristics"/>
-
+      <picker-characteristics
+        :characteristics="allEntryDetails.characteristics"
+      />
     </v-row>
 
     <!-- bottom Controls -->
@@ -139,11 +140,13 @@ const deselectThisCard = (id) => {
     selectionIds.value.delete(id)
   }
 }
+console.log('entryId', entryId)
 
 const allEntryDetails = computed(() => entryFormStore.getEntryById(entryId))
 
-onMounted(async () => {
-  await allEntryDetails.value.imageUrlGetter(allEntryDetails.value)
+onMounted(() => {
+
+  allEntryDetails.value.imageUrlGetter(allEntryDetails.value)
   console.log('allEntryDetails', allEntryDetails.value)
 })
 </script>

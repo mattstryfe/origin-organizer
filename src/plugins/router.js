@@ -16,7 +16,7 @@ const routes = [
   { name: 'FlockManager', path: '/flockmanager', component: FlockManagerPage },
   {
     name: 'EntryDetails',
-    path: '/entrydetails/:id',
+    path: '/entrydetails/:entryId',
     component: EntryDetailsPage,
     props: true
   }
@@ -37,8 +37,11 @@ router.beforeEach(async (to, from) => {
   //   return { name: 'LandingPage'}
   // }
   // const entryFormStore = useEntryFormStore()
-  if (from.name === 'EntryDetails') {
+  if (to.name === 'AddEntry') {
+    useEntryFormStore().editModeToggle = true
+  } else {
     useEntryFormStore().editModeToggle = false
+
   }
 })
 

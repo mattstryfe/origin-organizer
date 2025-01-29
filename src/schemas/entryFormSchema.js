@@ -74,7 +74,7 @@ export const schemaChickenBreedOptions = [
   'Welsummer',
   'Dominique'
 ]
-export const schemaCharacteristicOptions = [
+export const rawSchemaCharacteristicOptions = [
   'flighty',
   'bold',
   'small',
