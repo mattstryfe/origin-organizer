@@ -78,7 +78,7 @@
 
     <!-- Characteristics Area -->
     <v-row dense no-gutters>
-      <picker-characteristics/>
+      <picker-characteristics :characteristics="allEntryDetails.characteristics"/>
 
     </v-row>
 
