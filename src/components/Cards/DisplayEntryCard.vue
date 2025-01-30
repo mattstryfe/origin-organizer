@@ -21,7 +21,7 @@
 
     <!-- top bar -->
     <display-entry-card-top-bar
-      :entry-id="entryId"
+      :entry-id="allEntryDetails.entryId"
       :is-favorited="allEntryDetails.isFavorited"
       :is-foundation="allEntryDetails.isFoundation"
       :sex="allEntryDetails.sex"
@@ -92,7 +92,7 @@
           icon="mdi-delete-outline"
           size="medium"
           variant="text"
-          @click="entryFormStore.removeThisEntry(entryId)"
+          @click="entryFormStore.removeThisEntry(allEntryDetails.entryId)"
         ></v-btn>
       </v-col>
     </v-row>

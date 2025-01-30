@@ -17,6 +17,7 @@ export const useEntryFormStore = defineStore('entryFormStore', {
     formData: {},
     entries: [],
     selectedEntry: {},
+    hasEntryChanged: false,
     editModeToggle: false,
     selectionIds: new Map(), // Putting selections here because it might be used for multiple features (breeding, comparison, etc)
     isDoneLoadingEntries: null,

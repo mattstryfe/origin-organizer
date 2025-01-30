@@ -21,9 +21,9 @@
       </v-btn>
       <v-btn
         class="ml-2"
-        :color="updateThisEntry ? 'primary' : 'grey'"
+        :color="hasEntryChanged ? 'primary' : 'grey'"
         density="compact"
-        :variant="updateThisEntry ? 'elevated' : 'outlined'"
+        :variant="hasEntryChanged ? 'elevated' : 'outlined'"
         @click="entryFormStore.updateEntryInDb"
       >
         <v-icon>mdi-content-save</v-icon>
@@ -36,7 +36,7 @@
       v-if="isDoneLoadingEntries"
       :card-height="smAndUp ? 800 : 600"
       :card-width="smAndUp ? 600 : 450"
-      :entry-id="route.params.entryId"
+      :entry-id="entryId"
     ></display-entry-card>
   </v-row>
 </template>
@@ -46,14 +46,18 @@ import { inject } from 'vue'
 import router from '@/plugins/router'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 import DisplayEntryCard from '@/components/Cards/DisplayEntryCard.vue'
-import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 const smAndUp = inject('smAndUp')
 
+// Comes in from router props:true
+const { entryId } = defineProps({
+  entryId: {
+    type: String,
+    default: 'xxx',
+  }
+})
 const entryFormStore = useEntryFormStore()
-const { isDoneLoadingEntries, editModeToggle } = storeToRefs(entryFormStore)
-
-const route = useRoute()
+const { isDoneLoadingEntries, editModeToggle, hasEntryChanged } = storeToRefs(entryFormStore)
 </script>
 
 <style scoped></style>
