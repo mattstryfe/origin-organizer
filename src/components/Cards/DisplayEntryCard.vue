@@ -127,7 +127,7 @@ const { entryId, allowCardDeselection } = defineProps({
 })
 
 const entryFormStore = useEntryFormStore()
-const { selectionIds } = storeToRefs(entryFormStore)
+const { selectionIds, selectedEntry } = storeToRefs(entryFormStore)
 
 const showOverlay = computed(() => {
   if (selectionIds.value.length === 0) return false
@@ -145,6 +145,7 @@ const allEntryDetails = ref(entryFormStore.getEntryById(entryId))
 
 onMounted(() => {
   allEntryDetails.value.imageUrlGetter(allEntryDetails.value)
+  selectedEntry.value = allEntryDetails.value
 })
 
 </script>

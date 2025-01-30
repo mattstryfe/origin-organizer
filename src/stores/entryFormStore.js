@@ -16,7 +16,7 @@ export const useEntryFormStore = defineStore('entryFormStore', {
     // schemaCharacteristicOptions: structuredClone(schemaCharacteristicOptions),
     formData: {},
     entries: [],
-    // selectedEntry: {},
+    selectedEntry: {},
     editModeToggle: false,
     selectionIds: new Map(), // Putting selections here because it might be used for multiple features (breeding, comparison, etc)
     isDoneLoadingEntries: null,
@@ -154,6 +154,24 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       if (this.attachments.length > 0) {
         await this.uploadImages(flockId, entryId, this.formData.photoIds[0])
       }
+
+      // Now also re-query to re-sync everything
+      await this.getExistingEntries()
+    },
+    async updateEntryInDb() {
+      //flip edit toggle back to false
+      this.editModeToggle = false
+      const userStore = useUserStore()
+      const flockId = userStore.getUserUid
+
+      // Create reference to the nested document
+      const entryRef = doc(db, 'flocks', flockId, 'entries', this.selectedEntry.entryId)
+
+      console.log('entryRef', entryRef)
+      await updateDoc(entryRef, {
+        ...this.formData,
+        updatedAt: new Date()
+      })
 
       // Now also re-query to re-sync everything
       await this.getExistingEntries()

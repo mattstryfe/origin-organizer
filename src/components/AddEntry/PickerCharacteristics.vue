@@ -1,5 +1,4 @@
 <template>
-  characteristicsToUse {{ characteristicsToUse }}
   <v-chip-group
     v-model="formData['characteristics']"
     class="pl-4 d-block"
@@ -38,6 +37,7 @@ const { characteristics } = defineProps({
   }
 })
 
+// TODO: Look using vueUse for snapshotting this and checking differences...
 const characteristicsToUse = ref([])
 const schemaCharacteristicOptions = structuredClone(rawSchemaCharacteristicOptions);
 // Characteristics need to be wired up to the schema AND the options available (during edit mode)
@@ -50,7 +50,7 @@ watch(
       : [...characteristics]
 
     formData.value['characteristics'] = [...characteristics]
-    console.log('formData.value[\'characteristics\']', formData.value['characteristics'])
+    console.log('formData.value[\'characteristics\']', formData.value)
 
   },
   { immediate: true }

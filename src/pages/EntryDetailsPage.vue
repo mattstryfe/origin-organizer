@@ -19,6 +19,15 @@
       >
         <v-icon>mdi-note-edit</v-icon>
       </v-btn>
+      <v-btn
+        class="ml-2"
+        :color="updateThisEntry ? 'primary' : 'grey'"
+        density="compact"
+        :variant="updateThisEntry ? 'elevated' : 'outlined'"
+        @click="entryFormStore.updateEntryInDb"
+      >
+        <v-icon>mdi-content-save</v-icon>
+      </v-btn>
     </v-col>
   </v-row>
 
