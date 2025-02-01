@@ -79,7 +79,7 @@
     <!-- Characteristics Area -->
     <v-row dense no-gutters>
       <picker-characteristics
-        :characteristics="allEntryDetails.characteristics"
+        v-model:characteristics="allEntryDetails.characteristics"
       />
     </v-row>
 
@@ -145,7 +145,7 @@ const allEntryDetails = ref(entryFormStore.getEntryById(entryId))
 
 onMounted(() => {
   allEntryDetails.value.imageUrlGetter(allEntryDetails.value)
-  selectedEntry.value = allEntryDetails.value
+  // selectedEntry.value = allEntryDetails.value
 })
 
 </script>

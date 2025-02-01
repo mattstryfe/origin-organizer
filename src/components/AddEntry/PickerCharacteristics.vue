@@ -1,16 +1,17 @@
 <template>
   <v-chip-group
-    v-model="formData['characteristics']"
-    class="pl-4 d-block"
+    v-model="characteristics"
+    class="d-block"
     column
     multiple
   >
     <v-chip
-      v-for="(field, index) in characteristicsToUse"
-      :key="index"
-      class="mb-1"
+      v-for="field in characteristicsToUse"
+      :key="field"
+      class="mb-1 chip"
       :class="{ 'read-only-chip': !editModeToggle }"
       color="green-darken-3"
+      label
       size="small"
       :value="field"
       variant="outlined"
@@ -23,44 +24,39 @@
 <script setup>
 import { storeToRefs } from 'pinia'
 import { useEntryFormStore } from '@/stores/entryFormStore'
-import { ref, watch } from 'vue'
+import { computed } from 'vue'
 import { rawSchemaCharacteristicOptions } from '@/schemas/entryFormSchema'
 
 const entryFormStore = useEntryFormStore()
-const { formData, editModeToggle } =
+const { editModeToggle } =
   storeToRefs(entryFormStore)
 
-const { characteristics } = defineProps({
-  characteristics: {
-    type: Array,
-    default: () => []
-  }
-})
+const characteristics = defineModel('characteristics', { default: () => [] });
 
 // TODO: Look using vueUse for snapshotting this and checking differences...
-const characteristicsToUse = ref([])
 const schemaCharacteristicOptions = structuredClone(rawSchemaCharacteristicOptions);
 // Characteristics need to be wired up to the schema AND the options available (during edit mode)
 // because of this, we need to tether and re-tether reactivity during editMode toggles
-watch(
-  () => editModeToggle.value,
-  (newValue) => {
-    characteristicsToUse.value = newValue
-      ? [...new Set([...characteristics, ...schemaCharacteristicOptions])]
-      : [...characteristics]
 
-    formData.value['characteristics'] = [...characteristics]
-    console.log('formData.value[\'characteristics\']', formData.value)
-
-  },
-  { immediate: true }
-)
+// Compute available characteristics reactively
+const characteristicsToUse = computed(() => {
+  return editModeToggle.value
+    ? [...new Set([...characteristics.value, ...schemaCharacteristicOptions])]
+    : characteristics.value
+})
 </script>
 
 <style scoped>
+.chip {
+  max-width: 75px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .read-only-chip {
   pointer-events: none;
-  opacity: 0.8;
-  border-color: rgba(26, 195, 11, 0.3);
+  //opacity: 0.8;
+  //border-color: rgba(26, 195, 11, 0.3);
 }
 </style>

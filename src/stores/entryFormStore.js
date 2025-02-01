@@ -16,14 +16,13 @@ export const useEntryFormStore = defineStore('entryFormStore', {
     // schemaCharacteristicOptions: structuredClone(schemaCharacteristicOptions),
     formData: {},
     entries: [],
-    selectedEntry: {},
     hasEntryChanged: false,
     editModeToggle: false,
     selectionIds: new Map(), // Putting selections here because it might be used for multiple features (breeding, comparison, etc)
     isDoneLoadingEntries: null,
     showBottomSheet: false,
     attachments: [],
-    filterByFavoriteAndFoundation: false
+    filterByFavoriteAndFoundation: false,
   }),
   getters: {
     disableBottomSheetButton: (state) => state.selectionIds.size !== 2,
@@ -159,23 +158,22 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       // Now also re-query to re-sync everything
       await this.getExistingEntries()
     },
-    async updateEntryInDb() {
-      //flip edit toggle back to false
-      this.editModeToggle = false
+    async updateEntryInDb(entryId) {
       const userStore = useUserStore()
       const flockId = userStore.getUserUid
+      const entry = this.getEntryById(entryId)
 
       // Create reference to the nested document
-      const entryRef = doc(db, 'flocks', flockId, 'entries', this.selectedEntry.entryId)
+      const entryRef = doc(db, 'flocks', flockId, 'entries', entryId)
 
-      console.log('entryRef', entryRef)
       await updateDoc(entryRef, {
-        ...this.formData,
+        'characteristics': entry.characteristics,  // todo this is only temp
         updatedAt: new Date()
       })
 
       // Now also re-query to re-sync everything
       await this.getExistingEntries()
+      this.editModeToggle = false
     },
     async uploadImages(flockId, entryId, uniqueId) {
       // Now upload file

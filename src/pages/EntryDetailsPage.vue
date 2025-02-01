@@ -24,7 +24,7 @@
         :color="hasEntryChanged ? 'primary' : 'grey'"
         density="compact"
         :variant="hasEntryChanged ? 'elevated' : 'outlined'"
-        @click="entryFormStore.updateEntryInDb"
+        @click="entryFormStore.updateEntryInDb(entryId)"
       >
         <v-icon>mdi-content-save</v-icon>
       </v-btn>

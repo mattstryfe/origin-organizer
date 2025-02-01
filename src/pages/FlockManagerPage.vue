@@ -2,7 +2,7 @@
   <v-row class="flex-wrap">
     <flock-manager-filters></flock-manager-filters>
 
-    <template v-if="isLoadingEntries" >
+    <template v-if="!isDoneLoadingEntries" >
       <v-skeleton-loader
         v-for="i in 12"
         :key="i"
@@ -13,13 +13,13 @@
       ></v-skeleton-loader>
     </template>
 
-    <template v-if="!isLoadingEntries">
+    <template v-if="isDoneLoadingEntries">
       <display-entry-card
         v-for="entry in entries"
         :key="entry.entryId"
         ref="entryRefs"
         :allow-card-deselection="allowCardDeselection"
-        :card-height="smAndUp ? 400 : 300"
+        :card-height="smAndUp ? 800 : 300"
         :card-width="smAndUp ? 300 : 210"
         class="cust-border-trans"
         :class="highlightThisCard(entry.entryId)"
@@ -58,7 +58,7 @@ const entryFormStore = useEntryFormStore()
 const {
   entries,
   selectionIds,
-  isLoadingEntries,
+  isDoneLoadingEntries,
   showBottomSheet,
   disableBottomSheetButton
 } = storeToRefs(entryFormStore)
