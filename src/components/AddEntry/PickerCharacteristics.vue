@@ -1,17 +1,12 @@
 <template>
-  <v-chip-group
-    v-model="characteristics"
-    class="d-block"
-    column
-    multiple
-  >
+  <v-chip-group v-model="characteristics" class="d-block" column multiple>
     <v-chip
       v-for="field in characteristicsToUse"
       :key="field"
-      class="mb-1 chip"
+      class="mb-1"
       :class="{ 'read-only-chip': !editModeToggle }"
-      color="green-darken-3"
       label
+      selected-class="cust-selected-chip"
       size="small"
       :value="field"
       variant="outlined"
@@ -28,16 +23,16 @@ import { computed } from 'vue'
 import { rawSchemaCharacteristicOptions } from '@/schemas/entryFormSchema'
 
 const entryFormStore = useEntryFormStore()
-const { editModeToggle } =
-  storeToRefs(entryFormStore)
+const { editModeToggle } = storeToRefs(entryFormStore)
 
-const characteristics = defineModel('characteristics', { default: () => [] });
+const characteristics = defineModel('characteristics', { default: () => [] })
 
 // TODO: Look using vueUse for snapshotting this and checking differences...
-const schemaCharacteristicOptions = structuredClone(rawSchemaCharacteristicOptions);
+const schemaCharacteristicOptions = structuredClone(
+  rawSchemaCharacteristicOptions
+)
 // Characteristics need to be wired up to the schema AND the options available (during edit mode)
 // because of this, we need to tether and re-tether reactivity during editMode toggles
-
 // Compute available characteristics reactively
 const characteristicsToUse = computed(() => {
   return editModeToggle.value
@@ -47,16 +42,15 @@ const characteristicsToUse = computed(() => {
 </script>
 
 <style scoped>
+.cust-selected-chip {
+  color: rgba(34, 139, 34, 0.57);
+}
 .chip {
   max-width: 75px;
   text-align: center;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 .read-only-chip {
   pointer-events: none;
-  //opacity: 0.8;
-  //border-color: rgba(26, 195, 11, 0.3);
 }
 </style>

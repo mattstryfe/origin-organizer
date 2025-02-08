@@ -19,7 +19,7 @@
         :key="entry.entryId"
         ref="entryRefs"
         :allow-card-deselection="allowCardDeselection"
-        :card-height="smAndUp ? 800 : 300"
+        :card-height="smAndUp ? 400 : 300"
         :card-width="smAndUp ? 300 : 210"
         class="cust-border-trans"
         :class="highlightThisCard(entry.entryId)"

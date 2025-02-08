@@ -77,7 +77,7 @@
     <v-divider class="my-1"></v-divider>
 
     <!-- Characteristics Area -->
-    <v-row dense no-gutters>
+    <v-row class="overflow-scroll" dense no-gutters>
       <picker-characteristics
         v-model:characteristics="allEntryDetails.characteristics"
       />
