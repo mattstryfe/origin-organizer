@@ -7,13 +7,7 @@
       density="compact"
       label="Multiple"
     ></v-switch>
-    <v-btn
-      color="success"
-      variant="outlined"
-      @click="handleSave"
-    >
-      Save
-    </v-btn>
+    <v-btn color="success" variant="outlined" @click="handleSave">Save</v-btn>
   </v-row>
 </template>
 
@@ -28,7 +22,7 @@ const entryFormStore = useEntryFormStore()
 const handleSave = async () => {
   await entryFormStore.saveEntryToDb()
   if (!isMultiple.value) {
-    console.log(" here")
+    console.log(' here')
     entryFormStore.clearFormData()
   }
 }

@@ -52,15 +52,37 @@ export const useEntryFormStore = defineStore('entryFormStore', {
 
       const entriesCollection = collection(db, 'flocks', flockId, 'entries')
 
-      console.log('this.entries', this.entries)
       onSnapshot(
         entriesCollection,
         (querySnapshot) => {
-          this.entries = querySnapshot.docs.map((doc) => ({
+          console.log('🔄 Firestore updated, syncing entries...')
+
+          const updatedEntries = querySnapshot.docs.map((doc) => ({
             entryId: doc.id,
             ...doc.data(),
             imageUrlGetter: (entry) => this.getEntryImageUrls(entry)
           }))
+
+          // ✅ Instead of replacing the entire array, update each entry
+          updatedEntries.forEach((newEntry) => {
+            const existingEntry = this.entries.find(
+              (entry) => entry.entryId === newEntry.entryId
+            )
+
+            if (existingEntry) {
+              // ✅ Update existing entry object properties (keeps deep reactivity)
+              Object.assign(existingEntry, newEntry)
+            } else {
+              // ✅ If entry is new, add it
+              this.entries.push(newEntry)
+            }
+          })
+
+          // ✅ Remove any deleted entries
+          this.entries = this.entries.filter((entry) =>
+            updatedEntries.some((e) => e.entryId === entry.entryId)
+          )
+
           this.isDoneLoadingEntries = true
         },
         (error) => {
@@ -79,9 +101,6 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       const entryRef = doc(db, 'flocks', flockId, 'entries', entryId)
 
       await deleteDoc(entryRef)
-
-      // Now also re-query to re-sync everything
-      // await this.getExistingEntries()
     },
     async foundationThisEntry(entryId, isFoundation) {
       const userStore = useUserStore()
@@ -94,9 +113,6 @@ export const useEntryFormStore = defineStore('entryFormStore', {
         isFoundation: !isFoundation,
         updatedAt: new Date()
       })
-
-      // Now also re-query to re-sync everything
-      // await this.getExistingEntries()
     },
     async favoriteThisEntry(entryId, isFavorite) {
       const userStore = useUserStore()
@@ -109,9 +125,6 @@ export const useEntryFormStore = defineStore('entryFormStore', {
         isFavorited: !isFavorite,
         updatedAt: new Date()
       })
-
-      // Now also re-query to re-sync everything
-      // await this.getExistingEntries()
     },
     getEntryById(entryId) {
       return this.entries.find((entry) => entry.entryId === entryId)
@@ -135,32 +148,6 @@ export const useEntryFormStore = defineStore('entryFormStore', {
         return ''
       }
     },
-    // async getExistingEntries() {
-    //   this.isDoneLoadingEntries = false
-    //   const userStore = useUserStore()
-    //
-    //   // prevents firing before logged in
-    //   if (!userStore.userInfo) return
-    //
-    //   const flockId = userStore.getUserUid
-    //
-    //   // get snapshot of entries
-    //   const querySnapshot = await getDocs(
-    //     collection(db, 'flocks', flockId, 'entries')
-    //   )
-    //
-    //   // map over entries
-    //   this.entries = querySnapshot.docs.map((doc) => {
-    //     const docData = doc.data()
-    //     const entryId = doc.id
-    //     return {
-    //       entryId,
-    //       ...docData,
-    //       imageUrlGetter: (entry) => this.getEntryImageUrls(entry)
-    //     }
-    //   })
-    //   this.isDoneLoadingEntries = true
-    // },
     async saveEntryToDb() {
       const userStore = useUserStore()
       const flockId = userStore.getUserUid
@@ -180,9 +167,6 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       if (this.attachments.length > 0) {
         await this.uploadImages(flockId, entryId, this.formData.photoIds[0])
       }
-
-      // Now also re-query to re-sync everything
-      // await this.getExistingEntries()
     },
     async updateEntryInDb(entryId) {
       const userStore = useUserStore()
