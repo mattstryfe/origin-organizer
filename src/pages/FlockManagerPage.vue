@@ -2,7 +2,7 @@
   <v-row class="flex-wrap">
     <flock-manager-filters></flock-manager-filters>
 
-    <template v-if="!isDoneLoadingEntries" >
+    <template v-if="!isDoneLoadingEntries">
       <v-skeleton-loader
         v-for="i in 12"
         :key="i"
@@ -26,7 +26,6 @@
         :entry-id="entry.entryId"
       ></display-entry-card>
     </template>
-
 
     <create-breeding-navigation-drawer></create-breeding-navigation-drawer>
     <v-btn
