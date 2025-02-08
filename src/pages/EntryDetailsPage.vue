@@ -10,6 +10,24 @@
         <v-icon>mdi-arrow-left</v-icon>
         Flock Manager
       </v-btn>
+      <v-btn
+        class="ml-2"
+        :color="editModeToggle ? 'primary' : 'grey'"
+        density="compact"
+        :variant="editModeToggle ? 'elevated' : 'outlined'"
+        @click="editModeToggle = !editModeToggle"
+      >
+        <v-icon>mdi-note-edit</v-icon>
+      </v-btn>
+      <v-btn
+        class="ml-2"
+        :color="hasEntryChanged ? 'primary' : 'grey'"
+        density="compact"
+        :variant="hasEntryChanged ? 'elevated' : 'outlined'"
+        @click="entryFormStore.updateEntryInDb(entryId)"
+      >
+        <v-icon>mdi-content-save</v-icon>
+      </v-btn>
     </v-col>
   </v-row>
 
@@ -18,32 +36,28 @@
       v-if="isDoneLoadingEntries"
       :card-height="smAndUp ? 800 : 600"
       :card-width="smAndUp ? 600 : 450"
-      :entry-id="entry.entryId"
+      :entry-id="entryId"
     ></display-entry-card>
   </v-row>
 </template>
 
 <script setup>
-import { computed, inject } from 'vue'
+import { inject } from 'vue'
 import router from '@/plugins/router'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 import DisplayEntryCard from '@/components/Cards/DisplayEntryCard.vue'
-import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 const smAndUp = inject('smAndUp')
 
+// Comes in from router props:true
+const { entryId } = defineProps({
+  entryId: {
+    type: String,
+    default: 'xxx',
+  }
+})
 const entryFormStore = useEntryFormStore()
-const { isDoneLoadingEntries } = storeToRefs(entryFormStore)
-
-const route = useRoute()
-// a few components need to gracefully handle direct navigation.  This is one of them.
-// because of that, we have 2 hooks which need to be de-conflicted
-
-// This mostly handles direct navigation by watching for the query to come back
-// When the user is within the app, this information is already available so rendering can
-// be handled via mounted
-// the router finishes before the queries do.
-const entry = computed(() => entryFormStore.getEntryById(route.params.id))
+const { isDoneLoadingEntries, editModeToggle, hasEntryChanged } = storeToRefs(entryFormStore)
 </script>
 
 <style scoped></style>

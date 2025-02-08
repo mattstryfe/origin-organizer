@@ -21,7 +21,7 @@
 
     <!-- top bar -->
     <display-entry-card-top-bar
-      :entry-id="entryId"
+      :entry-id="allEntryDetails.entryId"
       :is-favorited="allEntryDetails.isFavorited"
       :is-foundation="allEntryDetails.isFoundation"
       :sex="allEntryDetails.sex"
@@ -76,18 +76,11 @@
 
     <v-divider class="my-1"></v-divider>
 
-    <v-row dense no-gutters>
-      <v-col class="overflow-y-auto" style="max-height: 60px">
-        <v-chip
-          v-for="c in allEntryDetails.characteristics"
-          :key="c"
-          class="mr-1 text-grey lighten-2 mb-1"
-          size="x-small"
-          variant="outlined"
-        >
-          {{ c }}
-        </v-chip>
-      </v-col>
+    <!-- Characteristics Area -->
+    <v-row class="overflow-scroll" dense no-gutters>
+      <picker-characteristics
+        v-model:characteristics="allEntryDetails.characteristics"
+      />
     </v-row>
 
     <!-- bottom Controls -->
@@ -99,7 +92,7 @@
           icon="mdi-delete-outline"
           size="medium"
           variant="text"
-          @click="entryFormStore.removeThisEntry(entryId)"
+          @click="entryFormStore.removeThisEntry(allEntryDetails.entryId)"
         ></v-btn>
       </v-col>
     </v-row>
@@ -107,10 +100,11 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 import DisplayEntryCardTopBar from '@/components/Cards/DisplayEntryCardTopBar.vue'
 import { storeToRefs } from 'pinia'
+import PickerCharacteristics from '@/components/AddEntry/PickerCharacteristics.vue'
 
 // New way to do props. both work
 const { entryId, allowCardDeselection } = defineProps({
@@ -147,10 +141,10 @@ const deselectThisCard = (id) => {
   }
 }
 
-const allEntryDetails = computed(() => entryFormStore.getEntryById(entryId))
+const allEntryDetails = ref(entryFormStore.getEntryById(entryId))
 
-onMounted(async () => {
-  await allEntryDetails.value.imageUrlGetter(allEntryDetails.value)
+onMounted(() => {
+  allEntryDetails.value.imageUrlGetter(allEntryDetails.value)
 })
 </script>
 

@@ -46,7 +46,7 @@
         icon="mdi-information-outline"
         size="medium"
         variant="text"
-        @click="router.push({ name: 'EntryDetails', params: { id: entryId } })"
+        @click="router.push({ name: 'EntryDetails', params: { entryId } })"
       ></v-btn>
     </v-col>
   </v-row>
@@ -77,5 +77,4 @@ const { entryId, sex, isFavorited, isFoundation } = defineProps({
 })
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

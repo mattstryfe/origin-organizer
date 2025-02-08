@@ -106,7 +106,8 @@ export const useUserStore = defineStore('userStore', {
         this.userInfo = userDoc.data()
 
         // Also init entry query
-        await useEntryFormStore().getExistingEntries()
+        // await useEntryFormStore().getExistingEntries()
+        await useEntryFormStore().setupEntriesListener()
       } catch (e) {
         console.log('no worky', e)
       }
