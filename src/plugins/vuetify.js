@@ -11,11 +11,17 @@ export const vuetify = createVuetify({
   directives,
   components: {
     ...components,
-    VFileUpload,
+    VFileUpload
   },
-  // components,
   theme: {
-    defaultTheme: 'dark'
+    defaultTheme: 'dark',
+    themes: {
+      dark: {
+        colors: {
+          'success-2': '#228b228f'
+        }
+      }
+    }
   },
   icons: {
     defaultSet: 'mdi',

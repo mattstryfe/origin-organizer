@@ -5,17 +5,15 @@ import {
   collection,
   deleteDoc,
   doc,
-  getDocs,
   updateDoc,
   onSnapshot
 } from 'firebase/firestore'
 import { db, storage } from '@/plugins/firebase'
-import { useFirestore, useCollection } from 'vuefire'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
+import { useNotificationsStore } from '@/stores/notificationsStore'
 
 export const useEntryFormStore = defineStore('entryFormStore', {
   state: () => ({
-    // schemaCharacteristicOptions: structuredClone(schemaCharacteristicOptions),
     formData: {},
     entries: [],
     hasEntryChanged: false,
@@ -47,6 +45,7 @@ export const useEntryFormStore = defineStore('entryFormStore', {
     // **🔥 Use VueFire to Make Queries Reactive**
     setupEntriesListener() {
       const userStore = useUserStore()
+      const notificationsStore = useNotificationsStore()
       const flockId = userStore.getUserUid
       if (!flockId) return
 
@@ -55,37 +54,57 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       onSnapshot(
         entriesCollection,
         (querySnapshot) => {
-          console.log('🔄 Firestore updated, syncing entries...')
+          console.log('🔄 Firestore updated, syncing entries...', querySnapshot)
 
-          const updatedEntries = querySnapshot.docs.map((doc) => ({
-            entryId: doc.id,
-            ...doc.data(),
-            imageUrlGetter: (entry) => this.getEntryImageUrls(entry)
-          }))
+          const updatedEntriesMap = new Map()
+          const currentIds = new Set(this.entries.map((e) => e.entryId))
 
-          // ✅ Instead of replacing the entire array, update each entry
-          updatedEntries.forEach((newEntry) => {
-            const existingEntry = this.entries.find(
-              (entry) => entry.entryId === newEntry.entryId
-            )
-
-            if (existingEntry) {
-              // ✅ Update existing entry object properties (keeps deep reactivity)
-              Object.assign(existingEntry, newEntry)
-            } else {
-              // ✅ If entry is new, add it
-              this.entries.push(newEntry)
+          // Listener that is always running
+          querySnapshot.docChanges().forEach((change) => {
+            // unpack entries and attach imageGetter
+            const newEntry = {
+              entryId: change.doc.id,
+              ...change.doc.data(),
+              imageUrlGetter: (entry) => this.getEntryImageUrls(entry)
             }
+
+            console.log('change type', change)
+            updatedEntriesMap.set(newEntry.entryId, newEntry)
+
+            const handlers = {
+              added: () => {
+                if (!currentIds.has(newEntry.entryId)) {
+                  this.entries.push(newEntry)
+                  notificationsStore.addNotification('found', newEntry.entryId)
+                }
+              },
+              modified: () => {
+                const existingEntry = this.entries.find(
+                  (e) => e.entryId === newEntry.entryId
+                )
+                if (existingEntry) {
+                  Object.assign(existingEntry, newEntry) // Keeps Vue reactivity
+                  notificationsStore.addNotification(
+                    'update',
+                    existingEntry.entryId
+                  )
+                }
+              },
+              removed: () => {
+                this.entries = this.entries.filter(
+                  (e) => e.entryId !== newEntry.entryId
+                )
+                notificationsStore.addNotification('removed', newEntry.entryId)
+              }
+            }
+
+            // Execute object literal logic
+            handlers[change.type]?.()
           })
-
-          // ✅ Remove any deleted entries
-          this.entries = this.entries.filter((entry) =>
-            updatedEntries.some((e) => e.entryId === entry.entryId)
-          )
-
           this.isDoneLoadingEntries = true
         },
         (error) => {
+          notificationsStore.addNotification('error')
           console.error('Error fetching entries:', error)
         }
       )
@@ -181,8 +200,6 @@ export const useEntryFormStore = defineStore('entryFormStore', {
         updatedAt: new Date()
       })
 
-      // Now also re-query to re-sync everything
-      // await this.getExistingEntries()
       this.editModeToggle = false
     },
     async uploadImages(flockId, entryId, uniqueId) {
