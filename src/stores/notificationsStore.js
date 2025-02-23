@@ -11,7 +11,7 @@ export const useNotificationsStore = defineStore('notifications', {
         id: entryId,
         type,
         show: true,
-        timeout: 400000,
+        timeout: 2000,
         prependIcon: 'mdi-information-outline'
       }
       switch (type) {

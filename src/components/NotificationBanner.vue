@@ -1,53 +1,39 @@
 <template>
-  <v-container
-    style="
-      position: fixed;
-      bottom: 40px;
-      right: 0px;
-      z-index: 9999;
-      max-height: 100%;
-      border: 1px solid blue;
-      background: transparent;
-      display: flex;
-      flex-direction: column-reverse;
-      align-items: flex-end;
-    "
+  <v-snackbar
+    v-for="(roa, index) in notifications"
+    :key="roa.id"
+    v-model="roa.show"
+    class="ma-0 pa-0"
+    :style="{ bottom: `${(index + 1) * 60}px` }"
+    :timeout="roa.timeout"
+    variant="outlined"
+    @update:model-value="removeNotification(roa.id)"
   >
-    <v-snackbar
-      v-for="(roa, index) in notifications"
-      :key="roa.id"
-      v-model="roa.show"
-      class="ma-0 pa-0"
-      :style="{ bottom: `${(index + 1) * 60}px` }"
-      :timeout="roa.timeout"
-      variant="outlined"
-      @update:model-value="removeNotification(roa.id)"
+    <v-card
+      append-icon="mdi-close"
+      :color="roa.type"
+      density="compact"
+      height="55"
+      :subtitle="roa.subtitle"
+      :title="roa.id"
+      width="375"
     >
-      <v-card
-        append-icon="mdi-close"
-        :color="roa.type"
-        density="compact"
-        height="55"
-        :subtitle="roa.subtitle"
-        :title="roa.id"
-        width="375"
-      >
-        <template #prepend>
-          <v-icon class="cust-prepend-icon" color="blue-darken-2" size="30">
-            {{ roa.prependIcon }}
-          </v-icon>
-        </template>
+      <template #prepend>
+        <v-icon class="cust-prepend-icon" color="blue-darken-2" size="30">
+          {{ roa.prependIcon }}
+        </v-icon>
+      </template>
 
-        <template #append>
-          <v-btn
-            class="cust-append-icon"
-            icon="mdi-close"
-            variant="plain"
-          ></v-btn>
-        </template>
-      </v-card>
-    </v-snackbar>
-  </v-container>
+      <template #append>
+        <v-btn
+          class="cust-append-icon"
+          icon="mdi-close"
+          variant="plain"
+          @click="removeNotification(roa.id)"
+        ></v-btn>
+      </template>
+    </v-card>
+  </v-snackbar>
 </template>
 
 <script setup>

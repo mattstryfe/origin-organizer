@@ -1,6 +1,6 @@
 <template>
   <!-- filters -->
-  <v-col cols="12">
+  <v-col class="ma-0 pa-0" cols="12">
     <v-chip-group
       v-model="filter"
       column
@@ -20,9 +20,6 @@
         Criteria
       </v-chip>
     </v-chip-group>
-    <span class="text-caption mr-2">Filter choices: {{ filter }}</span>
-
-    <!-- Add filtering components here populated by info from queries -->
   </v-col>
 </template>
 
