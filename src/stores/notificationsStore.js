@@ -12,7 +12,8 @@ export const useNotificationsStore = defineStore('notifications', {
         type,
         show: true,
         timeout: 2000,
-        prependIcon: 'mdi-information-outline'
+        prependIcon: 'mdi-information-outline',
+        iconColor: 'blue-darken-2'
       }
       switch (type) {
         case 'found':
@@ -24,6 +25,8 @@ export const useNotificationsStore = defineStore('notifications', {
           break
         case 'removed':
           msg.subtitle = ` has been removed successfully!`
+          msg.prependIcon = 'mdi-delete'
+          msg.iconColor = 'red-darken-2'
           break
         case 'error':
           msg.subtitle = 'Something went wrong'

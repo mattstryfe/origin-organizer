@@ -19,7 +19,7 @@
       width="375"
     >
       <template #prepend>
-        <v-icon class="cust-prepend-icon" color="blue-darken-2" size="30">
+        <v-icon class="cust-prepend-icon" :color="roa.iconColor" size="30">
           {{ roa.prependIcon }}
         </v-icon>
       </template>
