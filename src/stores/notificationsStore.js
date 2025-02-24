@@ -2,10 +2,19 @@ import { defineStore } from 'pinia'
 
 export const useNotificationsStore = defineStore('notifications', {
   state: () => ({
-    notifications: []
+    notifications: [],
+    didUserConfirmDelete: false,
+    toggleConfirmationDialog: false,
+    confirmationResolver: null
   }),
 
   actions: {
+    waitForConfirmation() {
+      return new Promise((resolve, reject) => {
+        this.confirmationResolver = resolve
+        this.toggleConfirmationDialog = true
+      })
+    },
     addNotification(type = 'found', entryId) {
       let msg = {
         id: entryId,

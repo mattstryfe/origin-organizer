@@ -7,6 +7,7 @@
     >
       <v-container fluid>
         <notification-banner />
+        <confirmation-dialog />
 
         <router-view></router-view>
       </v-container>
@@ -24,6 +25,7 @@ import { onMounted, provide } from 'vue'
 import { useUserStore } from '@/stores/userStore'
 import MobileBottomNavigationMenu from '@/components/navigation/MobileBottomNavigationMenu.vue'
 import NotificationBanner from '@/components/NotificationBanner.vue'
+import ConfirmationDialog from '@/components/ConfirmationDialog.vue'
 // Destructure the specific breakpoint properties you want to provide
 const { mdAndUp, smAndUp } = useDisplay()
 

@@ -68,7 +68,6 @@ export const useEntryFormStore = defineStore('entryFormStore', {
               imageUrlGetter: (entry) => this.getEntryImageUrls(entry)
             }
 
-            console.log('change type', change)
             updatedEntriesMap.set(newEntry.entryId, newEntry)
 
             const handlers = {
@@ -113,6 +112,10 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       this.formData = {}
     },
     async removeThisEntry(entryId) {
+      console.log('running!')
+      const isConfirmed = await useNotificationsStore().waitForConfirmation()
+      if (!isConfirmed) return
+
       const userStore = useUserStore()
       const flockId = userStore.getUserUid
 
@@ -120,6 +123,9 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       const entryRef = doc(db, 'flocks', flockId, 'entries', entryId)
 
       await deleteDoc(entryRef)
+
+      // toggle this back
+      this.didUserConfirmDelete = false
     },
     async foundationThisEntry(entryId, isFoundation) {
       const userStore = useUserStore()
