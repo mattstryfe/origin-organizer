@@ -3,14 +3,18 @@ import { defineStore } from 'pinia'
 export const useNotificationsStore = defineStore('notifications', {
   state: () => ({
     notifications: [],
-    didUserConfirmDelete: false,
     toggleConfirmationDialog: false,
     confirmationResolver: null
   }),
 
   actions: {
-    waitForConfirmation() {
-      return new Promise((resolve, reject) => {
+    toggleConfirmationResolver(val) {
+      // Call resolver and pass response to it
+      this.confirmationResolver(val)
+      this.toggleConfirmationDialog = false
+    },
+    waitForDeleteConfirmationResponse() {
+      return new Promise((resolve) => {
         this.confirmationResolver = resolve
         this.toggleConfirmationDialog = true
       })

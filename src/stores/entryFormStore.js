@@ -112,8 +112,8 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       this.formData = {}
     },
     async removeThisEntry(entryId) {
-      console.log('running!')
-      const isConfirmed = await useNotificationsStore().waitForConfirmation()
+      const isConfirmed =
+        await useNotificationsStore().waitForDeleteConfirmationResponse()
       if (!isConfirmed) return
 
       const userStore = useUserStore()
@@ -123,9 +123,6 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       const entryRef = doc(db, 'flocks', flockId, 'entries', entryId)
 
       await deleteDoc(entryRef)
-
-      // toggle this back
-      this.didUserConfirmDelete = false
     },
     async foundationThisEntry(entryId, isFoundation) {
       const userStore = useUserStore()

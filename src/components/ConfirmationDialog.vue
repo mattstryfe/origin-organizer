@@ -8,11 +8,7 @@
     >
       <template #actions>
         <v-btn class="ms-auto" text="DELETE" @click="okayClick"></v-btn>
-        <v-btn
-          class="ms-auto"
-          text="Cancel"
-          @click="toggleConfirmationDialog = false"
-        ></v-btn>
+        <v-btn class="ms-auto" text="Cancel" @click="cancelClick"></v-btn>
       </template>
     </v-card>
   </v-dialog>
@@ -23,11 +19,14 @@ import { storeToRefs } from 'pinia'
 import { useNotificationsStore } from '@/stores/notificationsStore'
 const notificationsStore = useNotificationsStore()
 
-const { didUserConfirmDelete, toggleConfirmationDialog } =
-  storeToRefs(notificationsStore)
+const { toggleConfirmationDialog } = storeToRefs(notificationsStore)
+
+const cancelClick = () => {
+  notificationsStore.toggleConfirmationResolver(false)
+}
 
 const okayClick = () => {
-  didUserConfirmDelete.value = true
+  notificationsStore.toggleConfirmationResolver(true)
 }
 </script>
 
