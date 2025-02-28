@@ -68,7 +68,6 @@ export const useEntryFormStore = defineStore('entryFormStore', {
               imageUrlGetter: (entry) => this.getEntryImageUrls(entry)
             }
 
-            console.log('change type', change)
             updatedEntriesMap.set(newEntry.entryId, newEntry)
 
             const handlers = {
@@ -188,12 +187,8 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       }
     },
     async updateEntryInDb(entryId) {
-console.log('herehre', this.formData)
       const userStore = useUserStore()
       const flockId = userStore.getUserUid
-      const entry = this.getEntryById(entryId)
-
-      console.log('formdatataaeare', this.formData)
 
       // Create reference to the nested document
       const entryRef = doc(db, 'flocks', flockId, 'entries', entryId)
