@@ -188,15 +188,18 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       }
     },
     async updateEntryInDb(entryId) {
+console.log('herehre', this.formData)
       const userStore = useUserStore()
       const flockId = userStore.getUserUid
       const entry = this.getEntryById(entryId)
+
+      console.log('formdatataaeare', this.formData)
 
       // Create reference to the nested document
       const entryRef = doc(db, 'flocks', flockId, 'entries', entryId)
 
       await updateDoc(entryRef, {
-        characteristics: entry.characteristics, // todo this is only temp
+        ...this.formData, // todo this is only temp
         updatedAt: new Date()
       })
 
