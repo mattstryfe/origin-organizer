@@ -271,7 +271,6 @@ const handleSaveClick = () => {
   )
   formData.value = newObj
   entryFormStore.updateEntryInDb(entryId)
-
 }
 
 const determineBorderColor = (entry) => {
@@ -303,8 +302,6 @@ watch(
     birdDetails.value = newVal
   }
 )
-
-console.log('birdDetails', birdDetails.value)
 </script>
 
 <style scoped></style>

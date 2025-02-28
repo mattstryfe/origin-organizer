@@ -1,16 +1,17 @@
 <template>
   <v-layout>
     <main-app-header></main-app-header>
-
     <v-main
       class="d-flex align-center justify-center"
       style="min-height: 300px"
     >
       <v-container fluid>
+        <notification-banner />
+
         <router-view></router-view>
       </v-container>
     </v-main>
-    <mobile-bottom-navigation-menu/>
+    <mobile-bottom-navigation-menu />
   </v-layout>
 </template>
 
@@ -22,6 +23,7 @@ import { useDisplay } from 'vuetify'
 import { onMounted, provide } from 'vue'
 import { useUserStore } from '@/stores/userStore'
 import MobileBottomNavigationMenu from '@/components/navigation/MobileBottomNavigationMenu.vue'
+import NotificationBanner from '@/components/NotificationBanner.vue'
 // Destructure the specific breakpoint properties you want to provide
 const { mdAndUp, smAndUp } = useDisplay()
 
@@ -35,7 +37,6 @@ onMounted(() => {
     userStore.handleLogin(true)
   }
 })
-
 </script>
 
 <style>
