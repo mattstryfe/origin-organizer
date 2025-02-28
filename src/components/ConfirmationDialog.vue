@@ -1,14 +1,15 @@
 <template>
   <v-dialog v-model="toggleConfirmationDialog" width="auto">
     <v-card
+      class="border"
       max-width="400"
-      prepend-icon="mdi-update"
-      text="Your application will relaunch automatically after the update is complete."
-      title="Update in progress"
+      prepend-icon="mdi-trash-can"
+      text="Are you sure you wanna purge the bird!?"
+      title="Delete Confirmation"
     >
       <template #actions>
-        <v-btn class="ms-auto" text="DELETE" @click="okayClick"></v-btn>
-        <v-btn class="ms-auto" text="Cancel" @click="cancelClick"></v-btn>
+        <v-btn class="ms-auto" text="DELETE" @click="okayClick()"></v-btn>
+        <v-btn class="ms-auto" text="Cancel" @click="cancelClick()"></v-btn>
       </template>
     </v-card>
   </v-dialog>
