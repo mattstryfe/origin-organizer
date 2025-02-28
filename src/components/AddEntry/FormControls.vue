@@ -22,7 +22,6 @@ const entryFormStore = useEntryFormStore()
 const handleSave = async () => {
   await entryFormStore.saveEntryToDb()
   if (!isMultiple.value) {
-    console.log(' here')
     entryFormStore.clearFormData()
   }
 }
