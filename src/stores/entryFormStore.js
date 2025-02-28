@@ -112,6 +112,10 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       this.formData = {}
     },
     async removeThisEntry(entryId) {
+      const isConfirmed =
+        await useNotificationsStore().waitForDeleteConfirmationResponse()
+      if (!isConfirmed) return
+
       const userStore = useUserStore()
       const flockId = userStore.getUserUid
 
