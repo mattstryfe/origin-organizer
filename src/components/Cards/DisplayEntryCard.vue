@@ -31,7 +31,7 @@
     <v-img
       class="text-black mb-1 border-sm"
       cover
-      :height="cardWidth / 2"
+      :height="cardWidth / 3"
       rounded
       :src="allEntryDetails.imageUrl"
     >
@@ -39,9 +39,9 @@
         class="position-absolute bottom-0"
         color="amber"
         density="compact"
+        :disabled="!editModeToggle"
         half-increments
         :model-value="allEntryDetails.rating"
-        readonly
         size="small"
       ></v-rating>
     </v-img>
@@ -77,6 +77,9 @@
           variant="outlined"
           v-model="allEntryDetails.DoB"
         ></v-text-field>
+
+        <drop-down-parents :disabled="!editModeToggle" target="mother" />
+        <drop-down-parents :disabled="!editModeToggle" target="father" />
       </v-col>
     </v-row>
 
@@ -111,6 +114,7 @@ import { useEntryFormStore } from '@/stores/entryFormStore'
 import DisplayEntryCardTopBar from '@/components/Cards/DisplayEntryCardTopBar.vue'
 import { storeToRefs } from 'pinia'
 import PickerCharacteristics from '@/components/AddEntry/PickerCharacteristics.vue'
+import DropDownParents from '@/components/AddEntry/DropDownParents.vue'
 
 // New way to do props. both work
 const { entryId, allowCardDeselection } = defineProps({

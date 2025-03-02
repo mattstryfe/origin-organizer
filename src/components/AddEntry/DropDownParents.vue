@@ -1,12 +1,11 @@
 <template>
-  <v-switch
+  <!--  <v-switch
     v-model="filterByFavoriteAndFoundation"
     class="mt-0 ms-2"
     color="green-lighten-2"
     density="compact"
     hide-details
-  ></v-switch>
-  <!-- Mother Autocomplete -->
+  ></v-switch>-->
   <v-autocomplete
     v-model="formData[target]"
     density="compact"
@@ -85,7 +84,6 @@ const filteredEntriesToDisplay = computed(() =>
 const entryFormStore = useEntryFormStore()
 const {
   formData,
-  filterByFavoriteAndFoundation,
   filteredEntriesForFatherDropdown,
   filteredEntriesForMotherDropdown
 } = storeToRefs(entryFormStore)

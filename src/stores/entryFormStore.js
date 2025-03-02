@@ -149,7 +149,10 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       })
     },
     getEntryById(entryId) {
-      return this.entries.find((entry) => entry.entryId === entryId)
+      // When we do this, also append the selected entry to formData
+      // this allows hydration of the form from top down...
+      this.formData = this.entries.find((entry) => entry.entryId === entryId)
+      return this.formData
     },
     async getEntryImageUrls(entry) {
       const userStore = useUserStore()
@@ -196,6 +199,10 @@ export const useEntryFormStore = defineStore('entryFormStore', {
 
       // Create reference to the nested document
       const entryRef = doc(db, 'flocks', flockId, 'entries', entryId)
+
+      // Cannot append functions to firestore, this gets re-added
+      // TODO: probably a better way to do this
+      delete this.formData.imageUrlGetter
 
       await updateDoc(entryRef, {
         ...this.formData, // todo this is only temp
