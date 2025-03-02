@@ -4,7 +4,7 @@
     :class="{
       'opacity-80': showOverlay
     }"
-    :height="cardHeight"
+    :height="'auto'"
     :width="cardWidth"
   >
     <v-sheet v-if="showOverlay" class="cust-overlay">
@@ -63,14 +63,20 @@
 
     <v-row dense no-gutters>
       <v-col class="pl-1">
-        <p class="text-subtitle-2 text-blue-grey">
-          Name:
-          <span class="text-white">{{ allEntryDetails.name }}</span>
-        </p>
-        <p class="text-subtitle-2 text-blue-grey">
-          Age:
-          <span class="text-white">{{ allEntryDetails.DoB }}</span>
-        </p>
+        <v-text-field
+          density="compact"
+          :disabled="!editModeToggle"
+          label="Name"
+          v-model="allEntryDetails.name"
+          variant="outlined"
+        ></v-text-field>
+        <v-text-field
+          density="compact"
+          :disabled="!editModeToggle"
+          label="DoB"
+          variant="outlined"
+          v-model="allEntryDetails.DoB"
+        ></v-text-field>
       </v-col>
     </v-row>
 
@@ -127,7 +133,7 @@ const { entryId, allowCardDeselection } = defineProps({
 })
 
 const entryFormStore = useEntryFormStore()
-const { selectionIds } = storeToRefs(entryFormStore)
+const { selectionIds, editModeToggle } = storeToRefs(entryFormStore)
 
 const showOverlay = computed(() => {
   if (selectionIds.value.length === 0) return false

@@ -20,7 +20,8 @@
               <v-col><star-rating /></v-col>
 
               <v-col>
-                <drop-down-parents/>
+                <drop-down-parents target="mother" />
+                <drop-down-parents target="father" />
               </v-col>
 
               <!-- Form Body -->
@@ -74,7 +75,6 @@ import DropDownParents from '@/components/AddEntry/DropDownParents.vue'
 
 const entryFormStore = useEntryFormStore()
 const { formData } = storeToRefs(entryFormStore)
-
 </script>
 
 <style scoped>

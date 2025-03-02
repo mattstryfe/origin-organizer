@@ -31,6 +31,15 @@
     </v-col>
   </v-row>
 
+  <template v-if="isDoneLoadingEntries">
+    <display-entry-card
+      :key="entryId"
+      :card-height="500"
+      :card-width="smAndUp ? 400 : 'auto'"
+      :entry-id="entryId"
+    />
+  </template>
+
   <v-card v-if="birdDetails" class="h-100 w-100 border-sm pa-1 ma-1">
     <display-entry-card-top-bar
       :entry-id="entryId"
@@ -228,7 +237,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, inject } from 'vue'
 import router from '@/plugins/router'
 import duration from 'dayjs/plugin/duration'
 import { useEntryFormStore } from '@/stores/entryFormStore'
@@ -239,6 +248,9 @@ import {
 import DisplayEntryCardTopBar from '@/components/Cards/DisplayEntryCardTopBar.vue'
 import { storeToRefs } from 'pinia'
 import dayjs from 'dayjs'
+import DisplayEntryCard from '@/components/Cards/DisplayEntryCard.vue'
+
+const smAndUp = inject('smAndUp')
 
 dayjs.extend(duration)
 
@@ -255,6 +267,7 @@ const entryFormStore = useEntryFormStore()
 const { formData } = storeToRefs(entryFormStore)
 
 const {
+  isDoneLoadingEntries,
   editModeToggle,
   hasEntryChanged,
   filteredEntriesForFatherDropdown,
