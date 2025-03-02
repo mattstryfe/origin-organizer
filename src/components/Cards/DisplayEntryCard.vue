@@ -78,15 +78,23 @@
           v-model="allEntryDetails.DoB"
         ></v-text-field>
 
-        <drop-down-parents :disabled="!editModeToggle" target="mother" />
-        <drop-down-parents :disabled="!editModeToggle" target="father" />
+        <drop-down-parents
+          :disabled="!editModeToggle"
+          target="mother"
+          v-model:parent="allEntryDetails['mother']"
+        />
+        <drop-down-parents
+          :disabled="!editModeToggle"
+          target="father"
+          v-model:parent="allEntryDetails['father']"
+        />
       </v-col>
     </v-row>
 
-    <v-divider class="my-1"></v-divider>
+    <v-divider class=""></v-divider>
 
     <!-- Characteristics Area -->
-    <v-row class="overflow-scroll" dense no-gutters>
+    <v-row class="dense no-gutters overflow-scroll">
       <picker-characteristics
         v-model:characteristics="allEntryDetails.characteristics"
       />

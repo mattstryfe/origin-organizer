@@ -15,7 +15,7 @@
         :color="editModeToggle ? 'primary' : 'grey'"
         density="compact"
         :variant="editModeToggle ? 'elevated' : 'outlined'"
-        @click="editModeToggle = !editModeToggle"
+        @click="handleEditModeToggle()"
       >
         <v-icon>mdi-note-edit</v-icon>
       </v-btn>
@@ -58,11 +58,16 @@ const { entryId } = defineProps({
 
 const entryFormStore = useEntryFormStore()
 
-const { isDoneLoadingEntries, editModeToggle, hasEntryChanged } =
+const { isDoneLoadingEntries, editModeToggle, hasEntryChanged, formData } =
   storeToRefs(entryFormStore)
 
 const handleSaveClick = () => {
   entryFormStore.updateEntryInDb(entryId)
+}
+
+const handleEditModeToggle = () => {
+  editModeToggle.value = !editModeToggle.value
+  formData.value = entryFormStore.getEntryById(entryId)
 }
 
 watch(

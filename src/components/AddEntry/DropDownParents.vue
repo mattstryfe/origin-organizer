@@ -1,13 +1,6 @@
 <template>
-  <!--  <v-switch
-    v-model="filterByFavoriteAndFoundation"
-    class="mt-0 ms-2"
-    color="green-lighten-2"
-    density="compact"
-    hide-details
-  ></v-switch>-->
   <v-autocomplete
-    v-model="formData[target]"
+    v-model="parent"
     density="compact"
     item-title="name"
     item-value="name"
@@ -74,6 +67,10 @@ const { target } = defineProps({
   }
 })
 
+const parent = defineModel('parent', {})
+// const father = defineModel('father', { default: () => [] })
+// const mother = defineModel('mother', { default: () => [] })
+
 // Adjust what displays in the dropdowns as items based on which one we're in
 const filteredEntriesToDisplay = computed(() =>
   target === 'father'
@@ -82,11 +79,8 @@ const filteredEntriesToDisplay = computed(() =>
 )
 
 const entryFormStore = useEntryFormStore()
-const {
-  formData,
-  filteredEntriesForFatherDropdown,
-  filteredEntriesForMotherDropdown
-} = storeToRefs(entryFormStore)
+const { filteredEntriesForFatherDropdown, filteredEntriesForMotherDropdown } =
+  storeToRefs(entryFormStore)
 
 const determineBorderColor = (entry) => {
   if (entry.isFoundation) return 'cust-border-yellow'

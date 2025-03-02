@@ -151,8 +151,8 @@ export const useEntryFormStore = defineStore('entryFormStore', {
     getEntryById(entryId) {
       // When we do this, also append the selected entry to formData
       // this allows hydration of the form from top down...
-      this.formData = this.entries.find((entry) => entry.entryId === entryId)
-      return this.formData
+      // this.formData =
+      return this.entries.find((entry) => entry.entryId === entryId)
     },
     async getEntryImageUrls(entry) {
       const userStore = useUserStore()
