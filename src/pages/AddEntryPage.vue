@@ -14,14 +14,26 @@
             <v-col cols="8">
               <v-col class="d-flex justify-space-around">
                 <picker-species />
-                <picker-phase />
-                <picker-sex />
+                <picker-phase
+                  v-model:phase="formData['phase']"
+                  :display-vertical="true"
+                />
+                <picker-sex
+                  v-model:sex="formData['sex']"
+                  :display-vertical="true"
+                />
               </v-col>
               <v-col><star-rating /></v-col>
 
               <v-col>
-                <drop-down-parents target="mother" />
-                <drop-down-parents target="father" />
+                <drop-down-parents
+                  target="mother"
+                  v-model:parent="formData['mother']"
+                />
+                <drop-down-parents
+                  target="father"
+                  v-model:parent="formData['father']"
+                />
               </v-col>
 
               <!-- Form Body -->
@@ -29,6 +41,7 @@
               <form-details />
               <upload-image />
 
+              <!-- TODO: update this one to work with new v-model pattern -->
               <picker-characteristics />
             </v-col>
 

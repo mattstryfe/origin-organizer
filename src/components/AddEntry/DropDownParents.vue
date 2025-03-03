@@ -68,8 +68,6 @@ const { target } = defineProps({
 })
 
 const parent = defineModel('parent', {})
-// const father = defineModel('father', { default: () => [] })
-// const mother = defineModel('mother', { default: () => [] })
 
 // Adjust what displays in the dropdowns as items based on which one we're in
 const filteredEntriesToDisplay = computed(() =>

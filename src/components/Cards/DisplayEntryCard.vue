@@ -4,7 +4,7 @@
     :class="{
       'opacity-80': showOverlay
     }"
-    :height="'auto'"
+    height="600"
     :width="cardWidth"
   >
     <v-sheet v-if="showOverlay" class="cust-overlay">
@@ -31,7 +31,7 @@
     <v-img
       class="text-black mb-1 border-sm"
       cover
-      :height="cardWidth / 3"
+      :height="editModeToggle ? 25 : 150"
       rounded
       :src="allEntryDetails.imageUrl"
     >
@@ -61,40 +61,51 @@
       </v-chip>
     </v-row>
 
-    <v-row dense no-gutters>
-      <v-col class="pl-1">
+    <v-row class="overflow-scroll" dense>
+      <v-col cols="7">
         <v-text-field
           density="compact"
           :disabled="!editModeToggle"
+          hide-details
           label="Name"
           v-model="allEntryDetails.name"
           variant="outlined"
         ></v-text-field>
+      </v-col>
+      <v-col cols="5">
         <v-text-field
           density="compact"
           :disabled="!editModeToggle"
+          hide-details
           label="DoB"
           variant="outlined"
           v-model="allEntryDetails.DoB"
         ></v-text-field>
-
+      </v-col>
+      <v-col cols="6">
         <drop-down-parents
           :disabled="!editModeToggle"
           target="mother"
           v-model:parent="allEntryDetails['mother']"
         />
+      </v-col>
+      <v-col cols="6">
         <drop-down-parents
           :disabled="!editModeToggle"
           target="father"
           v-model:parent="allEntryDetails['father']"
         />
       </v-col>
+      <v-col>
+        <picker-phase />
+        <picker-sex v-model:sex="allEntryDetails['sex']" />
+      </v-col>
     </v-row>
 
     <v-divider class=""></v-divider>
 
     <!-- Characteristics Area -->
-    <v-row class="dense no-gutters overflow-scroll">
+    <v-row class="mx-1 overflow-scroll" dense no-gutters>
       <picker-characteristics
         v-model:characteristics="allEntryDetails.characteristics"
       />
@@ -123,6 +134,8 @@ import DisplayEntryCardTopBar from '@/components/Cards/DisplayEntryCardTopBar.vu
 import { storeToRefs } from 'pinia'
 import PickerCharacteristics from '@/components/AddEntry/PickerCharacteristics.vue'
 import DropDownParents from '@/components/AddEntry/DropDownParents.vue'
+import PickerSex from '@/components/AddEntry/PickerSex.vue'
+import PickerPhase from '@/components/AddEntry/PickerPhase.vue'
 
 // New way to do props. both work
 const { entryId, allowCardDeselection } = defineProps({
