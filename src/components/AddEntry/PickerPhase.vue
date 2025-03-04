@@ -12,13 +12,13 @@
       :value="opt.phase"
     >
       <template v-if="opt.component">
-        <v-icon class="px-2" :size="opt.iconSize">
+        <v-icon size="35">
           <component :is="opt.component"></component>
         </v-icon>
       </template>
 
       <template v-else>
-        <v-icon :size="opt.iconSize">
+        <v-icon size="35">
           {{ opt.icon }}
         </v-icon>
       </template>

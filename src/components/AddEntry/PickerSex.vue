@@ -11,7 +11,7 @@
       class="border mr-2 mb-2"
       :value="opt.sex"
     >
-      <v-icon :size="opt.iconSize">
+      <v-icon size="35">
         {{ opt.icon }}
       </v-icon>
     </v-btn>

@@ -61,7 +61,7 @@
       </v-chip>
     </v-row>
 
-    <v-row class="overflow-scroll" dense>
+    <v-row class="overflow-scroll align-center justify-center" dense>
       <v-col cols="7">
         <v-text-field
           density="compact"
@@ -96,8 +96,10 @@
           v-model:parent="allEntryDetails['father']"
         />
       </v-col>
-      <v-col>
-        <picker-phase />
+      <v-col cols="7">
+        <picker-phase v-model:phase="allEntryDetails['phase']" />
+      </v-col>
+      <v-col cols="7">
         <picker-sex v-model:sex="allEntryDetails['sex']" />
       </v-col>
     </v-row>

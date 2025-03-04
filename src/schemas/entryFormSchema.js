@@ -14,16 +14,16 @@ export const schemaSpeciesOptions = [
     label: 'chicken',
     species: 'chicken',
     component: chickenIcon,
-    iconSize: '50'
+    iconSize: '30'
   },
-  { label: 'goose', species: 'goose', component: gooseIcon, iconSize: '50' },
-  { label: 'duck', species: 'duck', component: duckIcon, iconSize: '50' }
+  { label: 'goose', species: 'goose', component: gooseIcon, iconSize: '30' },
+  { label: 'duck', species: 'duck', component: duckIcon, iconSize: '30' }
 ]
 
 export const schemaPhaseOptions = [
-  { label: 'egg', phase: 'egg', icon: 'mdi-egg', iconSize: '50' },
-  { label: 'chick', phase: 'chick', component: chickIcon, iconSize: '50' },
-  { label: 'adult', phase: 'adult', icon: 'mdi-bird', iconSize: '50' }
+  { label: 'egg', phase: 'egg', icon: 'mdi-egg', iconSize: '30' },
+  { label: 'chick', phase: 'chick', component: chickIcon, iconSize: '40' },
+  { label: 'adult', phase: 'adult', icon: 'mdi-bird', iconSize: '30' }
 ]
 
 export const baseSchema = [
