@@ -3,14 +3,15 @@
     <v-chip
       v-for="b in breedsToUse"
       :key="b"
-      class="text-no-wrap text-truncate"
       :class="{ 'read-only-chip': !editModeToggle }"
       color="green-darken-3"
       density="compact"
+      label
+      selected-class="cust-selected-chip"
       :value="b"
       variant="outlined"
     >
-      <p class="grey">{{ b }}</p>
+      <span class="grey">{{ b }}</span>
     </v-chip>
   </v-chip-group>
 </template>
@@ -35,5 +36,9 @@ const breedsToUse = computed(() => {
 <style scoped>
 .read-only-chip {
   pointer-events: none;
+}
+
+.cust-selected-chip {
+  color: rgba(34, 139, 34, 0.57);
 }
 </style>

@@ -99,7 +99,7 @@
     <!-- Characteristics Area -->
     <v-row class="mx-1 overflow-scroll" dense no-gutters>
       <picker-characteristics
-        v-model:characteristics="allEntryDetails.characteristics"
+        v-model:characteristics="allEntryDetails['characteristics']"
       />
     </v-row>
 
