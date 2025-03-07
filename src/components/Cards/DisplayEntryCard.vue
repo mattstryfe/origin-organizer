@@ -48,17 +48,7 @@
 
     <!-- Breed area -->
     <v-row class="my-1" dense no-gutters>
-      <v-chip
-        v-for="breed in allEntryDetails.breed"
-        :key="breed"
-        class="mx-1"
-        density="compact"
-        label
-        size="small"
-        variant="tonal"
-      >
-        <span class="text-caption text-grey">{{ breed }}</span>
-      </v-chip>
+      <picker-breed v-model:breed="allEntryDetails['breed']" />
     </v-row>
 
     <v-row class="overflow-scroll align-center justify-center" dense>
@@ -79,7 +69,7 @@
           hide-details
           label="DoB"
           variant="outlined"
-          v-model="allEntryDetails.DoB"
+          v-model="allEntryDetails['DoB']"
         ></v-text-field>
       </v-col>
       <v-col cols="6">
@@ -138,6 +128,7 @@ import PickerCharacteristics from '@/components/AddEntry/PickerCharacteristics.v
 import DropDownParents from '@/components/AddEntry/DropDownParents.vue'
 import PickerSex from '@/components/AddEntry/PickerSex.vue'
 import PickerPhase from '@/components/AddEntry/PickerPhase.vue'
+import PickerBreed from '@/components/AddEntry/PickerBreed.vue'
 
 // New way to do props. both work
 const { entryId, allowCardDeselection } = defineProps({

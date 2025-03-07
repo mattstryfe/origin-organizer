@@ -46,7 +46,7 @@
             </v-col>
 
             <v-col cols="4">
-              <picker-breed />
+              <picker-breed v-model:breed="formData['breed']" />
             </v-col>
           </v-row>
 

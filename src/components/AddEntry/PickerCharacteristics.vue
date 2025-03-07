@@ -31,9 +31,8 @@ const characteristics = defineModel('characteristics', { default: () => [] })
 const schemaCharacteristicOptions = structuredClone(
   rawSchemaCharacteristicOptions
 )
-// Characteristics need to be wired up to the schema AND the options available (during edit mode)
-// because of this, we need to tether and re-tether reactivity during editMode toggles
-// Compute available characteristics reactively
+
+// gracefully deals with appending entries while in editMode.
 const characteristicsToUse = computed(() => {
   return editModeToggle.value
     ? [...new Set([...characteristics.value, ...schemaCharacteristicOptions])]
