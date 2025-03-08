@@ -18,7 +18,7 @@ export const vuetify = createVuetify({
     themes: {
       dark: {
         colors: {
-          'on-surface': '#757575',
+          'on-surface': '#d6d6d6',
           'success-2': '#228b228f'
         }
       }

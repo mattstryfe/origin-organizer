@@ -1,5 +1,5 @@
 <template>
-  <v-row class="flex-wrap">
+  <v-row class="flex-wrap px-3">
     <flock-manager-filters></flock-manager-filters>
 
     <template v-if="!isDoneLoadingEntries">

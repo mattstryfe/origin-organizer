@@ -1,10 +1,10 @@
 <template>
   <v-card
-    class="border-sm ma-1 pa-1 d-flex flex-column"
+    class="border-sm ma-1 px-2 d-flex flex-column"
     :class="{
       'opacity-80': showOverlay
     }"
-    height="600"
+    :height="cardHeight"
     :width="cardWidth"
   >
     <v-sheet v-if="showOverlay" class="cust-overlay">
@@ -47,15 +47,15 @@
     </v-img>
 
     <!-- Breed area -->
-    <v-row class="overflow-scroll" dense style="max-height: 120px">
-      <v-col class="pb-0">
-        <picker-breed v-model:breed="allEntryDetails['breed']" />
-      </v-col>
+    <v-row class="overflow-scroll" dense no-gutters>
+      <form-area-headers show-divider text-to-display="breed(s)" />
+
+      <picker-breed v-model:breed="allEntryDetails['breed']" />
     </v-row>
 
-    <v-divider class="mb-2"></v-divider>
-
     <v-row class="overflow-scroll align-center justify-center" dense>
+      <form-area-headers show-divider text-to-display="details" />
+
       <v-col cols="7">
         <v-text-field
           density="compact"
@@ -98,10 +98,9 @@
       </v-col>
     </v-row>
 
-    <v-divider class=""></v-divider>
-
     <!-- Characteristics Area -->
-    <v-row class="mx-1 overflow-scroll" dense no-gutters>
+    <v-row class="overflow-scroll" dense no-gutters>
+      <form-area-headers show-divider text-to-display="characteristics" />
       <picker-characteristics
         v-model:characteristics="allEntryDetails['characteristics']"
       />
@@ -133,6 +132,7 @@ import DropDownParents from '@/components/AddEntry/DropDownParents.vue'
 import PickerSex from '@/components/AddEntry/PickerSex.vue'
 import PickerPhase from '@/components/AddEntry/PickerPhase.vue'
 import PickerBreed from '@/components/AddEntry/PickerBreed.vue'
+import FormAreaHeaders from '@/components/FormAreaHeaders.vue'
 
 // New way to do props. both work
 const { entryId, allowCardDeselection } = defineProps({
@@ -145,11 +145,11 @@ const { entryId, allowCardDeselection } = defineProps({
     default: false
   },
   cardWidth: {
-    type: Number,
+    type: [Number, String],
     default: 300
   },
   cardHeight: {
-    type: Number,
+    type: [Number, String],
     default: 400
   }
 })

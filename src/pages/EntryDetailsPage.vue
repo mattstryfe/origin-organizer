@@ -33,7 +33,7 @@
 
   <template v-if="isDoneLoadingEntries">
     <display-entry-card
-      :card-height="500"
+      :card-height="'auto'"
       :card-width="smAndUp ? 400 : 'auto'"
       :entry-id="entryId"
     />
