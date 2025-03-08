@@ -29,7 +29,7 @@
 
     <!-- background image -->
     <v-img
-      class="text-black mb-1 border-sm"
+      class="text-black border-sm"
       cover
       :height="editModeToggle ? 25 : 150"
       rounded
@@ -47,9 +47,13 @@
     </v-img>
 
     <!-- Breed area -->
-    <v-row class="my-1" dense no-gutters>
-      <picker-breed v-model:breed="allEntryDetails['breed']" />
+    <v-row class="overflow-scroll" dense style="max-height: 120px">
+      <v-col class="pb-0">
+        <picker-breed v-model:breed="allEntryDetails['breed']" />
+      </v-col>
     </v-row>
+
+    <v-divider class="mb-2"></v-divider>
 
     <v-row class="overflow-scroll align-center justify-center" dense>
       <v-col cols="7">

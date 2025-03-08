@@ -5,13 +5,13 @@
       :key="field"
       class="mb-1"
       :class="{ 'read-only-chip': !editModeToggle }"
+      color="secondary"
       label
-      selected-class="cust-selected-chip"
       size="small"
       :value="field"
       variant="outlined"
     >
-      <span class="grey">{{ field }}</span>
+      <span>{{ field }}</span>
     </v-chip>
   </v-chip-group>
 </template>
@@ -41,14 +41,6 @@ const characteristicsToUse = computed(() => {
 </script>
 
 <style scoped>
-.cust-selected-chip {
-  color: rgba(34, 139, 34, 0.57);
-}
-.chip {
-  max-width: 75px;
-  text-align: center;
-  white-space: nowrap;
-}
 .read-only-chip {
   pointer-events: none;
 }
