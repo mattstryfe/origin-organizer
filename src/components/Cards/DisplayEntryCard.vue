@@ -29,7 +29,7 @@
 
     <!-- background image -->
     <v-img
-      class="text-black border-sm"
+      class="text-black border-sm transition-height"
       cover
       :height="editModeToggle ? 25 : 150"
       rounded
@@ -184,5 +184,8 @@ onMounted(() => {
   top: 35%;
   margin: auto auto;
   background: transparent;
+}
+.transition-height {
+  transition: height 0.4s ease-in-out;
 }
 </style>
