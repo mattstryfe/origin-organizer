@@ -1,7 +1,6 @@
 <template>
   <v-btn-toggle
     v-model="sex"
-    class=""
     :class="displayVertical ? 'flex-column fill-height' : ''"
     color="green-darken-3"
   >

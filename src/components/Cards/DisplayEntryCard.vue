@@ -91,10 +91,16 @@
         />
       </v-col>
       <v-col cols="7">
-        <picker-phase v-model:phase="allEntryDetails['phase']" />
+        <picker-phase
+          :disabled="!editModeToggle"
+          v-model:phase="allEntryDetails['phase']"
+        />
       </v-col>
       <v-col cols="7">
-        <picker-sex v-model:sex="allEntryDetails['sex']" />
+        <picker-sex
+          :disabled="!editModeToggle"
+          v-model:sex="allEntryDetails['sex']"
+        />
       </v-col>
     </v-row>
 
