@@ -1,41 +1,60 @@
 <template>
-  <v-fab
-    :active="true"
-    class="pl-4"
-    color="green-darken-3"
-    icon="mdi-plus"
-    location="bottom start"
-    size="xx-small"
-    variant="outlined"
-  ></v-fab>
-
-  <v-chip-group v-model="formData['breed']" class="pl-4" column multiple>
-    <v-chip
-      v-for="(breed, index) in sortedBreeds"
-      :key="index"
-      class="text-no-wrap text-truncate"
-      color="green-darken-3"
-      density="compact"
-      :value="breed"
-      variant="outlined"
-    >
-      <p class="grey">{{ breed }}</p>
-    </v-chip>
+  <v-chip-group v-model="breed" class="d-flex" column multiple>
+    <v-slide-y-transition group>
+      <v-chip
+        v-for="b in breedsToUse"
+        :key="b"
+        class=""
+        :class="{ 'read-only-chip': !editModeToggle }"
+        color="secondary"
+        label
+        size="small"
+        :value="b"
+        variant="outlined"
+      >
+        <span class="cust-trunc">{{ b }}</span>
+      </v-chip>
+    </v-slide-y-transition>
   </v-chip-group>
 </template>
 
 <script setup>
-import { storeToRefs } from 'pinia'
-import { useEntryFormStore } from '@/stores/entryFormStore'
 import { schemaChickenBreedOptions } from '@/schemas/entryFormSchema'
 import { computed } from 'vue'
-const entryFormStore = useEntryFormStore()
-const sortedBreeds = computed(() => schemaChickenBreedOptions.sort())
-const { formData } = storeToRefs(entryFormStore)
+import { storeToRefs } from 'pinia'
+import { useEntryFormStore } from '@/stores/entryFormStore'
+
+const breed = defineModel('breed', { default: () => [] })
+const { editModeToggle } = storeToRefs(useEntryFormStore())
+
+// gracefully deals with appending entries while in editMode.
+const breedsToUse = computed(() => {
+  return editModeToggle.value
+    ? [...new Set([...breed.value, ...schemaChickenBreedOptions.sort()])]
+    : breed.value
+})
 </script>
 
 <style scoped>
-.cust-width {
-  max-width: 99%;
+.dynamic-truncate {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 100% !important;
+  display: block !important; /* Ensure it's not flex or inline-flex */
+}
+
+.read-only-chip {
+  pointer-events: none;
+}
+
+.cust-trunc {
+  /*
+  display: -webkit-box;
+  */
+  /*  display: inline-block;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;*/
 }
 </style>

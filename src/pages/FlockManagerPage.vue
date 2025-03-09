@@ -1,5 +1,5 @@
 <template>
-  <v-row class="flex-wrap">
+  <v-row class="flex-wrap px-3">
     <flock-manager-filters></flock-manager-filters>
 
     <template v-if="!isDoneLoadingEntries">
@@ -19,8 +19,8 @@
         :key="entry.entryId"
         ref="entryRefs"
         :allow-card-deselection="allowCardDeselection"
-        :card-height="smAndUp ? 400 : 300"
-        :card-width="smAndUp ? 300 : 210"
+        :card-height="500"
+        :card-width="smAndUp ? 400 : 'auto'"
         class="cust-border-trans"
         :class="highlightThisCard(entry.entryId)"
         :entry-id="entry.entryId"

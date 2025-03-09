@@ -1,6 +1,6 @@
 <template>
   <v-card
-    class="border-sm ma-1 pa-1 d-flex flex-column"
+    class="border-sm ma-1 px-2 d-flex flex-column"
     :class="{
       'opacity-80': showOverlay
     }"
@@ -29,9 +29,9 @@
 
     <!-- background image -->
     <v-img
-      class="text-black mb-1 border-sm"
+      class="text-black border-sm transition-height"
       cover
-      :height="cardWidth / 2"
+      :height="editModeToggle ? 25 : 150"
       rounded
       :src="allEntryDetails.imageUrl"
     >
@@ -39,47 +39,76 @@
         class="position-absolute bottom-0"
         color="amber"
         density="compact"
+        :disabled="!editModeToggle"
         half-increments
         :model-value="allEntryDetails.rating"
-        readonly
         size="small"
       ></v-rating>
     </v-img>
 
     <!-- Breed area -->
-    <v-row class="my-1" dense no-gutters>
-      <v-chip
-        v-for="breed in allEntryDetails.breed"
-        :key="breed"
-        class="mx-1"
-        density="compact"
-        label
-        size="small"
-        variant="tonal"
-      >
-        <span class="text-caption text-grey">{{ breed }}</span>
-      </v-chip>
+    <v-row class="overflow-scroll" dense no-gutters>
+      <form-area-headers show-divider text-to-display="breed(s)" />
+
+      <picker-breed v-model:breed="allEntryDetails['breed']" />
     </v-row>
 
-    <v-row dense no-gutters>
-      <v-col class="pl-1">
-        <p class="text-subtitle-2 text-blue-grey">
-          Name:
-          <span class="text-white">{{ allEntryDetails.name }}</span>
-        </p>
-        <p class="text-subtitle-2 text-blue-grey">
-          Age:
-          <span class="text-white">{{ allEntryDetails.DoB }}</span>
-        </p>
+    <v-row class="overflow-scroll align-center justify-center" dense>
+      <form-area-headers show-divider text-to-display="details" />
+
+      <v-col cols="7">
+        <v-text-field
+          density="compact"
+          :disabled="!editModeToggle"
+          hide-details
+          label="Name"
+          v-model="allEntryDetails.name"
+          variant="outlined"
+        ></v-text-field>
+      </v-col>
+      <v-col cols="5">
+        <v-text-field
+          density="compact"
+          :disabled="!editModeToggle"
+          hide-details
+          label="DoB"
+          variant="outlined"
+          v-model="allEntryDetails['DoB']"
+        ></v-text-field>
+      </v-col>
+      <v-col cols="6">
+        <drop-down-parents
+          :disabled="!editModeToggle"
+          target="mother"
+          v-model:parent="allEntryDetails['mother']"
+        />
+      </v-col>
+      <v-col cols="6">
+        <drop-down-parents
+          :disabled="!editModeToggle"
+          target="father"
+          v-model:parent="allEntryDetails['father']"
+        />
+      </v-col>
+      <v-col cols="7">
+        <picker-phase
+          :disabled="!editModeToggle"
+          v-model:phase="allEntryDetails['phase']"
+        />
+      </v-col>
+      <v-col cols="7">
+        <picker-sex
+          :disabled="!editModeToggle"
+          v-model:sex="allEntryDetails['sex']"
+        />
       </v-col>
     </v-row>
 
-    <v-divider class="my-1"></v-divider>
-
     <!-- Characteristics Area -->
     <v-row class="overflow-scroll" dense no-gutters>
+      <form-area-headers show-divider text-to-display="characteristics" />
       <picker-characteristics
-        v-model:characteristics="allEntryDetails.characteristics"
+        v-model:characteristics="allEntryDetails['characteristics']"
       />
     </v-row>
 
@@ -105,6 +134,11 @@ import { useEntryFormStore } from '@/stores/entryFormStore'
 import DisplayEntryCardTopBar from '@/components/Cards/DisplayEntryCardTopBar.vue'
 import { storeToRefs } from 'pinia'
 import PickerCharacteristics from '@/components/AddEntry/PickerCharacteristics.vue'
+import DropDownParents from '@/components/AddEntry/DropDownParents.vue'
+import PickerSex from '@/components/AddEntry/PickerSex.vue'
+import PickerPhase from '@/components/AddEntry/PickerPhase.vue'
+import PickerBreed from '@/components/AddEntry/PickerBreed.vue'
+import FormAreaHeaders from '@/components/FormAreaHeaders.vue'
 
 // New way to do props. both work
 const { entryId, allowCardDeselection } = defineProps({
@@ -117,17 +151,17 @@ const { entryId, allowCardDeselection } = defineProps({
     default: false
   },
   cardWidth: {
-    type: Number,
+    type: [Number, String],
     default: 300
   },
   cardHeight: {
-    type: Number,
+    type: [Number, String],
     default: 400
   }
 })
 
 const entryFormStore = useEntryFormStore()
-const { selectionIds } = storeToRefs(entryFormStore)
+const { selectionIds, editModeToggle } = storeToRefs(entryFormStore)
 
 const showOverlay = computed(() => {
   if (selectionIds.value.length === 0) return false
@@ -156,5 +190,8 @@ onMounted(() => {
   top: 35%;
   margin: auto auto;
   background: transparent;
+}
+.transition-height {
+  transition: height 0.4s ease-in-out;
 }
 </style>

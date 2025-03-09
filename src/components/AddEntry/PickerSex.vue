@@ -1,7 +1,7 @@
 <template>
   <v-btn-toggle
-    v-model="formData['sex']"
-    class="fill-height flex-column"
+    v-model="sex"
+    :class="displayVertical ? 'flex-column fill-height' : ''"
     color="green-darken-3"
   >
     <v-btn
@@ -10,7 +10,7 @@
       class="border mr-2 mb-2"
       :value="opt.sex"
     >
-      <v-icon :size="opt.iconSize">
+      <v-icon size="35">
         {{ opt.icon }}
       </v-icon>
     </v-btn>
@@ -19,10 +19,14 @@
 
 <script setup>
 import { schemaSexOptions } from '@/schemas/entryFormSchema'
-import { useEntryFormStore } from '@/stores/entryFormStore'
-import { storeToRefs } from 'pinia'
-const entryFormStore = useEntryFormStore()
-const { formData } = storeToRefs(entryFormStore)
+const sex = defineModel('sex', {})
+
+defineProps({
+  displayVertical: {
+    type: Boolean,
+    default: false
+  }
+})
 </script>
 
 <style scoped></style>

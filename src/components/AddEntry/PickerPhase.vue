@@ -1,7 +1,8 @@
 <template>
   <v-btn-toggle
-    v-model="formData['phase']"
-    class="fill-height flex-column"
+    v-model="phase"
+    class=""
+    :class="displayVertical ? 'flex-column fill-height' : ''"
     color="green-darken-3"
   >
     <v-btn
@@ -11,13 +12,13 @@
       :value="opt.phase"
     >
       <template v-if="opt.component">
-        <v-icon class="px-2" :size="opt.iconSize">
+        <v-icon size="35">
           <component :is="opt.component"></component>
         </v-icon>
       </template>
 
       <template v-else>
-        <v-icon :size="opt.iconSize">
+        <v-icon size="35">
           {{ opt.icon }}
         </v-icon>
       </template>
@@ -27,11 +28,15 @@
 
 <script setup>
 import { schemaPhaseOptions } from '@/schemas/entryFormSchema'
-import { storeToRefs } from 'pinia'
-import { useEntryFormStore } from '@/stores/entryFormStore'
 
-const entryFormStore = useEntryFormStore()
-const { formData } = storeToRefs(entryFormStore)
+const phase = defineModel('phase', {})
+
+defineProps({
+  displayVertical: {
+    type: Boolean,
+    default: false
+  }
+})
 </script>
 
 <style scoped></style>

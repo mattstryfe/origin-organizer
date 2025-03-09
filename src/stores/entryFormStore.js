@@ -47,9 +47,11 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       const userStore = useUserStore()
       const notificationsStore = useNotificationsStore()
       const flockId = userStore.getUserUid
-      if (!flockId) return
+      if (!flockId || this.isListening) return
 
       const entriesCollection = collection(db, 'flocks', flockId, 'entries')
+
+      this.isListening = true // ✅ Mark as active listener  GPT says to do this?
 
       onSnapshot(
         entriesCollection,
@@ -68,6 +70,7 @@ export const useEntryFormStore = defineStore('entryFormStore', {
               imageUrlGetter: (entry) => this.getEntryImageUrls(entry)
             }
 
+            console.log('change!', change)
             updatedEntriesMap.set(newEntry.entryId, newEntry)
 
             const handlers = {
@@ -107,6 +110,7 @@ export const useEntryFormStore = defineStore('entryFormStore', {
           console.error('Error fetching entries:', error)
         }
       )
+      console.log('this.entries', this.entries)
     },
     clearFormData() {
       this.formData = {}
@@ -149,6 +153,9 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       })
     },
     getEntryById(entryId) {
+      // When we do this, also append the selected entry to formData
+      // this allows hydration of the form from top down...
+      // this.formData =
       return this.entries.find((entry) => entry.entryId === entryId)
     },
     async getEntryImageUrls(entry) {
@@ -191,14 +198,20 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       }
     },
     async updateEntryInDb(entryId) {
+      console.log('entryId ', entryId)
       const userStore = useUserStore()
       const flockId = userStore.getUserUid
+      const entryShallowCopy = this.getEntryById(entryId)
 
       // Create reference to the nested document
       const entryRef = doc(db, 'flocks', flockId, 'entries', entryId)
 
+      // Cannot append functions to firestore, this gets re-added
+      // TODO: probably a better way to do this
+      delete entryShallowCopy.imageUrlGetter
+
       await updateDoc(entryRef, {
-        ...this.formData, // todo this is only temp
+        ...entryShallowCopy, // todo this is only temp
         updatedAt: new Date()
       })
 

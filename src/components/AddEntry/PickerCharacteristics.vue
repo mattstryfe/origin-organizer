@@ -5,13 +5,13 @@
       :key="field"
       class="mb-1"
       :class="{ 'read-only-chip': !editModeToggle }"
+      color="secondary"
       label
-      selected-class="cust-selected-chip"
       size="small"
       :value="field"
       variant="outlined"
     >
-      <span class="grey">{{ field }}</span>
+      <span>{{ field }}</span>
     </v-chip>
   </v-chip-group>
 </template>
@@ -31,9 +31,8 @@ const characteristics = defineModel('characteristics', { default: () => [] })
 const schemaCharacteristicOptions = structuredClone(
   rawSchemaCharacteristicOptions
 )
-// Characteristics need to be wired up to the schema AND the options available (during edit mode)
-// because of this, we need to tether and re-tether reactivity during editMode toggles
-// Compute available characteristics reactively
+
+// gracefully deals with appending entries while in editMode.
 const characteristicsToUse = computed(() => {
   return editModeToggle.value
     ? [...new Set([...characteristics.value, ...schemaCharacteristicOptions])]
@@ -42,14 +41,6 @@ const characteristicsToUse = computed(() => {
 </script>
 
 <style scoped>
-.cust-selected-chip {
-  color: rgba(34, 139, 34, 0.57);
-}
-.chip {
-  max-width: 75px;
-  text-align: center;
-  white-space: nowrap;
-}
 .read-only-chip {
   pointer-events: none;
 }

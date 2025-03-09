@@ -14,13 +14,26 @@
             <v-col cols="8">
               <v-col class="d-flex justify-space-around">
                 <picker-species />
-                <picker-phase />
-                <picker-sex />
+                <picker-phase
+                  v-model:phase="formData['phase']"
+                  :display-vertical="true"
+                />
+                <picker-sex
+                  v-model:sex="formData['sex']"
+                  :display-vertical="true"
+                />
               </v-col>
               <v-col><star-rating /></v-col>
 
               <v-col>
-                <drop-down-parents/>
+                <drop-down-parents
+                  target="mother"
+                  v-model:parent="formData['mother']"
+                />
+                <drop-down-parents
+                  target="father"
+                  v-model:parent="formData['father']"
+                />
               </v-col>
 
               <!-- Form Body -->
@@ -28,11 +41,12 @@
               <form-details />
               <upload-image />
 
+              <!-- TODO: update this one to work with new v-model pattern -->
               <picker-characteristics />
             </v-col>
 
             <v-col cols="4">
-              <picker-breed />
+              <picker-breed v-model:breed="formData['breed']" />
             </v-col>
           </v-row>
 
@@ -74,7 +88,6 @@ import DropDownParents from '@/components/AddEntry/DropDownParents.vue'
 
 const entryFormStore = useEntryFormStore()
 const { formData } = storeToRefs(entryFormStore)
-
 </script>
 
 <style scoped>
