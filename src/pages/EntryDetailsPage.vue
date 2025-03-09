@@ -58,7 +58,7 @@ const { entryId } = defineProps({
 
 const entryFormStore = useEntryFormStore()
 
-const { isDoneLoadingEntries, editModeToggle, hasEntryChanged, formData } =
+const { isDoneLoadingEntries, editModeToggle, hasEntryChanged } =
   storeToRefs(entryFormStore)
 
 const handleSaveClick = () => {
@@ -67,7 +67,6 @@ const handleSaveClick = () => {
 
 const handleEditModeToggle = () => {
   editModeToggle.value = !editModeToggle.value
-  formData.value = entryFormStore.getEntryById(entryId)
 }
 
 watch(
