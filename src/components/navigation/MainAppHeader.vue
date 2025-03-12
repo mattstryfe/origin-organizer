@@ -24,7 +24,7 @@
     <template #append>
       <div v-if="smAndUp">
         <v-icon
-          v-for="w in routerLinksSchema"
+          v-for="w in routes"
           :key="w.name"
           class="pa-1 ma-1 v-icon--size-x-small"
           :color="w.color"
@@ -43,11 +43,9 @@
 </template>
 
 <script setup>
-// TODO: Used w in routerLinksSchema to follow same pattern in MainWaffleMenu -> Easier refactor.
 import WaffleMenu from '@/components/navigation/MainWaffleMenu.vue'
 import UserAccountMenu from '@/components/navigation/MainUserAccountMenu.vue'
-import routerLinksSchema from '@/schemas/routerLinksSchema'
-import router from '@/plugins/router'
+import { routes } from '@/schemas/routerLinksSchema'
 import { inject } from 'vue'
 import MainAppSearchField from '@/components/navigation/MainAppSearchField.vue'
 const smAndUp = inject('smAndUp')

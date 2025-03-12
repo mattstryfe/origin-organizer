@@ -19,7 +19,7 @@
           </v-col>
 
           <v-card
-            v-for="w in routerLinksSchema"
+            v-for="w in routes"
             :key="w.title"
             class="cursor-pointer text-center v-col-4 pa-1"
             :disabled="!userIsAuthenticated || !w.routeName"
@@ -57,7 +57,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/userStore'
 import { storeToRefs } from 'pinia'
-import routerLinksSchema from '@/schemas/routerLinksSchema'
+import { routes } from '@/schemas/routerLinksSchema'
 
 const router = useRouter()
 const userStore = useUserStore()

@@ -4,31 +4,32 @@ import LandingPage from '@/pages/LandingPage.vue'
 import FlockManagerPage from '@/pages/FlockManagerPage.vue'
 import EntryDetailsPage from '@/pages/EntryDetailsPage.vue'
 import { useEntryFormStore } from '@/stores/entryFormStore'
-// import { useUserStore } from '@/stores/userStore'
-
-const routes = [
-  {
-    name: 'LandingPage',
-    path: '/',
-    component: LandingPage
-  },
-  { name: 'AddEntry', path: '/addentry', component: AddEntryPage },
-  { name: 'FlockManager', path: '/flockmanager', component: FlockManagerPage },
-  {
-    name: 'EntryDetails',
-    path: '/entrydetails/:entryId',
-    component: EntryDetailsPage,
-    props: true
-  }
-]
+import { routes } from '@/schemas/routerLinksSchema'
+// const routes = [
+//   {
+//     name: 'LandingPage',
+//     path: '/',
+//     component: LandingPage
+//   },
+//   { name: 'AddEntry', path: '/addentry', component: AddEntryPage },
+//   { name: 'FlockManager', path: '/flockmanager', component: FlockManagerPage },
+//   {
+//     name: 'EntryDetails',
+//     path: '/entrydetails/:entryId',
+//     component: EntryDetailsPage,
+//     props: true
+//   }
+// ]
 // 3. Create the router instance and pass the `routes` option
 // You can pass in additional options here, but let's
 // keep it simple for now.
 const router = createRouter({
   // 4. Provide the history implementation to use. We are using the hash history for simplicity here.
   history: createWebHistory(),
-  routes // short for `routes: routes`
+  routes
+  // routes // short for `routes: routes`
 })
+console.log('router', router)
 
 router.beforeEach(async (to, from) => {
   // If not authed
@@ -37,11 +38,10 @@ router.beforeEach(async (to, from) => {
   //   return { name: 'LandingPage'}
   // }
   // const entryFormStore = useEntryFormStore()
-  if (to.name === 'AddEntry') {
+  if (to.name === 'EntryDetails') {
     useEntryFormStore().editModeToggle = true
   } else {
     useEntryFormStore().editModeToggle = false
-
   }
 })
 

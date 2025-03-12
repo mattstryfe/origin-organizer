@@ -33,7 +33,7 @@ export const useEntryFormStore = defineStore('entryFormStore', {
     disableBottomSheetButton: (state) => state.selectionIds.size !== 2
   },
   actions: {
-    filteredEntryListBy(sex) {
+    filterEntryListBy(sex) {
       // quick conversion for display purposes...
       const valToUse = sex === 'mother' ? 'female' : 'male'
 

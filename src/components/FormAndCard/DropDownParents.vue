@@ -71,7 +71,7 @@ const parent = defineModel('parent', {})
 
 // Adjust what displays in the dropdowns as items based on which one we're in
 const filteredEntriesToDisplay = computed(() =>
-  entryFormStore.filteredEntryListBy(target)
+  entryFormStore.filterEntryListBy(target)
 )
 
 const determineBorderColor = (entry) => {
