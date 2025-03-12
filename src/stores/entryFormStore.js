@@ -25,27 +25,25 @@ export const useEntryFormStore = defineStore('entryFormStore', {
     filterByFavoriteAndFoundation: false
   }),
   getters: {
+    // Gets the firestore document REF
     getEntryRef: () => {
       return (entryId) =>
         doc(db, 'flocks', useUserStore().getUserUid, 'entries', entryId)
     },
-    disableBottomSheetButton: (state) => state.selectionIds.size !== 2,
-    filteredEntriesForMotherDropdown: (state) => {
-      const baseFilter = state.filterByFavoriteAndFoundation
-        ? state.entries.filter((e) => e.isFoundation || e.isFavorited)
-        : state.entries
-
-      return baseFilter.filter((e) => e.sex === 'female')
-    },
-    filteredEntriesForFatherDropdown: (state) => {
-      const baseFilter = state.filterByFavoriteAndFoundation
-        ? state.entries.filter((e) => e.isFoundation || e.isFavorited)
-        : state.entries
-
-      return baseFilter.filter((e) => e.sex === 'male')
-    }
+    disableBottomSheetButton: (state) => state.selectionIds.size !== 2
   },
   actions: {
+    filteredEntryListBy(sex) {
+      // quick conversion for display purposes...
+      const valToUse = sex === 'mother' ? 'female' : 'male'
+
+      const baseFilter = this.filterByFavoriteAndFoundation
+        ? this.entries.filter((e) => e.isFoundation || e.isFavorited)
+        : this.entries
+
+      return baseFilter.filter((e) => e.sex === valToUse)
+    },
+
     // **🔥 Use VueFire to Make Queries Reactive**
     setupEntriesListener() {
       const notificationsStore = useNotificationsStore()
@@ -140,6 +138,19 @@ export const useEntryFormStore = defineStore('entryFormStore', {
     getEntryById(entryId) {
       return this.entries.find((entry) => entry.entryId === entryId)
     },
+    async updateEntryInDb(entryId) {
+      const entryLocalCopy = this.getEntryById(entryId)
+
+      // Cannot append functions to firestore, this gets re-added
+      delete entryLocalCopy.imageUrlGetter
+
+      await updateDoc(this.getEntryRef(entryId), {
+        ...entryLocalCopy, // todo this is only temp
+        updatedAt: new Date()
+      })
+
+      this.editModeToggle = false
+    },
     async getEntryImageUrls(entry) {
       const flockId = useUserStore().getUserUid
       const { entryId } = entry
@@ -176,19 +187,6 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       if (this.attachments.length > 0) {
         await this.uploadImages(flockId, entryId, this.formData.photoIds[0])
       }
-    },
-    async updateEntryInDb(entryId) {
-      const entryShallowCopy = this.getEntryById(entryId)
-
-      // Cannot append functions to firestore, this gets re-added
-      delete entryShallowCopy.imageUrlGetter
-
-      await updateDoc(this.getEntryRef(entryId), {
-        ...entryShallowCopy, // todo this is only temp
-        updatedAt: new Date()
-      })
-
-      this.editModeToggle = false
     },
     async uploadImages(flockId, entryId, uniqueId) {
       // Now upload file
