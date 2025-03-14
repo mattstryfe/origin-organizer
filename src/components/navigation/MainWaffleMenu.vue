@@ -19,10 +19,10 @@
           </v-col>
 
           <v-card
-            v-for="w in routes"
-            :key="w.title"
+            v-for="r in routesToUse"
+            :key="r.title"
             class="cursor-pointer text-center v-col-4 pa-1"
-            :disabled="!userIsAuthenticated || !w.routeName"
+            :disabled="!userIsAuthenticated || !r.routeName"
             variant="flat"
           >
             <v-hover>
@@ -32,16 +32,16 @@
                   class="pa-2"
                   link
                   :variant="isHovering ? 'tonal' : 'flat'"
-                  @click="router.push({ name: w.routeName })"
+                  @click="router.push({ name: r.routeName })"
                 >
                   <v-icon
-                    :class="w.class"
-                    :color="isHovering ? 'success' : w.color"
+                    :class="r.class"
+                    :color="isHovering ? 'success' : r.color"
                     size="2em"
                   >
-                    {{ w.icon }}
+                    {{ r.icon }}
                   </v-icon>
-                  <v-card-subtitle>{{ w.title }}</v-card-subtitle>
+                  <v-card-subtitle>{{ r.title }}</v-card-subtitle>
                 </v-card>
               </template>
             </v-hover>
@@ -53,7 +53,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/userStore'
 import { storeToRefs } from 'pinia'
@@ -64,6 +64,7 @@ const userStore = useUserStore()
 const { userIsAuthenticated } = storeToRefs(userStore)
 
 const waffleMenu = ref()
+const routesToUse = computed(() => routes.filter((r) => !r.hideInMainNav))
 </script>
 
 <style scoped>

@@ -2,12 +2,12 @@
   "name": "origin-organizer",
   "private": true,
   "version": "0.0.0",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
+    "lint": "eslint --ext .js,.vue --fix src",
     "format": "prettier .  --write"
   },
   "dependencies": {
@@ -28,15 +28,17 @@
     "vuetify": "3.7.6"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "5.0.4",
-    "eslint": "8.56.0",
+    "@eslint/js": "9.22.0",
+    "@vitejs/plugin-vue": "5.2.1",
+    "eslint": "9.22.0",
     "eslint-config-prettier": "9.1.0",
-    "eslint-plugin-vue": "9.24.1",
+    "eslint-plugin-vue": "10.0.0",
     "prettier": "3.2.5",
     "sass": "1.69.5",
     "vite": "5.2.8",
     "vite-plugin-vue-devtools": "7.7.0",
-    "vite-svg-loader": "5.1.0"
+    "vite-svg-loader": "5.1.0",
+    "vue-eslint-parser": "10.0.0"
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "4.9.5"

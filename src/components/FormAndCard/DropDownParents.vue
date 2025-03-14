@@ -67,7 +67,10 @@ const { target } = defineProps({
 })
 
 const entryFormStore = useEntryFormStore()
-const parent = defineModel('parent', {})
+// eslint-disable-next-line vue/require-prop-types
+const parent = defineModel('parent', {
+  default: () => {}
+})
 
 // Adjust what displays in the dropdowns as items based on which one we're in
 const filteredEntriesToDisplay = computed(() =>

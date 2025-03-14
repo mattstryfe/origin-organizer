@@ -1,63 +1,71 @@
 export const routes = [
   {
-    title: 'Home',
-    icon: 'mdi-home',
+    class: 'hover-gradient',
     color: 'blue-grey',
-    routeName: 'LandingPage',
-    class: 'hover-gradient',
+    component: () => import('@/pages/LandingPage.vue'),
     hideInMainNav: true,
+    icon: 'mdi-home',
+    name: 'LandingPage',
     path: '/',
-    component: () => import('@/pages/LandingPage.vue')
+    title: 'Home'
   },
   {
-    title: 'Add Entry',
-    icon: 'mdi-plus',
+    class: 'hover-gradient',
     color: 'info',
-    routeName: 'AddEntry',
-    class: 'hover-gradient',
+    component: () => import('@/pages/AddEntryPage.vue'),
+    icon: 'mdi-plus',
+    name: 'AddEntry',
     path: '/addentry',
-    component: () => import('@/pages/AddEntryPage.vue')
+    showInMobileNav: true,
+    title: 'Add Entry'
   },
   {
-    title: 'Entry Details',
-    icon: 'mdi-cog',
+    class: 'hover-gradient',
     color: 'teal',
-    class: 'hover-gradient',
-    path: '/entrydetails/:entryId',
     component: () => import('@/pages/EntryDetailsPage.vue'),
-    props: true
+    hideInMainNav: true,
+    icon: 'mdi-cog',
+    name: 'EntryDetails',
+    path: '/entrydetails/:entryId',
+    props: true,
+    title: 'Entry Details'
   },
   {
-    title: 'Planner',
-    icon: 'mdi-calendar-arrow-right',
-    color: 'orange-darken-3',
-    class: 'hover-gradient'
-  },
-  {
-    title: 'Flock Manager',
-    icon: 'mdi-bird',
-    color: 'yellow-lighten-2',
-    routeName: 'FlockManager',
     class: 'hover-gradient',
+    color: 'yellow-lighten-2',
+    component: () => import('@/pages/FlockManagerPage.vue'),
+    icon: 'mdi-bird',
+    name: 'FlockManager',
     path: '/flockmanager',
-    component: () => import('@/pages/FlockManagerPage.vue')
+    showInMobileNav: true,
+    title: 'Flock Manager'
   },
   {
-    title: 'Calendar',
-    icon: 'mdi-calendar',
+    class: 'hover-gradient',
+    color: 'orange-darken-3',
+    disabled: true,
+    title: 'Planner',
+    icon: 'mdi-calendar-arrow-right'
+  },
+  {
+    class: 'hover-gradient',
     color: 'indigo-darken-1',
-    class: 'hover-gradient'
+    disabled: true,
+    icon: 'mdi-calendar',
+    title: 'Calendar'
   },
   {
-    title: 'Reports',
-    icon: 'mdi-chart-bar',
+    class: 'hover-gradient',
     color: 'red-darken-2',
-    class: 'hover-gradient'
+    disabled: true,
+    icon: 'mdi-chart-bar',
+    title: 'Reports'
   },
   {
-    title: 'Gene Tools',
-    icon: 'mdi-atom',
+    class: 'hover-spin-continuous',
     color: 'yellow-darken-2',
-    class: 'hover-spin-continuous'
+    disabled: true,
+    icon: 'mdi-atom',
+    title: 'Gene Tools'
   }
 ]
