@@ -18,7 +18,7 @@ vite build && firebase deploy
 
 ### TIAGA Integration - https://docs.taiga.io/changing-elements-status-via-commit-message.html
 Add `TG-REF #STATUS-slug` to commit summary or description to change TIAGA ticket status
-- Example: 
+- Example:  
 - `TG-123 #in-progress`
 - `TG-123 #in-pr`
 - `TG-123 #done`
