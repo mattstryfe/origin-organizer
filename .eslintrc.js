@@ -1,11 +1,15 @@
 module.exports = {
   root: true,
   env: {
+    es2024: true,
     node: true
+  },
+  globals: {
+    structuredClone: 'readonly'
   },
   extends: ['eslint:recommended', 'plugin:vue/vue3-recommended', 'prettier'],
   rules: {
-    "max-len": ["error", { "code": 80, "ignoreComments": true }],
+    'max-len': ['error', { code: 100, ignoreComments: true }],
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'vue/component-api-style': [
@@ -32,31 +36,31 @@ module.exports = {
     ],
     'vue/padding-line-between-blocks': ['error', 'always'],
     // Additional rules
-    "vue/html-closing-bracket-newline": [
-      "error",
+    'vue/html-closing-bracket-newline': [
+      'error',
       {
-        "singleline": "never",
-        "multiline": "always",
-        "selfClosingTag": {
-          "singleline": "never",
-          "multiline": "always"
+        singleline: 'never',
+        multiline: 'always',
+        selfClosingTag: {
+          singleline: 'never',
+          multiline: 'always'
         }
       }
     ],
-    "vue/order-in-components": [
-      "error",
+    'vue/order-in-components': [
+      'error',
       {
         order: [
-          "name",
-          "props", // Position props near the top
-          "computed",
-          "data",
-          "methods",
-          "emits",
-          "watch",
-          "template",
-        ],
-      },
+          'name',
+          'props', // Position props near the top
+          'computed',
+          'data',
+          'methods',
+          'emits',
+          'watch',
+          'template'
+        ]
+      }
     ],
     // Enforce alphabetical order for props
     'vue/attributes-order': [
@@ -71,10 +75,10 @@ module.exports = {
           'UNIQUE', // ref, key, v-slot, slot
           'OTHER_ATTR', // custom attributes
           'EVENTS', // @click, v-on
-          'CONTENT', // v-text, v-html
+          'CONTENT' // v-text, v-html
         ],
-        alphabetical: true, // Enforce alphabetical sorting within each group
-      },
-    ],
+        alphabetical: true // Enforce alphabetical sorting within each group
+      }
+    ]
   }
 }

@@ -52,7 +52,6 @@
 </template>
 
 <script setup>
-import { storeToRefs } from 'pinia'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration'
@@ -67,18 +66,16 @@ const { target } = defineProps({
   }
 })
 
-const parent = defineModel('parent', {})
+const entryFormStore = useEntryFormStore()
+// eslint-disable-next-line vue/require-prop-types
+const parent = defineModel('parent', {
+  default: () => {}
+})
 
 // Adjust what displays in the dropdowns as items based on which one we're in
 const filteredEntriesToDisplay = computed(() =>
-  target === 'father'
-    ? filteredEntriesForFatherDropdown.value
-    : filteredEntriesForMotherDropdown.value
+  entryFormStore.filterEntryListBy(target)
 )
-
-const entryFormStore = useEntryFormStore()
-const { filteredEntriesForFatherDropdown, filteredEntriesForMotherDropdown } =
-  storeToRefs(entryFormStore)
 
 const determineBorderColor = (entry) => {
   if (entry.isFoundation) return 'cust-border-yellow'

@@ -42,7 +42,7 @@ import CreateBreedingDisplayEntryCard from '@/components/CreateBreeding/CreateBr
 
 const entryFormStore = useEntryFormStore()
 const { showBottomSheet, selectionIds } = storeToRefs(entryFormStore)
-const oldSize = shallowRef() // used because Map() in pinia is stupid and won't provide oldVal
+const oldSize = shallowRef()
 watch(selectionIds.value, (newValue) => {
   // Only popup the navigation drawer the first time the user
   // adds 1, then 2.

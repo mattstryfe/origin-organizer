@@ -25,28 +25,29 @@ export const useEntryFormStore = defineStore('entryFormStore', {
     filterByFavoriteAndFoundation: false
   }),
   getters: {
-    disableBottomSheetButton: (state) => state.selectionIds.size !== 2,
-    filteredEntriesForMotherDropdown: (state) => {
-      const baseFilter = state.filterByFavoriteAndFoundation
-        ? state.entries.filter((e) => e.isFoundation || e.isFavorited)
-        : state.entries
-
-      return baseFilter.filter((e) => e.sex === 'female')
+    // Gets the firestore document REF
+    getEntryRef: () => {
+      return (entryId) =>
+        doc(db, 'flocks', useUserStore().getUserUid, 'entries', entryId)
     },
-    filteredEntriesForFatherDropdown: (state) => {
-      const baseFilter = state.filterByFavoriteAndFoundation
-        ? state.entries.filter((e) => e.isFoundation || e.isFavorited)
-        : state.entries
-
-      return baseFilter.filter((e) => e.sex === 'male')
-    }
+    disableBottomSheetButton: (state) => state.selectionIds.size !== 2
   },
   actions: {
+    filterEntryListBy(sex) {
+      // quick conversion for display purposes...
+      const valToUse = sex === 'mother' ? 'female' : 'male'
+
+      const baseFilter = this.filterByFavoriteAndFoundation
+        ? this.entries.filter((e) => e.isFoundation || e.isFavorited)
+        : this.entries
+
+      return baseFilter.filter((e) => e.sex === valToUse)
+    },
+
     // **🔥 Use VueFire to Make Queries Reactive**
     setupEntriesListener() {
-      const userStore = useUserStore()
       const notificationsStore = useNotificationsStore()
-      const flockId = userStore.getUserUid
+      const flockId = useUserStore().getUserUid
       if (!flockId || this.isListening) return
 
       const entriesCollection = collection(db, 'flocks', flockId, 'entries')
@@ -120,47 +121,38 @@ export const useEntryFormStore = defineStore('entryFormStore', {
         await useNotificationsStore().waitForDeleteConfirmationResponse()
       if (!isConfirmed) return
 
-      const userStore = useUserStore()
-      const flockId = userStore.getUserUid
-
-      // Create reference to the nested document
-      const entryRef = doc(db, 'flocks', flockId, 'entries', entryId)
-
-      await deleteDoc(entryRef)
+      await deleteDoc(this.getEntryRef(entryId))
     },
     async foundationThisEntry(entryId, isFoundation) {
-      const userStore = useUserStore()
-      const flockId = userStore.getUserUid
-
-      // Create reference to the nested document
-      const entryRef = doc(db, 'flocks', flockId, 'entries', entryId)
-
-      await updateDoc(entryRef, {
+      await updateDoc(this.getEntryRef(entryId), {
         isFoundation: !isFoundation,
         updatedAt: new Date()
       })
     },
     async favoriteThisEntry(entryId, isFavorite) {
-      const userStore = useUserStore()
-      const flockId = userStore.getUserUid
-
-      // Create reference to the nested document
-      const entryRef = doc(db, 'flocks', flockId, 'entries', entryId)
-
-      await updateDoc(entryRef, {
+      await updateDoc(this.getEntryRef(entryId), {
         isFavorited: !isFavorite,
         updatedAt: new Date()
       })
     },
     getEntryById(entryId) {
-      // When we do this, also append the selected entry to formData
-      // this allows hydration of the form from top down...
-      // this.formData =
       return this.entries.find((entry) => entry.entryId === entryId)
     },
+    async updateEntryInDb(entryId) {
+      const entryLocalCopy = this.getEntryById(entryId)
+
+      // Cannot append functions to firestore, this gets re-added
+      delete entryLocalCopy.imageUrlGetter
+
+      await updateDoc(this.getEntryRef(entryId), {
+        ...entryLocalCopy, // todo this is only temp
+        updatedAt: new Date()
+      })
+
+      this.editModeToggle = false
+    },
     async getEntryImageUrls(entry) {
-      const userStore = useUserStore()
-      const flockId = userStore.getUserUid
+      const flockId = useUserStore().getUserUid
       const { entryId } = entry
       const imageId = entry?.photoIds?.[0] ?? null
 
@@ -178,8 +170,7 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       }
     },
     async saveEntryToDb() {
-      const userStore = useUserStore()
-      const flockId = userStore.getUserUid
+      const flockId = useUserStore().getUserUid
 
       // check to see if attachments are being added
       // We need to break this up and do this now in order to insert this value into the entriesCollection DB
@@ -196,26 +187,6 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       if (this.attachments.length > 0) {
         await this.uploadImages(flockId, entryId, this.formData.photoIds[0])
       }
-    },
-    async updateEntryInDb(entryId) {
-      console.log('entryId ', entryId)
-      const userStore = useUserStore()
-      const flockId = userStore.getUserUid
-      const entryShallowCopy = this.getEntryById(entryId)
-
-      // Create reference to the nested document
-      const entryRef = doc(db, 'flocks', flockId, 'entries', entryId)
-
-      // Cannot append functions to firestore, this gets re-added
-      // TODO: probably a better way to do this
-      delete entryShallowCopy.imageUrlGetter
-
-      await updateDoc(entryRef, {
-        ...entryShallowCopy, // todo this is only temp
-        updatedAt: new Date()
-      })
-
-      this.editModeToggle = false
     },
     async uploadImages(flockId, entryId, uniqueId) {
       // Now upload file

@@ -1,40 +1,71 @@
-export default [
+export const routes = [
   {
-    title: 'Add Entry',
-    icon: 'mdi-plus',
+    class: 'hover-gradient',
+    color: 'blue-grey',
+    component: () => import('@/pages/LandingPage.vue'),
+    hideInMainNav: true,
+    icon: 'mdi-home',
+    name: 'LandingPage',
+    path: '/',
+    title: 'Home'
+  },
+  {
+    class: 'hover-gradient',
     color: 'info',
-    routeName: 'AddEntry',
-    class: 'hover-gradient'
+    component: () => import('@/pages/AddEntryPage.vue'),
+    icon: 'mdi-plus',
+    name: 'AddEntry',
+    path: '/addentry',
+    showInMobileNav: true,
+    title: 'Add Entry'
   },
   {
-    title: 'Planner',
-    icon: 'mdi-calendar-arrow-right',
-    color: 'orange-darken-3',
-    class: 'hover-gradient'
+    class: 'hover-gradient',
+    color: 'teal',
+    component: () => import('@/pages/EntryDetailsPage.vue'),
+    hideInMainNav: true,
+    icon: 'mdi-cog',
+    name: 'EntryDetails',
+    path: '/entrydetails/:entryId',
+    props: true,
+    title: 'Entry Details'
   },
   {
-    title: 'Flock Manager',
-    icon: 'mdi-bird',
+    class: 'hover-gradient',
     color: 'yellow-lighten-2',
-    routeName: 'FlockManager',
-    class: 'hover-gradient'
+    component: () => import('@/pages/FlockManagerPage.vue'),
+    icon: 'mdi-bird',
+    name: 'FlockManager',
+    path: '/flockmanager',
+    showInMobileNav: true,
+    title: 'Flock Manager'
   },
   {
-    title: 'Calendar',
-    icon: 'mdi-calendar',
+    class: 'hover-gradient',
+    color: 'orange-darken-3',
+    disabled: true,
+    title: 'Planner',
+    icon: 'mdi-calendar-arrow-right'
+  },
+  {
+    class: 'hover-gradient',
     color: 'indigo-darken-1',
-    class: 'hover-gradient'
+    disabled: true,
+    icon: 'mdi-calendar',
+    title: 'Calendar'
   },
   {
-    title: 'Reports',
-    icon: 'mdi-chart-bar',
+    class: 'hover-gradient',
     color: 'red-darken-2',
-    class: 'hover-gradient'
+    disabled: true,
+    icon: 'mdi-chart-bar',
+    title: 'Reports'
   },
   {
-    title: 'Gene Tools',
-    icon: 'mdi-atom',
+    class: 'hover-spin-continuous',
     color: 'yellow-darken-2',
-    class: 'hover-spin-continuous'
+    disabled: true,
+    icon: 'mdi-atom',
+    title: 'Gene Tools'
   }
 ]

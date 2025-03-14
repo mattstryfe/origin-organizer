@@ -18,8 +18,24 @@ vite build && firebase deploy
 
 ### TIAGA Integration - https://docs.taiga.io/changing-elements-status-via-commit-message.html
 Add `TG-REF #STATUS-slug` to commit summary or description to change TIAGA ticket status
-- Example:
+- Example:  
 - `TG-123 #in-progress`
 - `TG-123 #in-pr`
 - `TG-123 #done`
 - Example: `TG-12 updated readme to relfect changes...`
+
+### To Integrate github desktop or git with TIAGA 
+this will...
+AUTO pre-pend pre commit messages with TG-XX
+
+- navigate to /.git/hooks
+- create file named `prepare-commit-msg`
+- add the following to the file
+
+```
+#!/bin/sh
+branch=$(git symbolic-ref --short HEAD)
+echo "$branch: $(cat "$1")" > "$1"
+```
+
+- restart github desktop

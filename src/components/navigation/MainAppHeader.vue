@@ -24,15 +24,15 @@
     <template #append>
       <div v-if="smAndUp">
         <v-icon
-          v-for="w in routerLinksSchema"
-          :key="w.name"
+          v-for="r in routesToUse"
+          :key="r.name"
           class="pa-1 ma-1 v-icon--size-x-small"
-          :color="w.color"
-          :disabled="!w.routeName"
-          :name="w.name"
-          @click="router.push({ name: w.routeName })"
+          :color="r.color"
+          :disabled="r.disabled"
+          :name="r.name"
+          @click="router.push({ name: r.name })"
         >
-          {{ w.icon }}
+          {{ r.icon }}
         </v-icon>
       </div>
 
@@ -43,14 +43,15 @@
 </template>
 
 <script setup>
-// TODO: Used w in routerLinksSchema to follow same pattern in MainWaffleMenu -> Easier refactor.
 import WaffleMenu from '@/components/navigation/MainWaffleMenu.vue'
 import UserAccountMenu from '@/components/navigation/MainUserAccountMenu.vue'
-import routerLinksSchema from '@/schemas/routerLinksSchema'
-import router from '@/plugins/router'
-import { inject } from 'vue'
+import { routes } from '@/schemas/routerLinksSchema'
+import { computed, inject } from 'vue'
 import MainAppSearchField from '@/components/navigation/MainAppSearchField.vue'
+import router from '@/plugins/router'
 const smAndUp = inject('smAndUp')
+
+const routesToUse = computed(() => routes.filter((r) => !r.hideInMainNav))
 </script>
 
 <style scoped>
