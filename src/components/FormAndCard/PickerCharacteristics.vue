@@ -25,7 +25,7 @@ import { rawSchemaCharacteristicOptions } from '@/schemas/entryFormSchema'
 const entryFormStore = useEntryFormStore()
 const { editModeToggle } = storeToRefs(entryFormStore)
 
-const characteristics = defineModel('characteristics', { default: () => [] })
+const characteristics = defineModel('characteristics', { type: Array })
 
 // TODO: Look using vueUse for snapshotting this and checking differences...
 const schemaCharacteristicOptions = structuredClone(

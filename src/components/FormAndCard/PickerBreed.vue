@@ -24,7 +24,7 @@ import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 
-const breed = defineModel('breed', { default: () => [] })
+const breed = defineModel('breed', { type: Array })
 const { editModeToggle } = storeToRefs(useEntryFormStore())
 
 // gracefully deals with appending entries while in editMode.
@@ -36,25 +36,7 @@ const breedsToUse = computed(() => {
 </script>
 
 <style scoped>
-.dynamic-truncate {
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  max-width: 100% !important;
-  display: block !important; /* Ensure it's not flex or inline-flex */
-}
-
 .read-only-chip {
   pointer-events: none;
-}
-
-.cust-trunc {
-  /*
-  display: -webkit-box;
-  */
-  /*  display: inline-block;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;*/
 }
 </style>

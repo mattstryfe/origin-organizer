@@ -1,7 +1,11 @@
 module.exports = {
   root: true,
   env: {
+    es2024: true,
     node: true
+  },
+  globals: {
+    structuredClone: 'readonly'
   },
   extends: ['eslint:recommended', 'plugin:vue/vue3-recommended', 'prettier'],
   rules: {
