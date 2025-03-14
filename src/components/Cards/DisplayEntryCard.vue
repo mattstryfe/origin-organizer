@@ -112,6 +112,14 @@
       />
     </v-row>
 
+    <v-row class="overflow-scroll" dense no-gutters>
+      <generic-form-dividers show-divider text-to-display="notes" />
+      <textarea-notes
+        :disabled="!editModeToggle"
+        v-model:notes="allEntryDetails['notes']"
+      />
+    </v-row>
+
     <!-- bottom Controls -->
     <v-row dense no-gutters>
       <v-col class="d-flex justify-end align-end">
@@ -139,6 +147,7 @@ import PickerSex from '@/components/FormAndCard/PickerSex.vue'
 import PickerPhase from '@/components/FormAndCard/PickerPhase.vue'
 import PickerBreed from '@/components/FormAndCard/PickerBreed.vue'
 import GenericFormDividers from '@/components/FormAndCard/GenericFormDividers.vue'
+import TextareaNotes from '@/components/FormAndCard/TextareaNotes.vue'
 
 // New way to do props. both work
 const { entryId, allowCardDeselection } = defineProps({

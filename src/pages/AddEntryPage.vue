@@ -39,6 +39,8 @@
               <!-- Form Body -->
               <v-divider></v-divider>
               <form-details />
+              <span class="ml-4 text-body-2">Notes:</span>
+              <textarea-notes v-model:notes="formData['notes']" class="px-4" />
               <upload-image />
 
               <!-- TODO: update this one to work with new v-model pattern -->
@@ -85,6 +87,7 @@ import ProgressTracker from '@/components/FormAndCard/ProgressTracker.vue'
 import StarRating from '@/components/FormAndCard/StarRating.vue'
 import UploadImage from '@/components/FormAndCard/UploadImage.vue'
 import DropDownParents from '@/components/FormAndCard/DropDownParents.vue'
+import TextareaNotes from '@/components/FormAndCard/TextareaNotes.vue'
 
 const entryFormStore = useEntryFormStore()
 const { formData } = storeToRefs(entryFormStore)
