@@ -48,13 +48,13 @@
 
     <!-- Breed area -->
     <v-row class="overflow-scroll" dense no-gutters>
-      <generic-form-headers show-divider text-to-display="breed(s)" />
+      <generic-form-dividers show-divider text-to-display="breed(s)" />
 
       <picker-breed v-model:breed="allEntryDetails['breed']" />
     </v-row>
 
     <v-row class="overflow-scroll align-center justify-center" dense>
-      <generic-form-headers show-divider text-to-display="details" />
+      <generic-form-dividers show-divider text-to-display="details" />
 
       <v-col cols="7">
         <v-text-field
@@ -106,7 +106,7 @@
 
     <!-- Characteristics Area -->
     <v-row class="overflow-scroll" dense no-gutters>
-      <generic-form-headers show-divider text-to-display="characteristics" />
+      <generic-form-dividers show-divider text-to-display="characteristics" />
       <picker-characteristics
         v-model:characteristics="allEntryDetails['characteristics']"
       />
@@ -138,7 +138,7 @@ import DropDownParents from '@/components/FormAndCard/DropDownParents.vue'
 import PickerSex from '@/components/FormAndCard/PickerSex.vue'
 import PickerPhase from '@/components/FormAndCard/PickerPhase.vue'
 import PickerBreed from '@/components/FormAndCard/PickerBreed.vue'
-import GenericFormHeaders from '@/components/GenericFormHeaders.vue'
+import GenericFormDividers from '@/components/FormAndCard/GenericFormDividers.vue'
 
 // New way to do props. both work
 const { entryId, allowCardDeselection } = defineProps({
