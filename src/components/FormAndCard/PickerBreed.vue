@@ -25,7 +25,6 @@ import { storeToRefs } from 'pinia'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 
 const breed = defineModel('breed', { type: Array, default: () => [] })
-console.log('breed', breed.value)
 const { editModeToggle } = storeToRefs(useEntryFormStore())
 
 // gracefully deals with appending entries while in editMode.

@@ -65,8 +65,6 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       onSnapshot(
         entriesCollection,
         (querySnapshot) => {
-          console.log('🔄 Firestore updated, syncing entries...', querySnapshot)
-
           const updatedEntriesMap = new Map()
           const currentIds = new Set(this.entries.map((e) => e.entryId))
 
@@ -93,7 +91,8 @@ export const useEntryFormStore = defineStore('entryFormStore', {
                 const existingEntry = this.entries.find(
                   (e) => e.entryId === entry.entryId
                 )
-                Object.assign(existingEntry, entry) // Keeps Vue reactivity
+                // IMPORTANT! Keeps Vue reactivity, especially with arrays and nested data.
+                Object.assign(existingEntry, entry)
                 notificationsStore.addNotification(
                   'update',
                   existingEntry.entryId
