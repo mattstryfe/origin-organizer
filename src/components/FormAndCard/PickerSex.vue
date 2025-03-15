@@ -19,7 +19,7 @@
 
 <script setup>
 import { schemaSexOptions } from '@/schemas/entryFormSchema'
-const sex = defineModel('sex', { type: Object, default: () => {} })
+const sex = defineModel('sex', { type: String, default: '' })
 
 defineProps({
   displayVertical: {

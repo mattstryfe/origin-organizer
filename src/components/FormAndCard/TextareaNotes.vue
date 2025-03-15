@@ -3,6 +3,7 @@
   <v-col cols="12">
     <v-textarea
       density="compact"
+      :disabled="disabled"
       rows="3"
       variant="outlined"
       v-model="activeNote"
@@ -23,10 +24,14 @@ const activeNote = defineModel('activeNote', {
   default: 'default note...'
 })
 
-const { archivedNotes } = defineProps({
+const { archivedNotes, disabled } = defineProps({
   archivedNotes: {
     type: Array,
     default: () => []
+  },
+  disabled: {
+    type: Boolean,
+    default: true
   }
 })
 // const appendedNotes = computed(() => notes.fi)
