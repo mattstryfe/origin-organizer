@@ -47,7 +47,7 @@
     </v-img>
 
     <!-- Breed area -->
-    <v-row class="overflow-scroll" dense no-gutters>
+    <v-row class="overflow-scroll mt-2" dense no-gutters>
       <generic-form-divider show-divider text-to-display="breed(s)" />
 
       <picker-breed v-model:breed="allEntryDetails['breed']" />
@@ -56,7 +56,7 @@
     <v-row class="overflow-scroll align-center justify-center" dense>
       <generic-form-divider show-divider text-to-display="details" />
 
-      <v-col cols="7">
+      <v-col class="mt-1" cols="7">
         <v-text-field
           density="compact"
           :disabled="!editModeToggle"
@@ -105,7 +105,7 @@
     </v-row>
 
     <!-- Characteristics Area -->
-    <v-row class="overflow-scroll" dense no-gutters>
+    <v-row class="overflow-scroll mt-1" dense no-gutters>
       <generic-form-divider show-divider text-to-display="characteristics" />
       <picker-characteristics
         v-model:characteristics="allEntryDetails['characteristics']"
