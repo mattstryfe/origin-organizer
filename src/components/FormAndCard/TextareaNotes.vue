@@ -1,5 +1,4 @@
 <template>
-  <!-- in edit mode, this will show -->
   <v-col cols="12">
     <v-textarea
       density="compact"
@@ -9,7 +8,6 @@
       v-model="activeNote"
     ></v-textarea>
   </v-col>
-  <!-- this area will show a list of last 3 entries in read mode-->
   <v-card v-for="n in archivedNotes" :key="n">
     <v-card-title>author:</v-card-title>
     <v-card-subtitle>
@@ -34,8 +32,6 @@ const { archivedNotes, disabled } = defineProps({
     default: true
   }
 })
-// const appendedNotes = computed(() => notes.fi)
-const test = ['there are some notes', '2 notes here..', '3 notes here..']
 </script>
 
 <style scoped></style>

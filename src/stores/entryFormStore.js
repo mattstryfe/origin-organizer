@@ -6,7 +6,7 @@ import {
   doc,
   updateDoc,
   onSnapshot,
-  setDoc,
+  addDoc,
   Timestamp,
   serverTimestamp
 } from 'firebase/firestore'
@@ -19,7 +19,7 @@ export const useEntryFormStore = defineStore('entryFormStore', {
   state: () => ({
     formData: {
       notes: {
-        active: [],
+        active: '',
         archived: []
       }
     },
@@ -118,7 +118,12 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       )
     },
     clearFormData() {
-      this.formData = {}
+      this.formData = {
+        notes: {
+          active: '',
+          archived: []
+        }
+      }
     },
     async removeThisEntry(entryId) {
       const isConfirmed =
@@ -130,13 +135,13 @@ export const useEntryFormStore = defineStore('entryFormStore', {
     async foundationThisEntry(entryId, isFoundation) {
       await updateDoc(this.getEntryRef(entryId), {
         isFoundation: !isFoundation,
-        updatedAt: new Date()
+        updatedAt: serverTimestamp()
       })
     },
     async favoriteThisEntry(entryId, isFavorite) {
       await updateDoc(this.getEntryRef(entryId), {
         isFavorited: !isFavorite,
-        updatedAt: new Date()
+        updatedAt: serverTimestamp()
       })
     },
     getEntryById(entryId) {
@@ -195,7 +200,7 @@ export const useEntryFormStore = defineStore('entryFormStore', {
 
       const flockDocRef = await doc(db, 'flocks', flockId)
       const entriesCollectionRef = collection(flockDocRef, 'entries')
-      const { entryId } = await setDoc(entriesCollectionRef, {
+      const { entryId } = await addDoc(entriesCollectionRef, {
         ...this.formData,
         updatedAt: serverTimestamp(),
         createdAt: serverTimestamp()

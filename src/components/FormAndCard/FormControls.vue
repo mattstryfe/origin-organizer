@@ -16,7 +16,6 @@ import { useEntryFormStore } from '@/stores/entryFormStore'
 import { ref } from 'vue'
 
 const isMultiple = ref(false)
-
 const entryFormStore = useEntryFormStore()
 
 const handleSave = async () => {

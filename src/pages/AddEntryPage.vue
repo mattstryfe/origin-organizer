@@ -42,12 +42,10 @@
               <span class="ml-4 text-body-2">Notes:</span>
               <textarea-notes
                 v-model:active-note="formData['notes']['active']"
-                :archived-notes="formData['notes']['archived']"
-                class="px-4"
+                :disabled="false"
               />
               <upload-image />
 
-              <!-- TODO: update this one to work with new v-model pattern -->
               <picker-characteristics />
             </v-col>
 
