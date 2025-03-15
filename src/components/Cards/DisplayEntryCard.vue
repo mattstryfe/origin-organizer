@@ -115,8 +115,9 @@
     <v-row class="overflow-scroll" dense no-gutters>
       <generic-form-dividers show-divider text-to-display="notes" />
       <textarea-notes
+        :archived-notes="allEntryDetails['notes']['archived']"
         :disabled="!editModeToggle"
-        v-model:notes="allEntryDetails['notes']"
+        v-model:active-note="allEntryDetails['notes']['active']"
       />
     </v-row>
 

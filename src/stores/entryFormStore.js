@@ -14,7 +14,12 @@ import { useNotificationsStore } from '@/stores/notificationsStore'
 
 export const useEntryFormStore = defineStore('entryFormStore', {
   state: () => ({
-    formData: {},
+    formData: {
+      notes: {
+        active: [],
+        archived: []
+      }
+    },
     entries: [],
     hasEntryChanged: false,
     editModeToggle: false,
@@ -71,7 +76,6 @@ export const useEntryFormStore = defineStore('entryFormStore', {
               imageUrlGetter: (entry) => this.getEntryImageUrls(entry)
             }
 
-            console.log('change!', change)
             updatedEntriesMap.set(newEntry.entryId, newEntry)
 
             const handlers = {
