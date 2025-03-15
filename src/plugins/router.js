@@ -17,7 +17,8 @@ router.beforeEach(async (to, from) => {
   // if (to.name !== 'LandingPage' && !useUserStore().userIsAuthenticated) {
   //   return { name: 'LandingPage'}
   // }
-  if (to.name === 'EntryDetails') {
+  // addEntry flips toggle to gracefully handle some picker's edit modes
+  if (to.name === 'EntryDetails' || to.name === 'AddEntry') {
     useEntryFormStore().editModeToggle = true
   } else {
     useEntryFormStore().editModeToggle = false

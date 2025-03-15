@@ -1,17 +1,13 @@
 <template>
   <v-row dense no-gutters>
-    <v-col cols="12">
-      <progress-tracker />
-    </v-col>
-
-    <v-divider class="mb-2"></v-divider>
-
     <v-col class="v-col-md-6">
       <v-card border class="pb-2 mb-2">
         <v-form>
           <!-- Species Picker -->
           <v-row class="mt-2" no-gutters>
             <v-col cols="8">
+              <generic-form-divider show-divider text-to-display="details" />
+
               <v-col class="d-flex justify-space-around">
                 <picker-species />
                 <picker-phase
@@ -36,20 +32,26 @@
                 />
               </v-col>
 
-              <!-- Form Body -->
-              <v-divider></v-divider>
               <form-details />
-              <span class="ml-4 text-body-2">Notes:</span>
+
+              <generic-form-divider show-divider text-to-display="notes" />
               <textarea-notes
                 v-model:active-note="formData['notes']['active']"
                 :disabled="false"
               />
-              <upload-image />
 
-              <picker-characteristics />
+              <generic-form-divider
+                show-divider
+                text-to-display="characteristics"
+              />
+              <picker-characteristics
+                v-model:characteristics="formData['characteristics']"
+              />
+              <upload-image />
             </v-col>
 
             <v-col cols="4">
+              <generic-form-divider show-divider text-to-display="breed(s)" />
               <picker-breed v-model:breed="formData['breed']" />
             </v-col>
           </v-row>
@@ -90,6 +92,7 @@ import StarRating from '@/components/FormAndCard/StarRating.vue'
 import UploadImage from '@/components/FormAndCard/UploadImage.vue'
 import DropDownParents from '@/components/FormAndCard/DropDownParents.vue'
 import TextareaNotes from '@/components/FormAndCard/TextareaNotes.vue'
+import GenericFormDivider from '@/components/FormAndCard/GenericFormDivider.vue'
 
 const entryFormStore = useEntryFormStore()
 const { formData } = storeToRefs(entryFormStore)

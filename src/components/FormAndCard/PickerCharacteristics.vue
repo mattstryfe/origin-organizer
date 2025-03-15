@@ -1,19 +1,21 @@
 <template>
-  <v-chip-group v-model="characteristics" class="d-block" column multiple>
-    <v-chip
-      v-for="field in characteristicsToUse"
-      :key="field"
-      class="mb-1"
-      :class="{ 'read-only-chip': !editModeToggle }"
-      color="secondary"
-      label
-      size="small"
-      :value="field"
-      variant="outlined"
-    >
-      <span>{{ field }}</span>
-    </v-chip>
-  </v-chip-group>
+  <v-col cols="12">
+    <v-chip-group v-model="characteristics" class="d-block" column multiple>
+      <v-chip
+        v-for="field in characteristicsToUse"
+        :key="field"
+        class="mb-1"
+        :class="{ 'read-only-chip': !editModeToggle }"
+        color="secondary"
+        label
+        size="small"
+        :value="field"
+        variant="outlined"
+      >
+        <span>{{ field }}</span>
+      </v-chip>
+    </v-chip-group>
+  </v-col>
 </template>
 
 <script setup>
@@ -34,7 +36,7 @@ const characteristics = defineModel('characteristics', {
 const schemaCharacteristicOptions = structuredClone(
   rawSchemaCharacteristicOptions
 )
-
+// editModeToggle is used for adding new entries and controlled in router.js
 // gracefully deals with appending entries while in editMode.
 const characteristicsToUse = computed(() => {
   return editModeToggle.value

@@ -12,7 +12,7 @@
         :value="b"
         variant="outlined"
       >
-        <span class="cust-trunc">{{ b }}</span>
+        <span>{{ b }}</span>
       </v-chip>
     </v-slide-y-transition>
   </v-chip-group>
@@ -27,6 +27,7 @@ import { useEntryFormStore } from '@/stores/entryFormStore'
 const breed = defineModel('breed', { type: Array, default: () => [] })
 const { editModeToggle } = storeToRefs(useEntryFormStore())
 
+// editModeToggle is used for adding new entries and controlled in router.js
 // gracefully deals with appending entries while in editMode.
 const breedsToUse = computed(() => {
   return editModeToggle.value
