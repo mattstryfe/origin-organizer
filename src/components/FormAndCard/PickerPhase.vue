@@ -29,7 +29,7 @@
 <script setup>
 import { schemaPhaseOptions } from '@/schemas/entryFormSchema'
 
-const phase = defineModel('phase', { type: Object })
+const phase = defineModel('phase', { type: Object, default: () => {} })
 
 defineProps({
   displayVertical: {

@@ -9,9 +9,7 @@ const router = createRouter({
   // 4. Provide the history implementation to use. We are using the hash history for simplicity here.
   history: createWebHistory(),
   routes
-  // routes // short for `routes: routes`
 })
-console.log('router', router)
 
 router.beforeEach(async (to, from) => {
   // If not authed
