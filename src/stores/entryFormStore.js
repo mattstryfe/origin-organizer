@@ -158,7 +158,9 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       if (entryLocalCopy.notes.active.length > 0) {
         entryLocalCopy.notes.archived.push({
           timestamp,
-          content: entryLocalCopy.notes.active
+          content: entryLocalCopy.notes.active,
+          user: useUserStore().getUserDisplayName,
+          userPhotoURL: useUserStore().getUserPhotoURL
         })
         entryLocalCopy.notes.active = ''
       }

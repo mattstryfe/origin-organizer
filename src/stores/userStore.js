@@ -27,7 +27,10 @@ export const useUserStore = defineStore('userStore', {
 
   getters: {
     // ?. is used to prevent logout from throwing console errors for now.
-    getUserDisplayName: (state) => state.userInfo?.displayName,
+    getUserDisplayName: (state) => {
+      console.log(state.userInfo)
+      return state.userInfo?.displayName
+    },
     getUserPhotoURL: (state) =>
       state.userInfo?.photoURL ||
       'https://randomuser.me/api/portraits/lego/1.jpg',
@@ -87,7 +90,7 @@ export const useUserStore = defineStore('userStore', {
         // If user entry DOESN'T exists, make it
         if (!userDoc.exists()) {
           await setDoc(doc(db, 'users', authResponse.user.uid), {
-            displayName: authResponse.user.displayName,
+            displayName: authResponse.user.displayName || 'Test User',
             photoURL: authResponse.user.photoURL,
             email: authResponse.user.email,
             uid: authResponse.user.uid,
