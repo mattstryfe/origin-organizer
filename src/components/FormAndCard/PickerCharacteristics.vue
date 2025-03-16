@@ -32,7 +32,6 @@ const characteristics = defineModel('characteristics', {
   default: () => []
 })
 
-// TODO: Look using vueUse for snapshotting this and checking differences...
 const schemaCharacteristicOptions = structuredClone(
   rawSchemaCharacteristicOptions
 )

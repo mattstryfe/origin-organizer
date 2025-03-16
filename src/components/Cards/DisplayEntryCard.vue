@@ -4,8 +4,8 @@
     :class="{
       'opacity-80': showOverlay
     }"
-    :height="cardHeight"
-    :width="cardWidth"
+    :height="useLayoutStore().calculatedHeight"
+    :width="useLayoutStore().calculatedWidth"
   >
     <v-sheet v-if="showOverlay" class="cust-overlay">
       <v-icon
@@ -43,7 +43,7 @@
         half-increments
         :model-value="allEntryDetails.rating"
         size="small"
-      ></v-rating>
+      />
     </v-img>
 
     <!-- Breed area -->
@@ -64,7 +64,7 @@
           label="Name"
           v-model="allEntryDetails.name"
           variant="outlined"
-        ></v-text-field>
+        />
       </v-col>
       <v-col cols="5">
         <v-text-field
@@ -74,7 +74,7 @@
           label="DoB"
           variant="outlined"
           v-model="allEntryDetails['DoB']"
-        ></v-text-field>
+        />
       </v-col>
       <v-col cols="6">
         <drop-down-parents
@@ -112,7 +112,12 @@
       />
     </v-row>
 
-    <v-row class="overflow-scroll mt-2" dense no-gutters>
+    <v-row
+      v-if="useLayoutStore().hideNotesOnFMPage"
+      class="overflow-scroll mt-2"
+      dense
+      no-gutters
+    >
       <generic-form-divider show-divider text-to-display="notes" />
       <textarea-notes
         :archived-notes="allEntryDetails['notes']['archived']"
@@ -131,7 +136,7 @@
           size="medium"
           variant="text"
           @click="entryFormStore.removeThisEntry(allEntryDetails.entryId)"
-        ></v-btn>
+        />
       </v-col>
     </v-row>
   </v-card>
@@ -149,6 +154,7 @@ import PickerPhase from '@/components/FormAndCard/PickerPhase.vue'
 import PickerBreed from '@/components/FormAndCard/PickerBreed.vue'
 import GenericFormDivider from '@/components/FormAndCard/GenericFormDivider.vue'
 import TextareaNotes from '@/components/FormAndCard/TextareaNotes.vue'
+import { useLayoutStore } from '@/stores/layoutStore.js'
 
 // New way to do props. both work
 const { entryId, allowCardDeselection } = defineProps({
@@ -159,14 +165,6 @@ const { entryId, allowCardDeselection } = defineProps({
   allowCardDeselection: {
     type: Boolean,
     default: false
-  },
-  cardWidth: {
-    type: [Number, String],
-    default: 300
-  },
-  cardHeight: {
-    type: [Number, String],
-    default: 400
   }
 })
 

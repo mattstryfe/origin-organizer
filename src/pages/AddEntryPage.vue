@@ -56,7 +56,7 @@
             </v-col>
           </v-row>
 
-          <v-divider></v-divider>
+          <v-divider />
           <!-- Form Controls -->
           <form-controls />
         </v-form>
@@ -87,7 +87,6 @@ import PickerSpecies from '@/components/FormAndCard/PickerSpecies.vue'
 import PickerSex from '@/components/FormAndCard/PickerSex.vue'
 import PickerBreed from '@/components/FormAndCard/PickerBreed.vue'
 import PickerCharacteristics from '@/components/FormAndCard/PickerCharacteristics.vue'
-import ProgressTracker from '@/components/FormAndCard/ProgressTracker.vue'
 import StarRating from '@/components/FormAndCard/StarRating.vue'
 import UploadImage from '@/components/FormAndCard/UploadImage.vue'
 import DropDownParents from '@/components/FormAndCard/DropDownParents.vue'

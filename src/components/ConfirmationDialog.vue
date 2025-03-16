@@ -1,5 +1,8 @@
 <template>
-  <v-dialog v-model="toggleConfirmationDialog" width="auto">
+  <v-dialog
+    v-model="toggleConfirmationDialog"
+    width="auto"
+  >
     <v-card
       class="border"
       max-width="400"
@@ -8,8 +11,16 @@
       title="Delete Confirmation"
     >
       <template #actions>
-        <v-btn class="ms-auto" text="DELETE" @click="okayClick()"></v-btn>
-        <v-btn class="ms-auto" text="Cancel" @click="cancelClick()"></v-btn>
+        <v-btn
+          class="ms-auto"
+          text="DELETE"
+          @click="okayClick()"
+        />
+        <v-btn
+          class="ms-auto"
+          text="Cancel"
+          @click="cancelClick()"
+        />
       </template>
     </v-card>
   </v-dialog>

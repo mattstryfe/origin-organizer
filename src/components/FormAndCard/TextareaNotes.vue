@@ -7,7 +7,7 @@
       rows="3"
       variant="outlined"
       v-model="activeNote"
-    ></v-textarea>
+    />
   </v-col>
   <v-col cols="12">
     <v-list>
@@ -22,7 +22,7 @@
             class="mt-1"
             density="compact"
             :image="n.userPhotoURL"
-          ></v-avatar>
+          />
         </template>
         <v-list-item-title>
           <span class="text-body-2">{{ n.user }}</span>

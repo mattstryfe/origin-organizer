@@ -1,19 +1,32 @@
 <template>
-  <v-menu v-model="waffleMenu" location="bottom" width="400">
+  <v-menu
+    v-model="waffleMenu"
+    location="bottom"
+    width="400"
+  >
     <template #activator="{ props }">
       <v-btn
         v-bind="props"
         class="cursor-pointer mr-1"
         color="green-darken-3"
         icon="mdi-dots-grid"
-      ></v-btn>
+      />
     </template>
 
     <v-card>
       <v-container fluid>
-        <v-row dense no-gutters>
-          <v-col v-if="!userIsAuthenticated" cols="12">
-            <v-alert type="info" variant="outlined">
+        <v-row
+          dense
+          no-gutters
+        >
+          <v-col
+            v-if="!userIsAuthenticated"
+            cols="12"
+          >
+            <v-alert
+              type="info"
+              variant="outlined"
+            >
               Must login to access cool shit...
             </v-alert>
           </v-col>
@@ -22,7 +35,7 @@
             v-for="r in routesToUse"
             :key="r.title"
             class="cursor-pointer text-center v-col-4 pa-1"
-            :disabled="!userIsAuthenticated || !r.routeName"
+            :disabled="!userIsAuthenticated || r.disabled"
             variant="flat"
           >
             <v-hover>

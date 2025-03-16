@@ -1,6 +1,11 @@
 <template>
   <v-col cols="12">
-    <v-chip-group v-model="breed" class="d-flex" column multiple>
+    <v-chip-group
+      v-model="breed"
+      class="d-flex"
+      column
+      multiple
+    >
       <v-slide-y-transition group>
         <v-chip
           v-for="b in breedsToUse"

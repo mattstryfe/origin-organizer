@@ -1,13 +1,18 @@
 <template>
   <!-- filters -->
-  <v-col class="ma-0 pa-0" cols="12">
+  <v-col
+    class="ma-0 pa-0"
+    cols="12"
+  >
     <v-chip-group
       v-model="filter"
       column
       multiple
       selected-class="text-green-darken-3"
     >
-      <v-icon class="pt-1 mr-3">mdi-filter-variant-plus</v-icon>
+      <v-icon class="pt-1 mr-3">
+        mdi-filter-variant-plus
+      </v-icon>
 
       <v-chip
         v-for="n in 5"

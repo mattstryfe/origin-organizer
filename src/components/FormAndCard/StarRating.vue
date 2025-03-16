@@ -4,7 +4,7 @@
     dense
     half-increments
     v-model="formData['rating']"
-  ></v-rating>
+  />
 </template>
 
 <script setup>

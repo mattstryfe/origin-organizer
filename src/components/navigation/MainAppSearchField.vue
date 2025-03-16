@@ -8,7 +8,7 @@
     placeholder=" "
     prepend-inner-icon="mdi-magnify"
     variant="solo"
-  ></v-text-field>
+  />
 </template>
 
 <script setup>

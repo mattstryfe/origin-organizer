@@ -10,7 +10,7 @@
           color="primary"
           density="compact"
           hide-details
-        ></v-switch>
+        />
       </template>
 
       <v-list-item-title class="text-capitalize v-label text-right">
@@ -26,7 +26,7 @@
           color="primary"
           density="compact"
           hide-details
-        ></v-switch>
+        />
       </template>
 
       <v-list-item-title class="text-capitalize v-label text-right">
@@ -34,14 +34,14 @@
       </v-list-item-title>
     </v-list-item>
 
-    <v-divider></v-divider>
+    <v-divider />
     <v-list-subheader color="red-lighten-2">Danger Zone</v-list-subheader>
     <!-- example for now -->
     <v-progress-linear
       :active="!hasProfileBeenRepaired"
       color="green-darken-3"
       :indeterminate="!hasProfileBeenRepaired"
-    ></v-progress-linear>
+    />
 
     <v-list-item
       v-for="(item, i) in dangerZoneEntries"
@@ -50,11 +50,7 @@
       @click="item.action"
     >
       <template #prepend>
-        <v-icon
-          :color="item.iconColor"
-          :icon="item.icon"
-          :loading="true"
-        ></v-icon>
+        <v-icon :color="item.iconColor" :icon="item.icon" :loading="true" />
       </template>
       <v-list-item-title class="text-capitalize v-label">
         {{ item.name }}
@@ -72,10 +68,6 @@ import { storeToRefs } from 'pinia'
 const userStore = useUserStore()
 const { hasProfileBeenRepaired } = storeToRefs(userStore)
 
-const userControls = ref([
-  { name: 'dark mode', icon: '' },
-  { name: 'auto save', icon: '' }
-])
 const dangerZoneEntries = ref([
   {
     name: 'repair profile',

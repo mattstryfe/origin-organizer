@@ -1,16 +1,16 @@
 <template>
   <v-row class="flex-wrap px-3">
-    <flock-manager-filters></flock-manager-filters>
+    <flock-manager-filters />
 
     <template v-if="!isDoneLoadingEntries">
       <v-skeleton-loader
         v-for="i in 12"
         :key="i"
         class="v-card ma-1 pa-1 border-sm"
-        height="400"
+        :height="useLayoutStore().calculatedHeight"
         type="card-avatar, article, actions"
-        width="300"
-      ></v-skeleton-loader>
+        :width="800"
+      />
     </template>
 
     <template v-if="isDoneLoadingEntries">
@@ -19,15 +19,13 @@
         :key="entry.entryId"
         ref="entryRefs"
         :allow-card-deselection="allowCardDeselection"
-        :card-height="500"
-        :card-width="smAndUp ? 400 : 'auto'"
         class="cust-border-trans"
         :class="highlightThisCard(entry.entryId)"
         :entry-id="entry.entryId"
-      ></display-entry-card>
+      />
     </template>
 
-    <create-breeding-navigation-drawer></create-breeding-navigation-drawer>
+    <create-breeding-navigation-drawer />
     <v-btn
       class="v-btn--fixed v-btn--top v-btn--right border-thin"
       :disabled="disableBottomSheetButton"
@@ -47,11 +45,11 @@
 import DisplayEntryCard from '@/components/Cards/DisplayEntryCard.vue'
 import { storeToRefs } from 'pinia'
 import { useEntryFormStore } from '@/stores/entryFormStore'
-import { inject, nextTick, onMounted, ref, watch } from 'vue'
+import { nextTick, onMounted, ref, watch } from 'vue'
 import { onLongPress } from '@vueuse/core'
 import CreateBreedingNavigationDrawer from '@/components/CreateBreeding/CreateBreedingNavigationDrawer.vue'
 import FlockManagerFilters from '@/components/FlockManagerFilters.vue'
-const smAndUp = inject('smAndUp')
+import { useLayoutStore } from '@/stores/layoutStore.js'
 
 const entryFormStore = useEntryFormStore()
 const {

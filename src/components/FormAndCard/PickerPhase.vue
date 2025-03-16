@@ -13,7 +13,7 @@
     >
       <template v-if="opt.component">
         <v-icon size="35">
-          <component :is="opt.component"></component>
+          <component :is="opt.component" />
         </v-icon>
       </template>
 

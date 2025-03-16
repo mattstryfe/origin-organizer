@@ -11,7 +11,7 @@
       :value="opt.species"
     >
       <v-icon size="35">
-        <component :is="opt.component"></component>
+        <component :is="opt.component" />
       </v-icon>
     </v-btn>
   </v-btn-toggle>

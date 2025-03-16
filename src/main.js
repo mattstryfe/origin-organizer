@@ -4,7 +4,7 @@ import pinia from '@/plugins/pinia.js'
 import router from '@/plugins/router.js'
 import './assets/css/style.css'
 import { vuetify } from '@/plugins/vuetify'
-import { VueFire, VueFireAuth } from 'vuefire'
+import { VueFire } from 'vuefire'
 import { db } from '@/plugins/firebase'
 
 createApp(App)

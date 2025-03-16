@@ -4,7 +4,7 @@
     density="compact"
     :elevation="2"
     rounded
-    :scroll-behavior="smAndUp ? '' : 'hide'"
+    :scroll-behavior="useLayoutStore().smAndUp ? '' : 'hide'"
   >
     <template #prepend>
       <v-btn
@@ -12,8 +12,8 @@
         color="primary"
         icon="mdi-orbit"
         @click="router.push({ name: 'LandingPage' })"
-      ></v-btn>
-      <v-divider vertical></v-divider>
+      />
+      <v-divider vertical />
     </template>
 
     <template #title>
@@ -22,7 +22,7 @@
     <main-app-search-field />
 
     <template #append>
-      <div v-if="smAndUp">
+      <div v-if="useLayoutStore().smAndUp">
         <v-icon
           v-for="r in routesToUse"
           :key="r.name"
@@ -36,8 +36,8 @@
         </v-icon>
       </div>
 
-      <waffle-menu v-if="smAndUp"></waffle-menu>
-      <user-account-menu></user-account-menu>
+      <waffle-menu v-if="useLayoutStore().smAndUp" />
+      <user-account-menu />
     </template>
   </v-app-bar>
 </template>
@@ -46,10 +46,10 @@
 import WaffleMenu from '@/components/navigation/MainWaffleMenu.vue'
 import UserAccountMenu from '@/components/navigation/MainUserAccountMenu.vue'
 import { routes } from '@/schemas/routerLinksSchema'
-import { computed, inject } from 'vue'
+import { computed } from 'vue'
 import MainAppSearchField from '@/components/navigation/MainAppSearchField.vue'
 import router from '@/plugins/router'
-const smAndUp = inject('smAndUp')
+import { useLayoutStore } from '@/stores/layoutStore.js'
 
 const routesToUse = computed(() => routes.filter((r) => !r.hideInMainNav))
 </script>

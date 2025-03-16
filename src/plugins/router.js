@@ -11,7 +11,7 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach(async (to, from) => {
+router.beforeEach(async (to) => {
   // If not authed
   // TODO: Uncomment for actual permissions.
   // if (to.name !== 'LandingPage' && !useUserStore().userIsAuthenticated) {
