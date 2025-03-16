@@ -9,7 +9,7 @@
         class="v-card ma-1 pa-1 border-sm"
         :height="useLayoutStore().calculatedHeight"
         type="card-avatar, article, actions"
-        :width="useLayoutStore().calculatedWidth"
+        :width="800"
       />
     </template>
 
@@ -36,11 +36,7 @@
       :variant="disableBottomSheetButton ? 'outlined' : 'elevated'"
       @click="showBottomSheet = !showBottomSheet"
     >
-      <v-icon
-        class="hover-spin-continuous"
-        color="success"
-        size="30"
-      >
+      <v-icon class="hover-spin-continuous" color="success" size="30">
         mdi-atom
       </v-icon>
     </v-btn>
