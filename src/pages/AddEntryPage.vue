@@ -1,12 +1,24 @@
 <template>
-  <v-row dense no-gutters>
+  <v-row
+    dense
+    no-gutters
+  >
     <v-col class="v-col-md-6">
-      <v-card border class="pb-2 mb-2">
+      <v-card
+        border
+        class="pb-2 mb-2"
+      >
         <v-form>
           <!-- Species Picker -->
-          <v-row class="mt-2" no-gutters>
+          <v-row
+            class="mt-2"
+            no-gutters
+          >
             <v-col cols="8">
-              <generic-form-divider show-divider text-to-display="details" />
+              <generic-form-divider
+                show-divider
+                text-to-display="details"
+              />
 
               <v-col class="d-flex justify-space-around">
                 <picker-species />
@@ -34,7 +46,10 @@
 
               <form-details />
 
-              <generic-form-divider show-divider text-to-display="notes" />
+              <generic-form-divider
+                show-divider
+                text-to-display="notes"
+              />
               <textarea-notes
                 v-model:active-note="formData['notes']['active']"
                 :disabled="false"
@@ -51,12 +66,15 @@
             </v-col>
 
             <v-col cols="4">
-              <generic-form-divider show-divider text-to-display="breed(s)" />
+              <generic-form-divider
+                show-divider
+                text-to-display="breed(s)"
+              />
               <picker-breed v-model:breed="formData['breed']" />
             </v-col>
           </v-row>
 
-          <v-divider></v-divider>
+          <v-divider />
           <!-- Form Controls -->
           <form-controls />
         </v-form>
@@ -64,8 +82,15 @@
     </v-col>
 
     <!-- Right side widget to hold Object for DEV-ing -->
-    <v-col class="pl-3" cols="12" md="6">
-      <v-card class="overflow-auto" min-height="1000">
+    <v-col
+      class="pl-3"
+      cols="12"
+      md="6"
+    >
+      <v-card
+        class="overflow-auto"
+        min-height="1000"
+      >
         <v-card-title>Live Reactive/Object</v-card-title>
         <v-card-text>
           <pre>

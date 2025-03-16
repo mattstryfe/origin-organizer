@@ -11,12 +11,19 @@
         variant="outlined"
         @click="userStore.handleLogin()"
       >
-        <v-icon start>mdi-account-outline</v-icon>
+        <v-icon start>
+          mdi-account-outline
+        </v-icon>
         Sign in
       </v-chip>
       <!-- v-bind props opens menu -->
-      <v-avatar v-else v-bind="props" class="cursor-pointer" size="30">
-        <v-img :src="`${userStore.getUserPhotoURL}`"></v-img>
+      <v-avatar
+        v-else
+        v-bind="props"
+        class="cursor-pointer"
+        size="30"
+      >
+        <v-img :src="`${userStore.getUserPhotoURL}`" />
       </v-avatar>
     </template>
 
@@ -35,20 +42,29 @@
               size="small"
               variant="tonal"
               @click="userStore.handleLogout()"
-            ></v-btn>
+            />
           </template>
         </v-list-item>
       </v-list>
 
-      <v-divider></v-divider>
+      <v-divider />
 
-      <user-account-menu-actions></user-account-menu-actions>
+      <user-account-menu-actions />
 
       <v-card-actions>
-        <v-spacer></v-spacer>
+        <v-spacer />
 
-        <v-btn variant="tonal" @click="accountMenu = false">Cancel</v-btn>
-        <v-btn color="primary" variant="tonal" @click="accountMenu = false">
+        <v-btn
+          variant="tonal"
+          @click="accountMenu = false"
+        >
+          Cancel
+        </v-btn>
+        <v-btn
+          color="primary"
+          variant="tonal"
+          @click="accountMenu = false"
+        >
           Save
         </v-btn>
       </v-card-actions>

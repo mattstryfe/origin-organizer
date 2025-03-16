@@ -1,6 +1,6 @@
 <template>
   <v-row class="flex-wrap px-3">
-    <flock-manager-filters></flock-manager-filters>
+    <flock-manager-filters />
 
     <template v-if="!isDoneLoadingEntries">
       <v-skeleton-loader
@@ -10,7 +10,7 @@
         :height="useLayoutStore().calculatedHeight"
         type="card-avatar, article, actions"
         :width="useLayoutStore().calculatedWidth"
-      ></v-skeleton-loader>
+      />
     </template>
 
     <template v-if="isDoneLoadingEntries">
@@ -24,10 +24,10 @@
         class="cust-border-trans"
         :class="highlightThisCard(entry.entryId)"
         :entry-id="entry.entryId"
-      ></display-entry-card>
+      />
     </template>
 
-    <create-breeding-navigation-drawer></create-breeding-navigation-drawer>
+    <create-breeding-navigation-drawer />
     <v-btn
       class="v-btn--fixed v-btn--top v-btn--right border-thin"
       :disabled="disableBottomSheetButton"
@@ -36,7 +36,11 @@
       :variant="disableBottomSheetButton ? 'outlined' : 'elevated'"
       @click="showBottomSheet = !showBottomSheet"
     >
-      <v-icon class="hover-spin-continuous" color="success" size="30">
+      <v-icon
+        class="hover-spin-continuous"
+        color="success"
+        size="30"
+      >
         mdi-atom
       </v-icon>
     </v-btn>

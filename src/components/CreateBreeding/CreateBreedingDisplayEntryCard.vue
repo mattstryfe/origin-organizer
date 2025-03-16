@@ -1,6 +1,11 @@
 <template>
   <v-card class="">
-    <v-icon class="position-absolute ma-1" size="small">mdi-gender-male</v-icon>
+    <v-icon
+      class="position-absolute ma-1"
+      size="small"
+    >
+      mdi-gender-male
+    </v-icon>
     <v-img
       class="text-black align-end mb-1 opacity-50"
       cover
@@ -15,7 +20,7 @@
         :model-value="3"
         readonly
         size="small"
-      ></v-rating>
+      />
       {{ entryId }}
     </v-img>
   </v-card>

@@ -12,8 +12,8 @@
         color="primary"
         icon="mdi-orbit"
         @click="router.push({ name: 'LandingPage' })"
-      ></v-btn>
-      <v-divider vertical></v-divider>
+      />
+      <v-divider vertical />
     </template>
 
     <template #title>
@@ -36,8 +36,8 @@
         </v-icon>
       </div>
 
-      <waffle-menu v-if="useLayoutStore().smAndUp"></waffle-menu>
-      <user-account-menu></user-account-menu>
+      <waffle-menu v-if="useLayoutStore().smAndUp" />
+      <user-account-menu />
     </template>
   </v-app-bar>
 </template>

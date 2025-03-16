@@ -15,7 +15,7 @@
         v-bind="props"
         :prepend-avatar="item.raw.imageUrl"
         :text="item.raw.name"
-      ></v-chip>
+      />
     </template>
 
     <template #item="{ props, item }">
@@ -37,14 +37,14 @@
             color="yellow"
             icon="mdi-wall"
             variant="text"
-          ></v-btn>
+          />
           <v-btn
             v-if="item.raw.isFavorited"
             v-tooltip="'Favorited'"
             color="red-darken-3"
             icon="mdi-heart"
             variant="text"
-          ></v-btn>
+          />
         </template>
       </v-list-item>
     </template>

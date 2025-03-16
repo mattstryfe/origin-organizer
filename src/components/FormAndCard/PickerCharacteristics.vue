@@ -1,6 +1,11 @@
 <template>
   <v-col cols="12">
-    <v-chip-group v-model="characteristics" class="d-block" column multiple>
+    <v-chip-group
+      v-model="characteristics"
+      class="d-block"
+      column
+      multiple
+    >
       <v-chip
         v-for="field in characteristicsToUse"
         :key="field"

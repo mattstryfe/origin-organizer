@@ -1,6 +1,8 @@
 <template>
   <v-list density="compact">
-    <v-list-subheader color="secondary">User Controls</v-list-subheader>
+    <v-list-subheader color="secondary">
+      User Controls
+    </v-list-subheader>
 
     <v-list-item class="py-0 my-0">
       <template #prepend>
@@ -10,7 +12,7 @@
           color="primary"
           density="compact"
           hide-details
-        ></v-switch>
+        />
       </template>
 
       <v-list-item-title class="text-capitalize v-label text-right">
@@ -26,7 +28,7 @@
           color="primary"
           density="compact"
           hide-details
-        ></v-switch>
+        />
       </template>
 
       <v-list-item-title class="text-capitalize v-label text-right">
@@ -34,14 +36,16 @@
       </v-list-item-title>
     </v-list-item>
 
-    <v-divider></v-divider>
-    <v-list-subheader color="red-lighten-2">Danger Zone</v-list-subheader>
+    <v-divider />
+    <v-list-subheader color="red-lighten-2">
+      Danger Zone
+    </v-list-subheader>
     <!-- example for now -->
     <v-progress-linear
       :active="!hasProfileBeenRepaired"
       color="green-darken-3"
       :indeterminate="!hasProfileBeenRepaired"
-    ></v-progress-linear>
+    />
 
     <v-list-item
       v-for="(item, i) in dangerZoneEntries"
@@ -54,7 +58,7 @@
           :color="item.iconColor"
           :icon="item.icon"
           :loading="true"
-        ></v-icon>
+        />
       </template>
       <v-list-item-title class="text-capitalize v-label">
         {{ item.name }}

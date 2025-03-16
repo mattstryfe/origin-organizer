@@ -1,6 +1,9 @@
 <template>
   <v-row class="flex-wrap">
-    <v-col class="mb-1" cols="12">
+    <v-col
+      class="mb-1"
+      cols="12"
+    >
       <v-btn
         color="info"
         density="compact"

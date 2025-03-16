@@ -1,5 +1,8 @@
 <template>
-  <v-row class="px-4 mt-2" no-gutters>
+  <v-row
+    class="px-4 mt-2"
+    no-gutters
+  >
     <component
       :is="getFieldComponent(field.type)"
       v-for="(field, index) in schemaToUse"
@@ -16,7 +19,7 @@
       :placeholder="field.placeholder"
       variant="outlined"
       @click:append-inner="genericAppendAction(field)"
-    ></component>
+    />
   </v-row>
 </template>
 

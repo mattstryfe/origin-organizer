@@ -1,5 +1,8 @@
 <template>
-  <v-row class="px-4 mb-3" no-gutters>
+  <v-row
+    class="px-4 mb-3"
+    no-gutters
+  >
     <v-col cols="12">
       <v-file-upload
         accept="image/*"
@@ -7,7 +10,7 @@
         scrim="primary"
         v-model="attachments"
         show-size
-      ></v-file-upload>
+      />
     </v-col>
   </v-row>
 </template>

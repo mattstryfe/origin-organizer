@@ -7,7 +7,10 @@
     :height="useLayoutStore().calculatedHeight"
     :width="useLayoutStore().calculatedWidth"
   >
-    <v-sheet v-if="showOverlay" class="cust-overlay">
+    <v-sheet
+      v-if="showOverlay"
+      class="cust-overlay"
+    >
       <v-icon
         class="ma-0 pa-0"
         color="blue-darken-2"
@@ -43,20 +46,35 @@
         half-increments
         :model-value="allEntryDetails.rating"
         size="small"
-      ></v-rating>
+      />
     </v-img>
 
     <!-- Breed area -->
-    <v-row class="overflow-scroll mt-2" dense>
-      <generic-form-divider show-divider text-to-display="breed(s)" />
+    <v-row
+      class="overflow-scroll mt-2"
+      dense
+    >
+      <generic-form-divider
+        show-divider
+        text-to-display="breed(s)"
+      />
 
       <picker-breed v-model:breed="allEntryDetails['breed']" />
     </v-row>
 
-    <v-row class="overflow-scroll align-center justify-center mt-1" dense>
-      <generic-form-divider show-divider text-to-display="details" />
+    <v-row
+      class="overflow-scroll align-center justify-center mt-1"
+      dense
+    >
+      <generic-form-divider
+        show-divider
+        text-to-display="details"
+      />
 
-      <v-col class="mt-1" cols="7">
+      <v-col
+        class="mt-1"
+        cols="7"
+      >
         <v-text-field
           density="compact"
           :disabled="!editModeToggle"
@@ -64,7 +82,7 @@
           label="Name"
           v-model="allEntryDetails.name"
           variant="outlined"
-        ></v-text-field>
+        />
       </v-col>
       <v-col cols="5">
         <v-text-field
@@ -74,7 +92,7 @@
           label="DoB"
           variant="outlined"
           v-model="allEntryDetails['DoB']"
-        ></v-text-field>
+        />
       </v-col>
       <v-col cols="6">
         <drop-down-parents
@@ -105,15 +123,29 @@
     </v-row>
 
     <!-- Characteristics Area -->
-    <v-row class="overflow-scroll mt-2" dense no-gutters>
-      <generic-form-divider show-divider text-to-display="characteristics" />
+    <v-row
+      class="overflow-scroll mt-2"
+      dense
+      no-gutters
+    >
+      <generic-form-divider
+        show-divider
+        text-to-display="characteristics"
+      />
       <picker-characteristics
         v-model:characteristics="allEntryDetails['characteristics']"
       />
     </v-row>
 
-    <v-row class="overflow-scroll mt-2" dense no-gutters>
-      <generic-form-divider show-divider text-to-display="notes" />
+    <v-row
+      class="overflow-scroll mt-2"
+      dense
+      no-gutters
+    >
+      <generic-form-divider
+        show-divider
+        text-to-display="notes"
+      />
       <textarea-notes
         :archived-notes="allEntryDetails['notes']['archived']"
         :disabled="!editModeToggle"
@@ -122,7 +154,10 @@
     </v-row>
 
     <!-- bottom Controls -->
-    <v-row dense no-gutters>
+    <v-row
+      dense
+      no-gutters
+    >
       <v-col class="d-flex justify-end align-end">
         <v-btn
           color="blue-darken-2"
@@ -131,7 +166,7 @@
           size="medium"
           variant="text"
           @click="entryFormStore.removeThisEntry(allEntryDetails.entryId)"
-        ></v-btn>
+        />
       </v-col>
     </v-row>
   </v-card>

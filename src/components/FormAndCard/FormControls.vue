@@ -1,13 +1,22 @@
 <template>
-  <v-row class="px-4 mt-2 justify-end" no-gutters>
+  <v-row
+    class="px-4 mt-2 justify-end"
+    no-gutters
+  >
     <v-switch
       v-model="isMultiple"
       class="mr-5"
       color="green-lighten-2"
       density="compact"
       label="Multiple"
-    ></v-switch>
-    <v-btn color="success" variant="outlined" @click="handleSave">Save</v-btn>
+    />
+    <v-btn
+      color="success"
+      variant="outlined"
+      @click="handleSave"
+    >
+      Save
+    </v-btn>
   </v-row>
 </template>
 

@@ -19,7 +19,11 @@
       width="375"
     >
       <template #prepend>
-        <v-icon class="cust-prepend-icon" :color="roa.iconColor" size="30">
+        <v-icon
+          class="cust-prepend-icon"
+          :color="roa.iconColor"
+          size="30"
+        >
           {{ roa.prependIcon }}
         </v-icon>
       </template>
@@ -30,7 +34,7 @@
           icon="mdi-close"
           variant="plain"
           @click="removeNotification(roa.id)"
-        ></v-btn>
+        />
       </template>
     </v-card>
   </v-snackbar>
