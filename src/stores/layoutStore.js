@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia'
 import { useDisplay } from 'vuetify'
 import { computed, reactive } from 'vue'
+import { useRouter } from 'vue-router'
 
 export const useLayoutStore = defineStore('layoutStore', () => {
   const display = useDisplay() // Vuetify's responsive composable
+  const router = useRouter()
 
   // Reactive state
   const state = reactive({
@@ -13,6 +15,10 @@ export const useLayoutStore = defineStore('layoutStore', () => {
     },
     FMLayoutMode: 'full'
   })
+  // Prevents very long display cards on FM page (mobile)
+  const hideNotesOnFMPage = computed(
+    () => router.currentRoute.value.name !== 'FlockManager'
+  )
 
   // Computed getters
   const smAndUp = computed(() => display.smAndUp.value)
@@ -29,6 +35,7 @@ export const useLayoutStore = defineStore('layoutStore', () => {
     smAndUp,
     mdAndUp,
     calculatedHeight,
-    calculatedWidth
+    calculatedWidth,
+    hideNotesOnFMPage
   }
 })

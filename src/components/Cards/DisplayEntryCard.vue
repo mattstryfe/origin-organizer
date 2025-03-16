@@ -112,7 +112,12 @@
       />
     </v-row>
 
-    <v-row class="overflow-scroll mt-2" dense no-gutters>
+    <v-row
+      v-if="useLayoutStore().hideNotesOnFMPage"
+      class="overflow-scroll mt-2"
+      dense
+      no-gutters
+    >
       <generic-form-divider show-divider text-to-display="notes" />
       <textarea-notes
         :archived-notes="allEntryDetails['notes']['archived']"

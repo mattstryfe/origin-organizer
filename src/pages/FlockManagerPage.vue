@@ -19,8 +19,6 @@
         :key="entry.entryId"
         ref="entryRefs"
         :allow-card-deselection="allowCardDeselection"
-        :card-height="useLayoutStore().calculatedHeight"
-        :card-width="useLayoutStore().calculatedWidth"
         class="cust-border-trans"
         :class="highlightThisCard(entry.entryId)"
         :entry-id="entry.entryId"
