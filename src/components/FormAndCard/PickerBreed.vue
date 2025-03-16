@@ -1,21 +1,23 @@
 <template>
-  <v-chip-group v-model="breed" class="d-flex" column multiple>
-    <v-slide-y-transition group>
-      <v-chip
-        v-for="b in breedsToUse"
-        :key="b"
-        class=""
-        :class="{ 'read-only-chip': !editModeToggle }"
-        color="secondary"
-        label
-        size="small"
-        :value="b"
-        variant="outlined"
-      >
-        <span>{{ b }}</span>
-      </v-chip>
-    </v-slide-y-transition>
-  </v-chip-group>
+  <v-col cols="12">
+    <v-chip-group v-model="breed" class="d-flex" column multiple>
+      <v-slide-y-transition group>
+        <v-chip
+          v-for="b in breedsToUse"
+          :key="b"
+          class=""
+          :class="{ 'read-only-chip': !editModeToggle }"
+          color="secondary"
+          label
+          size="small"
+          :value="b"
+          variant="outlined"
+        >
+          <span>{{ b }}</span>
+        </v-chip>
+      </v-slide-y-transition>
+    </v-chip-group>
+  </v-col>
 </template>
 
 <script setup>
