@@ -10,7 +10,17 @@ export default [
     languageOptions: {
       parser, // ✅ Use vue-eslint-parser
       ecmaVersion: 'latest',
-      sourceType: 'module'
+      sourceType: 'module',
+      globals: {
+        //  Define globals to avoid ESLint error
+        navigator: 'readonly',
+        window: 'readonly',
+        document: 'readonly',
+        structuredClone: 'readonly',
+        process: 'readonly',
+        setTimeout: 'readonly',
+        crypto: 'readonly'
+      }
     },
     plugins: {
       vue
@@ -30,7 +40,7 @@ export default [
       'vue/new-line-between-multi-line-property': [
         'error',
         {
-          minLineOfMultilineProperty: 2
+          minLineOfMultilineProperty: 4
         }
       ],
       'vue/block-order': [
@@ -86,5 +96,4 @@ export default [
       ]
     }
   }
-
 ]

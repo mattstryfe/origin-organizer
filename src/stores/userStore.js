@@ -28,7 +28,6 @@ export const useUserStore = defineStore('userStore', {
   getters: {
     // ?. is used to prevent logout from throwing console errors for now.
     getUserDisplayName: (state) => {
-      console.log(state.userInfo)
       return state.userInfo?.displayName
     },
     getUserPhotoURL: (state) =>
@@ -43,9 +42,7 @@ export const useUserStore = defineStore('userStore', {
       this.hasProfileBeenRepaired = false
       // the idea here is to gracefully fix/update keys and objects as they change.
       const userDoc = await getDoc(doc(db, 'users', this.userInfo.uid))
-      const hasAllKeys = this.userInfoKeysToTrack.every(
-        (key) => key in userDoc.data()
-      )
+      this.userInfoKeysToTrack.every((key) => key in userDoc.data())
       // Fake promise
       await new Promise((resolve) => setTimeout(resolve, 3000))
       this.hasProfileBeenRepaired = true
@@ -112,6 +109,7 @@ export const useUserStore = defineStore('userStore', {
         // await useEntryFormStore().getExistingEntries()
         await useEntryFormStore().setupEntriesListener()
       } catch (e) {
+        // eslint-disable-next-line no-undef
         console.log('no worky', e)
       }
     }

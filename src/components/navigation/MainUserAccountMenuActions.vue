@@ -1,8 +1,6 @@
 <template>
   <v-list density="compact">
-    <v-list-subheader color="secondary">
-      User Controls
-    </v-list-subheader>
+    <v-list-subheader color="secondary">User Controls</v-list-subheader>
 
     <v-list-item class="py-0 my-0">
       <template #prepend>
@@ -37,9 +35,7 @@
     </v-list-item>
 
     <v-divider />
-    <v-list-subheader color="red-lighten-2">
-      Danger Zone
-    </v-list-subheader>
+    <v-list-subheader color="red-lighten-2">Danger Zone</v-list-subheader>
     <!-- example for now -->
     <v-progress-linear
       :active="!hasProfileBeenRepaired"
@@ -54,11 +50,7 @@
       @click="item.action"
     >
       <template #prepend>
-        <v-icon
-          :color="item.iconColor"
-          :icon="item.icon"
-          :loading="true"
-        />
+        <v-icon :color="item.iconColor" :icon="item.icon" :loading="true" />
       </template>
       <v-list-item-title class="text-capitalize v-label">
         {{ item.name }}
@@ -76,10 +68,6 @@ import { storeToRefs } from 'pinia'
 const userStore = useUserStore()
 const { hasProfileBeenRepaired } = storeToRefs(userStore)
 
-const userControls = ref([
-  { name: 'dark mode', icon: '' },
-  { name: 'auto save', icon: '' }
-])
 const dangerZoneEntries = ref([
   {
     name: 'repair profile',

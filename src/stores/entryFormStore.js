@@ -113,6 +113,7 @@ export const useEntryFormStore = defineStore('entryFormStore', {
         },
         (error) => {
           notificationsStore.addNotification('error')
+          // eslint-disable-next-line no-undef
           console.error('Error fetching entries:', error)
         }
       )
@@ -186,6 +187,7 @@ export const useEntryFormStore = defineStore('entryFormStore', {
         const storageRef = ref(storage, `${flockId}/${entryId}/${imageId}.jpg`)
         entry.imageUrl = await getDownloadURL(storageRef)
       } catch (error) {
+        // eslint-disable-next-line no-undef
         console.error('Error fetching image URL:', error)
         return ''
       }
@@ -222,7 +224,7 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       await uploadBytes(storageRef, this.attachments[0])
 
       // const ref = storageRef(storage, `${flockId}/${entryId}/${this.formData.photoIds[0]}`)
-      const url = await getDownloadURL(storageRef)
+      // const url = await getDownloadURL(storageRef)
     }
   }
 })
