@@ -5,7 +5,7 @@
       class="d-flex align-center justify-center"
       style="min-height: 300px"
     >
-      <v-container fluid>
+      <v-container class="px-1" fluid>
         <notification-banner />
         <confirmation-dialog />
 
@@ -18,20 +18,11 @@
 
 <script setup>
 import MainAppHeader from '@/components/navigation/MainAppHeader.vue'
-// Vuetify Shorthand for responsiveness across app
-// saves from needing to import and destructure in each component.
-import { useDisplay } from 'vuetify'
-import { onMounted, provide } from 'vue'
+import { onMounted } from 'vue'
 import { useUserStore } from '@/stores/userStore'
 import MobileBottomNavigationMenu from '@/components/navigation/MobileBottomNavigationMenu.vue'
 import NotificationBanner from '@/components/NotificationBanner.vue'
 import ConfirmationDialog from '@/components/ConfirmationDialog.vue'
-// Destructure the specific breakpoint properties you want to provide
-const { mdAndUp, smAndUp } = useDisplay()
-
-// Provide these properties globally
-provide('mdAndUp', mdAndUp)
-provide('smAndUp', smAndUp)
 
 onMounted(() => {
   if (import.meta.env.MODE === 'development') {

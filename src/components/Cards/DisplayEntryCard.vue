@@ -4,8 +4,8 @@
     :class="{
       'opacity-80': showOverlay
     }"
-    :height="cardHeight"
-    :width="cardWidth"
+    :height="useLayoutStore().calculatedHeight"
+    :width="useLayoutStore().calculatedWidth"
   >
     <v-sheet v-if="showOverlay" class="cust-overlay">
       <v-icon
@@ -149,6 +149,7 @@ import PickerPhase from '@/components/FormAndCard/PickerPhase.vue'
 import PickerBreed from '@/components/FormAndCard/PickerBreed.vue'
 import GenericFormDivider from '@/components/FormAndCard/GenericFormDivider.vue'
 import TextareaNotes from '@/components/FormAndCard/TextareaNotes.vue'
+import { useLayoutStore } from '@/stores/layoutStore.js'
 
 // New way to do props. both work
 const { entryId, allowCardDeselection } = defineProps({
@@ -159,14 +160,6 @@ const { entryId, allowCardDeselection } = defineProps({
   allowCardDeselection: {
     type: Boolean,
     default: false
-  },
-  cardWidth: {
-    type: [Number, String],
-    default: 300
-  },
-  cardHeight: {
-    type: [Number, String],
-    default: 400
   }
 })
 

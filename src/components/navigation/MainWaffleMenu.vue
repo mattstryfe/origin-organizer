@@ -22,7 +22,7 @@
             v-for="r in routesToUse"
             :key="r.title"
             class="cursor-pointer text-center v-col-4 pa-1"
-            :disabled="!userIsAuthenticated || !r.routeName"
+            :disabled="!userIsAuthenticated || r.disabled"
             variant="flat"
           >
             <v-hover>

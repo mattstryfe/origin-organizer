@@ -7,9 +7,9 @@
         v-for="i in 12"
         :key="i"
         class="v-card ma-1 pa-1 border-sm"
-        height="400"
+        :height="useLayoutStore().calculatedHeight"
         type="card-avatar, article, actions"
-        width="300"
+        :width="useLayoutStore().calculatedWidth"
       ></v-skeleton-loader>
     </template>
 
@@ -19,8 +19,8 @@
         :key="entry.entryId"
         ref="entryRefs"
         :allow-card-deselection="allowCardDeselection"
-        :card-height="500"
-        :card-width="smAndUp ? 400 : 'auto'"
+        :card-height="useLayoutStore().calculatedHeight"
+        :card-width="useLayoutStore().calculatedWidth"
         class="cust-border-trans"
         :class="highlightThisCard(entry.entryId)"
         :entry-id="entry.entryId"
@@ -47,11 +47,11 @@
 import DisplayEntryCard from '@/components/Cards/DisplayEntryCard.vue'
 import { storeToRefs } from 'pinia'
 import { useEntryFormStore } from '@/stores/entryFormStore'
-import { inject, nextTick, onMounted, ref, watch } from 'vue'
+import { nextTick, onMounted, ref, watch } from 'vue'
 import { onLongPress } from '@vueuse/core'
 import CreateBreedingNavigationDrawer from '@/components/CreateBreeding/CreateBreedingNavigationDrawer.vue'
 import FlockManagerFilters from '@/components/FlockManagerFilters.vue'
-const smAndUp = inject('smAndUp')
+import { useLayoutStore } from '@/stores/layoutStore.js'
 
 const entryFormStore = useEntryFormStore()
 const {

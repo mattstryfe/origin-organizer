@@ -1,7 +1,7 @@
 <template>
   <v-bottom-navigation
     v-model="nav"
-    :active="!smAndUp"
+    :active="!useLayoutStore().smAndUp"
     class="border-t-sm"
     color="primary"
     grow
@@ -27,9 +27,9 @@
 <script setup>
 import { routes } from '@/schemas/routerLinksSchema'
 import router from '@/plugins/router'
-import { computed, inject, ref } from 'vue'
+import { computed, ref } from 'vue'
+import { useLayoutStore } from '@/stores/layoutStore.js'
 
-const smAndUp = inject('smAndUp')
 const nav = ref()
 const routesToUse = computed(() => routes.filter((r) => r.showInMobileNav))
 </script>

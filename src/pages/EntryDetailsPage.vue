@@ -33,20 +33,20 @@
 
   <template v-if="isDoneLoadingEntries">
     <display-entry-card
-      :card-height="'auto'"
-      :card-width="smAndUp ? 'auto' : 400"
+      :card-height="useLayoutStore().calculatedHeight"
+      :card-width="useLayoutStore().calculatedWidth"
       :entry-id="entryId"
     />
   </template>
 </template>
 
 <script setup>
-import { watch, inject } from 'vue'
+import { watch } from 'vue'
 import router from '@/plugins/router'
 import { useEntryFormStore } from '@/stores/entryFormStore'
 import { storeToRefs } from 'pinia'
 import DisplayEntryCard from '@/components/Cards/DisplayEntryCard.vue'
-const smAndUp = inject('smAndUp')
+import { useLayoutStore } from '@/stores/layoutStore.js'
 
 // Comes in from router props:true
 const { entryId } = defineProps({
