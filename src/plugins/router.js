@@ -9,9 +9,7 @@ const router = createRouter({
   // 4. Provide the history implementation to use. We are using the hash history for simplicity here.
   history: createWebHistory(),
   routes
-  // routes // short for `routes: routes`
 })
-console.log('router', router)
 
 router.beforeEach(async (to, from) => {
   // If not authed
@@ -19,7 +17,8 @@ router.beforeEach(async (to, from) => {
   // if (to.name !== 'LandingPage' && !useUserStore().userIsAuthenticated) {
   //   return { name: 'LandingPage'}
   // }
-  if (to.name === 'EntryDetails') {
+  // addEntry flips toggle to gracefully handle some picker's edit modes
+  if (to.name === 'EntryDetails' || to.name === 'AddEntry') {
     useEntryFormStore().editModeToggle = true
   } else {
     useEntryFormStore().editModeToggle = false

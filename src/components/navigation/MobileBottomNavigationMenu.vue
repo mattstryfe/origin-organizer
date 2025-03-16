@@ -31,7 +31,7 @@ import { computed, inject, ref } from 'vue'
 
 const smAndUp = inject('smAndUp')
 const nav = ref()
-const routesToUse = computed(() => routes.filter((r) => !r.hideInMainNav))
+const routesToUse = computed(() => routes.filter((r) => r.showInMobileNav))
 </script>
 
 <style scoped></style>

@@ -1,20 +1,28 @@
 import { defineStore } from 'pinia'
 import { useUserStore } from '@/stores/userStore'
 import {
-  addDoc,
   collection,
   deleteDoc,
   doc,
   updateDoc,
-  onSnapshot
+  onSnapshot,
+  addDoc,
+  Timestamp,
+  serverTimestamp
 } from 'firebase/firestore'
 import { db, storage } from '@/plugins/firebase'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { useNotificationsStore } from '@/stores/notificationsStore'
+import { notesValidator } from '@/utils/generalUtils.js'
 
 export const useEntryFormStore = defineStore('entryFormStore', {
   state: () => ({
-    formData: {},
+    formData: {
+      notes: {
+        active: '',
+        archived: []
+      }
+    },
     entries: [],
     hasEntryChanged: false,
     editModeToggle: false,
@@ -57,47 +65,44 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       onSnapshot(
         entriesCollection,
         (querySnapshot) => {
-          console.log('🔄 Firestore updated, syncing entries...', querySnapshot)
-
           const updatedEntriesMap = new Map()
           const currentIds = new Set(this.entries.map((e) => e.entryId))
 
           // Listener that is always running
           querySnapshot.docChanges().forEach((change) => {
             // unpack entries and attach imageGetter
-            const newEntry = {
+            const entry = {
               entryId: change.doc.id,
               ...change.doc.data(),
+              notes: notesValidator(change.doc.data().notes), // Ensure notes field exists & fixes if broken/old
               imageUrlGetter: (entry) => this.getEntryImageUrls(entry)
             }
 
-            console.log('change!', change)
-            updatedEntriesMap.set(newEntry.entryId, newEntry)
+            updatedEntriesMap.set(entry.entryId, entry)
 
             const handlers = {
               added: () => {
-                if (!currentIds.has(newEntry.entryId)) {
-                  this.entries.push(newEntry)
-                  notificationsStore.addNotification('found', newEntry.entryId)
+                if (!currentIds.has(entry.entryId)) {
+                  this.entries.push(entry)
+                  notificationsStore.addNotification('found', entry.entryId)
                 }
               },
               modified: () => {
                 const existingEntry = this.entries.find(
-                  (e) => e.entryId === newEntry.entryId
+                  (e) => e.entryId === entry.entryId
                 )
-                if (existingEntry) {
-                  Object.assign(existingEntry, newEntry) // Keeps Vue reactivity
-                  notificationsStore.addNotification(
-                    'update',
-                    existingEntry.entryId
-                  )
-                }
+                // IMPORTANT! Keeps Vue reactivity, especially with arrays and nested data.
+                Object.assign(existingEntry, entry)
+                notificationsStore.addNotification(
+                  'update',
+                  existingEntry.entryId
+                )
               },
               removed: () => {
                 this.entries = this.entries.filter(
-                  (e) => e.entryId !== newEntry.entryId
+                  (e) => e.entryId !== entry.entryId
                 )
-                notificationsStore.addNotification('removed', newEntry.entryId)
+                notificationsStore.addNotification('removed', entry.entryId)
               }
             }
 
@@ -111,10 +116,14 @@ export const useEntryFormStore = defineStore('entryFormStore', {
           console.error('Error fetching entries:', error)
         }
       )
-      console.log('this.entries', this.entries)
     },
     clearFormData() {
-      this.formData = {}
+      this.formData = {
+        notes: {
+          active: '',
+          archived: []
+        }
+      }
     },
     async removeThisEntry(entryId) {
       const isConfirmed =
@@ -126,27 +135,39 @@ export const useEntryFormStore = defineStore('entryFormStore', {
     async foundationThisEntry(entryId, isFoundation) {
       await updateDoc(this.getEntryRef(entryId), {
         isFoundation: !isFoundation,
-        updatedAt: new Date()
+        updatedAt: serverTimestamp()
       })
     },
     async favoriteThisEntry(entryId, isFavorite) {
       await updateDoc(this.getEntryRef(entryId), {
         isFavorited: !isFavorite,
-        updatedAt: new Date()
+        updatedAt: serverTimestamp()
       })
     },
     getEntryById(entryId) {
       return this.entries.find((entry) => entry.entryId === entryId)
     },
     async updateEntryInDb(entryId) {
+      const timestamp = Timestamp.now()
       const entryLocalCopy = this.getEntryById(entryId)
 
       // Cannot append functions to firestore, this gets re-added
       delete entryLocalCopy.imageUrlGetter
 
+      // before write to DB, manage notes appropriately
+      if (entryLocalCopy.notes.active.length > 0) {
+        entryLocalCopy.notes.archived.push({
+          timestamp,
+          content: entryLocalCopy.notes.active,
+          user: useUserStore().getUserDisplayName,
+          userPhotoURL: useUserStore().getUserPhotoURL
+        })
+        entryLocalCopy.notes.active = ''
+      }
+
       await updateDoc(this.getEntryRef(entryId), {
-        ...entryLocalCopy, // todo this is only temp
-        updatedAt: new Date()
+        ...entryLocalCopy,
+        updatedAt: timestamp
       })
 
       this.editModeToggle = false
@@ -181,7 +202,11 @@ export const useEntryFormStore = defineStore('entryFormStore', {
 
       const flockDocRef = await doc(db, 'flocks', flockId)
       const entriesCollectionRef = collection(flockDocRef, 'entries')
-      const { entryId } = await addDoc(entriesCollectionRef, this.formData)
+      const { entryId } = await addDoc(entriesCollectionRef, {
+        ...this.formData,
+        updatedAt: serverTimestamp(),
+        createdAt: serverTimestamp()
+      })
 
       // Now upload file
       if (this.attachments.length > 0) {

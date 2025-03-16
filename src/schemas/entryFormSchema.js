@@ -19,11 +19,6 @@ export const baseSchema = [
     label: 'Name',
     model: 'name',
     type: 'text'
-  },
-  {
-    label: 'Notes',
-    model: 'notes',
-    type: 'text-area'
   }
 ]
 

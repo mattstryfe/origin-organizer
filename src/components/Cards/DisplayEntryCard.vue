@@ -47,16 +47,16 @@
     </v-img>
 
     <!-- Breed area -->
-    <v-row class="overflow-scroll" dense no-gutters>
-      <generic-form-dividers show-divider text-to-display="breed(s)" />
+    <v-row class="overflow-scroll mt-2" dense>
+      <generic-form-divider show-divider text-to-display="breed(s)" />
 
       <picker-breed v-model:breed="allEntryDetails['breed']" />
     </v-row>
 
-    <v-row class="overflow-scroll align-center justify-center" dense>
-      <generic-form-dividers show-divider text-to-display="details" />
+    <v-row class="overflow-scroll align-center justify-center mt-1" dense>
+      <generic-form-divider show-divider text-to-display="details" />
 
-      <v-col cols="7">
+      <v-col class="mt-1" cols="7">
         <v-text-field
           density="compact"
           :disabled="!editModeToggle"
@@ -105,10 +105,19 @@
     </v-row>
 
     <!-- Characteristics Area -->
-    <v-row class="overflow-scroll" dense no-gutters>
-      <generic-form-dividers show-divider text-to-display="characteristics" />
+    <v-row class="overflow-scroll mt-2" dense no-gutters>
+      <generic-form-divider show-divider text-to-display="characteristics" />
       <picker-characteristics
         v-model:characteristics="allEntryDetails['characteristics']"
+      />
+    </v-row>
+
+    <v-row class="overflow-scroll mt-2" dense no-gutters>
+      <generic-form-divider show-divider text-to-display="notes" />
+      <textarea-notes
+        :archived-notes="allEntryDetails['notes']['archived']"
+        :disabled="!editModeToggle"
+        v-model:active-note="allEntryDetails['notes']['active']"
       />
     </v-row>
 
@@ -138,7 +147,8 @@ import DropDownParents from '@/components/FormAndCard/DropDownParents.vue'
 import PickerSex from '@/components/FormAndCard/PickerSex.vue'
 import PickerPhase from '@/components/FormAndCard/PickerPhase.vue'
 import PickerBreed from '@/components/FormAndCard/PickerBreed.vue'
-import GenericFormDividers from '@/components/FormAndCard/GenericFormDividers.vue'
+import GenericFormDivider from '@/components/FormAndCard/GenericFormDivider.vue'
+import TextareaNotes from '@/components/FormAndCard/TextareaNotes.vue'
 
 // New way to do props. both work
 const { entryId, allowCardDeselection } = defineProps({
