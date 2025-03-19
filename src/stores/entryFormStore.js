@@ -40,7 +40,6 @@ export const useEntryFormStore = defineStore('entryFormStore', {
     },
     disableBottomSheetButton: (state) => state.selectionIds.size !== 2,
     getMostRecentEntries: (state) => {
-      console.log('this.entries', state.entries)
       return state.entries
     }
   },

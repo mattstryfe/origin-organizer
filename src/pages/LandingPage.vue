@@ -80,7 +80,6 @@ import { useEntryFormStore } from '@/stores/entryFormStore.js'
 const routesToUse = computed(() => routes.filter((r) => !r.hideInMainNav))
 const { getMostRecentEntries, isDoneLoadingEntries } =
   storeToRefs(useEntryFormStore())
-console.log('getMostRecentEntries', getMostRecentEntries.value)
 </script>
 
 <style scoped>
