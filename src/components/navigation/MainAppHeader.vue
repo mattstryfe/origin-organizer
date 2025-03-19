@@ -44,7 +44,6 @@ import WaffleMenu from '@/components/navigation/MainWaffleMenu.vue'
 import UserAccountMenu from '@/components/navigation/MainUserAccountMenu.vue'
 import { routes } from '@/schemas/routerLinksSchema'
 import { computed } from 'vue'
-import MainAppSearchField from '@/components/navigation/MainAppSearchField.vue'
 import router from '@/plugins/router'
 import { useLayoutStore } from '@/stores/layoutStore.js'
 
