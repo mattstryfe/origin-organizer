@@ -15,7 +15,7 @@
       <v-badge
         v-if="r.showBadgeOnLandingPage"
         class="badge-top-right text-left"
-        content="5"
+        content="+5"
       ></v-badge>
 
       <v-card
