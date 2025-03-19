@@ -38,7 +38,10 @@ export const useEntryFormStore = defineStore('entryFormStore', {
       return (entryId) =>
         doc(db, 'flocks', useUserStore().getUserUid, 'entries', entryId)
     },
-    disableBottomSheetButton: (state) => state.selectionIds.size !== 2
+    disableBottomSheetButton: (state) => state.selectionIds.size !== 2,
+    getMostRecentEntries: (state) => {
+      return state.entries
+    }
   },
   actions: {
     filterEntryListBy(sex) {

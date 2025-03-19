@@ -1,22 +1,18 @@
 <template>
-  <v-layout>
+  <v-app>
     <main-app-header />
     <v-main
       class="d-flex align-center justify-center"
       style="min-height: 300px"
     >
-      <v-container
-        class="px-1"
-        fluid
-      >
+      <v-container class="" fluid>
         <notification-banner />
         <confirmation-dialog />
-
         <router-view />
       </v-container>
     </v-main>
     <mobile-bottom-navigation-menu />
-  </v-layout>
+  </v-app>
 </template>
 
 <script setup>

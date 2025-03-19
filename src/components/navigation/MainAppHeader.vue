@@ -1,8 +1,6 @@
 <template>
   <v-app-bar
-    class="cust-o"
     density="compact"
-    :elevation="2"
     rounded
     :scroll-behavior="useLayoutStore().smAndUp ? '' : 'hide'"
   >
@@ -19,10 +17,9 @@
     <template #title>
       <span class="ms-0 text-subtitle-1 text-sm-h6">Origin Organizer</span>
     </template>
-    <main-app-search-field />
 
     <template #append>
-      <div v-if="useLayoutStore().smAndUp">
+      <template v-if="useLayoutStore().smAndUp">
         <v-icon
           v-for="r in routesToUse"
           :key="r.name"
@@ -34,7 +31,7 @@
         >
           {{ r.icon }}
         </v-icon>
-      </div>
+      </template>
 
       <waffle-menu v-if="useLayoutStore().smAndUp" />
       <user-account-menu />
@@ -47,7 +44,6 @@ import WaffleMenu from '@/components/navigation/MainWaffleMenu.vue'
 import UserAccountMenu from '@/components/navigation/MainUserAccountMenu.vue'
 import { routes } from '@/schemas/routerLinksSchema'
 import { computed } from 'vue'
-import MainAppSearchField from '@/components/navigation/MainAppSearchField.vue'
 import router from '@/plugins/router'
 import { useLayoutStore } from '@/stores/layoutStore.js'
 
@@ -76,6 +72,6 @@ const routesToUse = computed(() => routes.filter((r) => !r.hideInMainNav))
   animation: spin 5s linear infinite;
 }
 .cust-o {
-  overflow: visible !important;
+  //overflow: visible !important;
 }
 </style>
