@@ -7,9 +7,11 @@
     :height="useLayoutStore().calculatedHeight"
     :width="useLayoutStore().calculatedWidth"
   >
-    <v-sheet v-if="showOverlay" class="cust-overlay">
+    <v-sheet
+      v-if="showOverlay"
+      class="cust-overlay d-flex justify-center align-center"
+    >
       <v-icon
-        class="ma-0 pa-0"
         color="blue-darken-2"
         :disabled="!allowCardDeselection"
         size="100"
@@ -194,8 +196,10 @@ onMounted(() => {
 .cust-overlay {
   z-index: 2400;
   position: absolute;
-  left: 30%;
-  top: 35%;
+  height: 100%;
+  width: 100%;
+  //left: 30%;
+  //top: 35%;
   margin: auto auto;
   background: transparent;
 }

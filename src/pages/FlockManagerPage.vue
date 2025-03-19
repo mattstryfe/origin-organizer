@@ -9,7 +9,7 @@
         class="v-card ma-1 pa-1 border-sm"
         :height="useLayoutStore().calculatedHeight"
         type="card-avatar, article, actions"
-        :width="800"
+        :width="useLayoutStore().calculatedWidth"
       />
     </template>
 
