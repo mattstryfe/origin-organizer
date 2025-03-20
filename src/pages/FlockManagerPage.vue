@@ -15,9 +15,9 @@
 
     <template v-if="isDoneLoadingEntries">
       <display-entry-card
-        v-for="entry in entries"
+        v-for="(entry, index) in entries"
         :key="entry.entryId"
-        ref="entryRefs"
+        :ref="(el) => (entryRefs[index] = el)"
         :allow-card-deselection="allowCardDeselection"
         class="cust-border-trans"
         :class="highlightThisCard(entry.entryId)"
@@ -45,7 +45,7 @@
 import DisplayEntryCard from '@/components/Cards/DisplayEntryCard.vue'
 import { storeToRefs } from 'pinia'
 import { useEntryFormStore } from '@/stores/entryFormStore'
-import { nextTick, onMounted, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { onLongPress } from '@vueuse/core'
 import CreateBreedingNavigationDrawer from '@/components/CreateBreeding/CreateBreedingNavigationDrawer.vue'
 import FlockManagerFilters from '@/components/FlockManagerFilters.vue'
@@ -95,22 +95,10 @@ const handleLongPress = (entry) => {
 
 // Entries updates from store.  Needs to fire each time it changes.
 // However, it also needs to wait for the DOM to update (v-for)
-watch(entries, async () => {
+watch(entries.value, () => {
   // Required because refs need to be applied to v-for element AFTER render
   // this ONLY needs to happen because this is being attached via [listener/ref]
-  await nextTick()
-
-  entryRefs.value.forEach((entryRef, index) => {
-    if (entryRef) {
-      onLongPress(entryRef, () => handleLongPress(entries.value[index]), {
-        delay: 200 // long press duration in ms
-      })
-    }
-  })
-})
-
-onMounted(() => {
-  // if the watcher already fired...
+  // This now only runs once and in a watcher instead of deconflicting an onMounted()
   if (entryRefs.value.length !== 0) {
     entryRefs.value.forEach((entryRef, index) => {
       if (entryRef) {

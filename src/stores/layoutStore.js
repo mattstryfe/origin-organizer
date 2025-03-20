@@ -11,7 +11,7 @@ export const useLayoutStore = defineStore('layoutStore', () => {
   const state = reactive({
     defaults: {
       cardHeight: 800,
-      cardWidth: 800
+      cardWidth: 600
     },
     FMLayoutMode: 'full'
   })

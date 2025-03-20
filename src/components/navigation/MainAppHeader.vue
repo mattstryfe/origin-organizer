@@ -51,14 +51,6 @@ const routesToUse = computed(() => routes.filter((r) => !r.hideInMainNav))
 </script>
 
 <style scoped>
-/* Ensure text wraps and overrides flexbox constraints */
-.wrap-title {
-  white-space: normal; /* Allow wrapping */
-  word-break: break-word; /* Ensure breaking for long words */
-  text-align: left; /* Align text within the available space */
-  flex-shrink: 1; /* Shrink if necessary */
-  max-width: 150px; /* Set a maximum width to trigger wrapping */
-}
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -70,8 +62,5 @@ const routesToUse = computed(() => routes.filter((r) => !r.hideInMainNav))
 
 .hover-spin-continuous {
   animation: spin 5s linear infinite;
-}
-.cust-o {
-  //overflow: visible !important;
 }
 </style>
