@@ -198,8 +198,6 @@ onMounted(() => {
   position: absolute;
   height: 100%;
   width: 100%;
-  //left: 30%;
-  //top: 35%;
   margin: auto auto;
   background: transparent;
 }
