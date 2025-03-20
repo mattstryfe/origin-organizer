@@ -45,7 +45,7 @@
 import DisplayEntryCard from '@/components/Cards/DisplayEntryCard.vue'
 import { storeToRefs } from 'pinia'
 import { useEntryFormStore } from '@/stores/entryFormStore'
-import { nextTick, onMounted, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { onLongPress } from '@vueuse/core'
 import CreateBreedingNavigationDrawer from '@/components/CreateBreeding/CreateBreedingNavigationDrawer.vue'
 import FlockManagerFilters from '@/components/FlockManagerFilters.vue'
