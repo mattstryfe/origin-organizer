@@ -7,6 +7,7 @@ export const routes = [
     icon: 'mdi-home',
     name: 'LandingPage',
     path: '/',
+    showInMobileNav: true,
     title: 'Home'
   },
   {
