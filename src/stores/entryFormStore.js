@@ -139,13 +139,13 @@ export const useEntryFormStore = defineStore('entryFormStore', {
     async foundationThisEntry(entryId, isFoundation) {
       await updateDoc(this.getEntryRef(entryId), {
         isFoundation: !isFoundation,
-        updatedAt: serverTimestamp()
+        updatedAt: Timestamp.now()
       })
     },
     async favoriteThisEntry(entryId, isFavorite) {
       await updateDoc(this.getEntryRef(entryId), {
         isFavorited: !isFavorite,
-        updatedAt: serverTimestamp()
+        updatedAt: Timestamp.now()
       })
     },
     getEntryById(entryId) {
