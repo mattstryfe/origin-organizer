@@ -1,11 +1,13 @@
 <template>
   <v-bottom-navigation
     v-model="nav"
-    :active="!useLayoutStore().smAndUp"
+    v-if="!useLayoutStore().smAndUp"
     class="border-t-sm"
     color="primary"
     grow
     horizontal
+    v-scroll="onScroll"
+    :style="{ transform: isHidden ? 'translateY(100%)' : 'translateY(0)' }"
   >
     <!-- Bottom Navigation Pages.  Filtered by enabled for now-->
     <v-btn
@@ -40,8 +42,11 @@ watch(
 )
 const routesToUse = computed(() => routes.filter((r) => r.showInMobileNav))
 
+const isHidden = ref(false) // Controls hiding behavior
+const lastScrollY = ref(0) // Tracks last scroll position
+
 // Mimic `v-app-bar` scroll behavior
-const onScroll = (event) => {
+const onScroll = () => {
   const currentScrollY = window.scrollY
   isHidden.value = currentScrollY > lastScrollY.value && currentScrollY > 50
   lastScrollY.value = currentScrollY
