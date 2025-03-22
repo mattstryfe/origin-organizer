@@ -5,16 +5,19 @@
     <v-list-item class="py-0 my-0">
       <template #prepend>
         <v-switch
-          v-model="enableDarkMode"
           class="mr-8"
           color="primary"
           density="compact"
+          false-value="light"
           hide-details
+          v-model="enableDarkMode"
+          true-value="dark"
+          @update:model-value="toggleDarkMode"
         />
       </template>
 
       <v-list-item-title class="text-capitalize v-label text-right">
-        Dark Mode
+        {{ enableDarkMode }} Mode
       </v-list-item-title>
     </v-list-item>
 
@@ -61,13 +64,21 @@
 
 <script setup>
 import { ref } from 'vue'
-const enableDarkMode = ref(false)
 const enableAutoSave = ref(true)
 import { useUserStore } from '@/stores/userStore'
 import { storeToRefs } from 'pinia'
+import { useTheme } from 'vuetify'
+
 const userStore = useUserStore()
 const { hasProfileBeenRepaired } = storeToRefs(userStore)
 
+// Tether theme value to ref for statefulness
+const theme = useTheme()
+const enableDarkMode = ref(theme.global.name.value)
+
+const toggleDarkMode = () => {
+  theme.global.name.value = enableDarkMode.value
+}
 const dangerZoneEntries = ref([
   {
     name: 'repair profile',

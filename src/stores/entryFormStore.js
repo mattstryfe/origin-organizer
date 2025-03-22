@@ -30,7 +30,8 @@ export const useEntryFormStore = defineStore('entryFormStore', {
     isDoneLoadingEntries: null,
     showBottomSheet: false,
     attachments: [],
-    filterByFavoriteAndFoundation: false
+    filterByFavoriteAndFoundation: false,
+    isAppIniting: true
   }),
   getters: {
     // Gets the firestore document REF
@@ -70,10 +71,12 @@ export const useEntryFormStore = defineStore('entryFormStore', {
         (querySnapshot) => {
           const updatedEntriesMap = new Map()
           const currentIds = new Set(this.entries.map((e) => e.entryId))
+          const addedBatch = []
 
           // Listener that is always running
           querySnapshot.docChanges().forEach((change) => {
             // unpack entries and attach imageGetter
+
             const entry = {
               entryId: change.doc.id,
               ...change.doc.data(),
@@ -86,8 +89,12 @@ export const useEntryFormStore = defineStore('entryFormStore', {
             const handlers = {
               added: () => {
                 if (!currentIds.has(entry.entryId)) {
-                  this.entries.push(entry)
-                  notificationsStore.addNotification('found', entry.entryId)
+                  if (this.isAppIniting) {
+                    addedBatch.push(entry)
+                  } else {
+                    this.entries.push(entry)
+                    notificationsStore.addNotification('found', entry.entryId)
+                  }
                 }
               },
               modified: () => {
@@ -112,6 +119,13 @@ export const useEntryFormStore = defineStore('entryFormStore', {
             // Execute object literal logic
             handlers[change.type]?.()
           })
+
+          // Do a one-time bulk insert
+          if (this.isAppIniting) {
+            this.entries = [...this.entries, ...addedBatch]
+            this.isAppIniting = false
+          }
+
           this.isDoneLoadingEntries = true
         },
         (error) => {
