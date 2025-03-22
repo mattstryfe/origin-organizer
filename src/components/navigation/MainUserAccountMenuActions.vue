@@ -64,7 +64,6 @@
 
 <script setup>
 import { ref } from 'vue'
-const enableDarkMode = ref('dark')
 const enableAutoSave = ref(true)
 import { useUserStore } from '@/stores/userStore'
 import { storeToRefs } from 'pinia'
@@ -72,7 +71,10 @@ import { useTheme } from 'vuetify'
 
 const userStore = useUserStore()
 const { hasProfileBeenRepaired } = storeToRefs(userStore)
+
+// Tether theme value to ref for statefulness
 const theme = useTheme()
+const enableDarkMode = ref(theme.global.name.value)
 
 const toggleDarkMode = () => {
   theme.global.name.value = enableDarkMode.value
