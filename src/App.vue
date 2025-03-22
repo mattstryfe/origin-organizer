@@ -7,6 +7,7 @@
     >
       <v-container class="" fluid>
         <notification-banner />
+
         <confirmation-dialog />
         <router-view />
       </v-container>

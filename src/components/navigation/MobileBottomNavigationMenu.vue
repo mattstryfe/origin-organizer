@@ -5,6 +5,7 @@
     class="border-t-sm"
     color="primary"
     grow
+    height="48"
     horizontal
     v-scroll="onScroll"
     :style="{ transform: isHidden ? 'translateY(100%)' : 'translateY(0)' }"
