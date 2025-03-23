@@ -1,7 +1,7 @@
 <template>
   <v-row class="flex-wrap px-3">
     <flock-manager-filters />
-
+    things......
     <template v-if="!isDoneLoadingEntries">
       <v-skeleton-loader
         v-for="i in 12"

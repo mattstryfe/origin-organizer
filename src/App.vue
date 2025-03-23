@@ -3,9 +3,9 @@
     <main-app-header />
     <v-main
       class="d-flex align-center justify-center"
-      style="min-height: 300px"
+      style="min-height: 300px; padding-bottom: env(safe-area-inset-bottom)"
     >
-      <v-container class="" fluid>
+      <v-container fluid>
         <notification-banner />
 
         <confirmation-dialog />

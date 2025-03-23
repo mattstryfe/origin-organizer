@@ -1,7 +1,8 @@
 <template>
   <v-bottom-navigation
-    v-model="nav"
     v-if="!useLayoutStore().smAndUp"
+    app
+    v-model="nav"
     class="border-t-sm"
     color="primary"
     grow

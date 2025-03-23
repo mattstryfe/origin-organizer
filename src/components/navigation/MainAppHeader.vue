@@ -1,5 +1,6 @@
 <template>
   <v-app-bar
+    app
     density="compact"
     rounded
     :scroll-behavior="useLayoutStore().smAndUp ? '' : 'hide'"
