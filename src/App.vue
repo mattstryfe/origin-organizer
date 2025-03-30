@@ -50,9 +50,8 @@ body,
 }
 
 .safe-area-top {
-  overflow-y: auto;
-  margin-top: var(--inset-top) !important;
-  padding-top: var(--inset-top) !important;
+  /*margin-top: var(--inset-top) !important;*/
+  /*padding-top: var(--inset-top) !important;*/
 }
 .v-app-bar {
   padding-top: var(--inset-top) !important;
