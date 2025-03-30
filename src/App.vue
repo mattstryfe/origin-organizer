@@ -2,10 +2,7 @@
   <v-app class="">
     <main-app-header />
     <v-main class="safe-area-top">
-      <v-container
-        class="d-flex flex-column fill-height px-4 safe-area-top"
-        fluid
-      >
+      <v-container class="d-flex flex-column px-4 safe-area-top" fluid>
         <notification-banner />
 
         <confirmation-dialog />
@@ -50,6 +47,7 @@ body,
 }
 
 .safe-area-top {
+  /*height: 90vh;*/
   /*margin-top: var(--inset-top) !important;*/
   /*padding-top: var(--inset-top) !important;*/
 }

@@ -5,10 +5,10 @@
     rounded
     v-scroll="onScroll"
     :style="{
-      transform: isHidden ? 'translateY(-100%)' : 'translateY(0%)'
+      transform: isHidden ? 'translateY(-50%)' : 'translateY(0%)'
     }"
   >
-    <template #prepend>
+    <template #prepend v-if="!isHidden">
       <v-btn
         class="ms-n1 hover-spin-continuous"
         color="primary"
@@ -18,11 +18,11 @@
       <v-divider vertical />
     </template>
 
-    <template #title>
+    <template #title v-if="!isHidden">
       <span class="ms-0 text-subtitle-1 text-sm-h6">Origin Organizer</span>
     </template>
 
-    <template #append>
+    <template #append v-if="!isHidden">
       <template v-if="useLayoutStore().smAndUp">
         <v-icon
           v-for="r in routesToUse"
