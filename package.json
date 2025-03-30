@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "lint": "eslint --ext .js,.vue --fix src",
     "format": "prettier .  --write",
-    "dev:mobile": "node scripts/switch-capacitor-config.js dev && vite",
+    "dev:mobile": "node scripts/switch-capacitor-config.js dev && vite && npx cap copy android && npx cap open android",
     "build:mobile": "node scripts/switch-capacitor-config.js prod && vite build && npx cap copy android"
   },
   "dependencies": {

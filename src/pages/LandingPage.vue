@@ -6,12 +6,11 @@
         Track your flock with precision.
       </span>
     </v-col>
+    <v-divider class=""></v-divider>
   </v-row>
 
   <v-row>
-    <v-divider class="my-3 mx-4"></v-divider>
-
-    <v-col v-for="r in routesToUse" cols="6">
+    <v-col v-for="r in routesToUse" cols="6" lg="3" md="4">
       <v-badge
         v-if="r.showBadgeOnLandingPage"
         class="badge-top-right text-left"
@@ -41,32 +40,25 @@
     </v-col>
   </v-row>
 
-  <v-row>
-    <v-col class="pb-1" cols="12">Recently Viewed/Added</v-col>
+  <v-row class="w-100">
+    <v-col class="pb-1 pl-0" cols="12">Recently Viewed/Added 1</v-col>
 
-    <v-infinite-scroll class="ml-3" direction="horizontal">
+    <!--    <v-col cols="12">-->
+    <v-infinite-scroll direction="horizontal">
       <template v-if="isDoneLoadingEntries">
         <v-col
           v-for="entry in getMostRecentEntries"
           :key="entry.entryId"
+          class="pl-0"
           cols="7"
+          md="4"
         >
           <at-a-glance-card :entry-id="entry.entryId" />
         </v-col>
       </template>
     </v-infinite-scroll>
+    <!--    </v-col>-->
   </v-row>
-  <!--  <v-row class="">
-    <template v-if="isDoneLoadingEntries">
-      <v-col
-        v-for="entry in getMostRecentEntries"
-        :key="entry.entryId"
-        cols="7"
-      >
-        <at-a-glance-card :entry-id="entry.entryId" />
-      </v-col>
-    </template>
-  </v-row>-->
 </template>
 
 <script setup>

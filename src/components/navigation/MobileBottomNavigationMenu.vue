@@ -6,10 +6,13 @@
     class="border-t-sm"
     color="primary"
     grow
-    height="48"
+    height="98"
     horizontal
     v-scroll="onScroll"
-    :style="{ transform: isHidden ? 'translateY(100%)' : 'translateY(0)' }"
+    :style="{
+      transform: isHidden ? 'translateY(100%)' : 'translateY(0)',
+      opacity: isHidden ? 0 : 1 // Correctly fade in/out
+    }"
   >
     <!-- Bottom Navigation Pages.  Filtered by enabled for now-->
     <v-btn
@@ -58,6 +61,9 @@ const onScroll = () => {
 <style scoped>
 /* Smooth transition */
 .v-bottom-navigation {
-  transition: transform 0.3s ease-in-out;
+  transition:
+    transform 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
+  will-change: transform, opacity; /* Boost performance */
 }
 </style>
