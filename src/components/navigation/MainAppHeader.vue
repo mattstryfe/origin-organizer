@@ -3,7 +3,10 @@
     app
     density="compact"
     rounded
-    :scroll-behavior="useLayoutStore().smAndUp ? '' : 'hide'"
+    v-scroll="onScroll"
+    :style="{
+      transform: isHidden ? 'translateY(-100%)' : 'translateY(0%)'
+    }"
   >
     <template #prepend>
       <v-btn
@@ -44,14 +47,33 @@
 import WaffleMenu from '@/components/navigation/MainWaffleMenu.vue'
 import UserAccountMenu from '@/components/navigation/MainUserAccountMenu.vue'
 import { routes } from '@/schemas/routerLinksSchema'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import router from '@/plugins/router'
 import { useLayoutStore } from '@/stores/layoutStore.js'
 
 const routesToUse = computed(() => routes.filter((r) => !r.hideInMainNav))
+
+const isHidden = ref(false) // Controls hiding behavior
+const lastScrollY = ref(0) // Tracks last scroll position
+
+// Mimic `v-app-bar` scroll behavior
+const onScroll = () => {
+  const currentScrollY = window.scrollY
+  isHidden.value = currentScrollY > lastScrollY.value || currentScrollY > 0
+  lastScrollY.value = currentScrollY
+  // console.log('currentScrollY', currentScrollY)
+  console.log('isHidden', isHidden.value)
+}
 </script>
 
 <style scoped>
+/* Smooth transition */
+.v-app-bar {
+  transition:
+    transform 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
+  will-change: transform, opacity; /* Boost performance */
+}
 @keyframes spin {
   0% {
     transform: rotate(0deg);
