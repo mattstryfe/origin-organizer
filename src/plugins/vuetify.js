@@ -6,12 +6,14 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import { aliases, mdi } from 'vuetify/iconsets/mdi'
 import { VFileUpload } from 'vuetify/labs/VFileUpload'
+import { VPullToRefresh } from 'vuetify/labs/VPullToRefresh'
 
 export const vuetify = createVuetify({
   directives,
   components: {
     ...components,
-    VFileUpload
+    VFileUpload,
+    VPullToRefresh
   },
   theme: {
     defaultTheme: 'dark',

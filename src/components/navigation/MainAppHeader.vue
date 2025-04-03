@@ -61,8 +61,6 @@ const onScroll = () => {
   const currentScrollY = window.scrollY
   isHidden.value = currentScrollY > lastScrollY.value || currentScrollY > 0
   lastScrollY.value = currentScrollY
-  // console.log('currentScrollY', currentScrollY)
-  console.log('isHidden', isHidden.value)
 }
 </script>
 

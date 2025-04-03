@@ -1,13 +1,19 @@
 <template>
   <v-app class="">
     <main-app-header />
-    <v-main class="safe-area-top">
-      <v-container class="d-flex flex-column px-4 safe-area-top" fluid>
-        <notification-banner />
+    <v-main class="">
+      <v-pull-to-refresh
+        :disabled="!isNative"
+        :pull-down-threshold="100"
+        @load="refreshApp"
+      >
+        <v-container class="d-flex flex-column px-4 fill-height" fluid>
+          <notification-banner />
 
-        <confirmation-dialog />
-        <router-view />
-      </v-container>
+          <confirmation-dialog />
+          <router-view />
+        </v-container>
+      </v-pull-to-refresh>
     </v-main>
     <mobile-bottom-navigation-menu />
   </v-app>
@@ -20,6 +26,7 @@ import { useUserStore } from '@/stores/userStore'
 import MobileBottomNavigationMenu from '@/components/navigation/MobileBottomNavigationMenu.vue'
 import NotificationBanner from '@/components/NotificationBanner.vue'
 import ConfirmationDialog from '@/components/ConfirmationDialog.vue'
+import { Capacitor } from '@capacitor/core'
 
 onMounted(() => {
   if (import.meta.env.MODE === 'development') {
@@ -27,6 +34,14 @@ onMounted(() => {
     userStore.handleLogin(true)
   }
 })
+
+const isNative = Capacitor.isNativePlatform()
+
+async function refreshApp({ done }) {
+  console.log('🔁 App-level refresh triggered', isNative)
+  await new Promise((resolve) => setTimeout(() => resolve(), 2000))
+  done('ok')
+}
 </script>
 
 <style>
@@ -46,11 +61,6 @@ body,
   padding-top: var(--inset-top) !important;
 }
 
-.safe-area-top {
-  /*height: 90vh;*/
-  /*margin-top: var(--inset-top) !important;*/
-  /*padding-top: var(--inset-top) !important;*/
-}
 .v-app-bar {
   padding-top: var(--inset-top) !important;
 }
