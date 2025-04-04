@@ -1,16 +1,16 @@
 <template>
-  <v-row>
+  <v-row class="flex-0-1">
     <v-col class="text-center mt-5" cols="12">
       <h1>Origin Organizer</h1>
       <span class="text-grey text-caption">
         Track your flock with precision.
       </span>
     </v-col>
-    <v-divider class=""></v-divider>
+    <v-divider class="mt-2 mx-4" color="blue" :thickness="5"></v-divider>
   </v-row>
 
-  <v-row>
-    <v-col v-for="r in routesToUse" cols="6" lg="3" md="4">
+  <v-row class="mt-10">
+    <v-col v-for="r in routesToUse" cols="6" lg="4" md="4">
       <v-badge
         v-if="r.showBadgeOnLandingPage"
         class="badge-top-right text-left"
@@ -40,24 +40,24 @@
     </v-col>
   </v-row>
 
-  <v-row class="w-100">
-    <v-col class="pb-1 pl-0" cols="12">Recently Viewed/Added 1</v-col>
+  <v-row class="w-100 mt-10 flex-0-1">
+    <v-col class="mb-0 pb-0" cols="12">Recently Viewed/Added</v-col>
 
-    <!--    <v-col cols="12">-->
-    <v-infinite-scroll direction="horizontal">
-      <template v-if="isDoneLoadingEntries">
-        <v-col
-          v-for="entry in getMostRecentEntries"
-          :key="entry.entryId"
-          class="pl-0"
-          cols="7"
-          md="4"
-        >
-          <at-a-glance-card :entry-id="entry.entryId" />
-        </v-col>
-      </template>
-    </v-infinite-scroll>
-    <!--    </v-col>-->
+    <v-col cols="12">
+      <v-infinite-scroll direction="horizontal">
+        <template v-if="isDoneLoadingEntries">
+          <v-col
+            v-for="entry in getMostRecentEntries"
+            :key="entry.entryId"
+            class="pl-0"
+            cols="7"
+            md="4"
+          >
+            <at-a-glance-card :entry-id="entry.entryId" />
+          </v-col>
+        </template>
+      </v-infinite-scroll>
+    </v-col>
   </v-row>
 </template>
 

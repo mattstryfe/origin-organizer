@@ -1,8 +1,9 @@
 <template>
-  <v-app class="">
+  <v-app>
     <main-app-header />
-    <v-main class="">
+    <v-main>
       <v-pull-to-refresh
+        class=""
         :disabled="!isNative"
         :pull-down-threshold="100"
         @load="refreshApp"
@@ -45,11 +46,11 @@ async function refreshApp({ done }) {
 </script>
 
 <style>
-/* MOBILE - prevents swiping down from refreshing the app*/
-/*html,
-body {
-  overscroll-behavior: none;
-}*/
+/*Fixes alignment & layout issues caused from this being in labs probably.*/
+.v-pull-to-refresh,
+.v-pull-to-refresh__scroll-container {
+  height: 100%;
+}
 
 :root {
   --inset-top: env(safe-area-inset-top);
