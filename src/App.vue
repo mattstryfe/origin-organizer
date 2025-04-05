@@ -35,7 +35,6 @@ import { useUserStore } from '@/stores/userStore'
 import MobileBottomNavigationMenu from '@/components/navigation/MobileBottomNavigationMenu.vue'
 import NotificationBanner from '@/components/NotificationBanner.vue'
 import ConfirmationDialog from '@/components/ConfirmationDialog.vue'
-// import { Capacitor } from '@capacitor/core'
 import { useEntryFormStore } from '@/stores/entryFormStore.js'
 
 onMounted(() => {
@@ -44,8 +43,6 @@ onMounted(() => {
     userStore.handleLogin(true)
   }
 })
-
-// const isNative = Capacitor.isNativePlatform()
 
 async function refreshApp({ done }) {
   // Resets entire store
