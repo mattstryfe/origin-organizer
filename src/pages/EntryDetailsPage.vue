@@ -1,9 +1,6 @@
 <template>
-  <v-row class="flex-wrap">
-    <v-col
-      class="mb-1"
-      cols="12"
-    >
+  <v-row class="">
+    <v-col class="mb-1" cols="12">
       <v-btn
         color="info"
         density="compact"
@@ -34,13 +31,17 @@
     </v-col>
   </v-row>
 
-  <template v-if="isDoneLoadingEntries">
-    <display-entry-card
-      :card-height="useLayoutStore().calculatedHeight"
-      :card-width="useLayoutStore().calculatedWidth"
-      :entry-id="entryId"
-    />
-  </template>
+  <v-row>
+    <v-col>
+      <template v-if="isDoneLoadingEntries">
+        <display-entry-card
+          :card-height="useLayoutStore().calculatedHeight"
+          :card-width="useLayoutStore().calculatedWidth"
+          :entry-id="entryId"
+        />
+      </template>
+    </v-col>
+  </v-row>
 </template>
 
 <script setup>

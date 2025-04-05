@@ -14,12 +14,12 @@ export default defineConfig({
         replacement: fileURLToPath(new URL('./src', import.meta.url))
       }
     ]
-    // '@': path.resolve(__dirname, './src') // Correct alias definition
   },
   build: {
     sourcemap: true
   },
   server: {
-    port: 8080
+    port: 8080,
+    host: '0.0.0.0'
   }
 })

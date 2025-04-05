@@ -24,3 +24,7 @@ dist-ssr
 *.sw?
 .firebase/hosting.ZGlzdA.cache
 /.firebase
+
+android/.gradle/
+android/app/build/
+android/build/

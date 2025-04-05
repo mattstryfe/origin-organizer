@@ -1,14 +1,19 @@
 <template>
   <v-bottom-navigation
-    v-model="nav"
     v-if="!useLayoutStore().smAndUp"
+    app
+    v-model="nav"
     class="border-t-sm"
+    :class="{ 'app-bottom-navigation-shim': isNative }"
     color="primary"
     grow
-    height="48"
+    :height="isNative ? 98 : 55"
     horizontal
     v-scroll="onScroll"
-    :style="{ transform: isHidden ? 'translateY(100%)' : 'translateY(0)' }"
+    :style="{
+      transform: isHidden ? 'translateY(100%)' : 'translateY(0)',
+      opacity: isHidden ? 0 : 1 // Correctly fade in/out
+    }"
   >
     <!-- Bottom Navigation Pages.  Filtered by enabled for now-->
     <v-btn
@@ -32,9 +37,14 @@ import router from '@/plugins/router'
 import { computed, ref, watch } from 'vue'
 import { useLayoutStore } from '@/stores/layoutStore.js'
 import { useRoute } from 'vue-router'
-const route = useRoute()
+import { Capacitor } from '@capacitor/core'
 
+// app/platform dictator
+const isNative = ref(Capacitor.isNativePlatform())
+
+const route = useRoute()
 const nav = ref({})
+
 watch(
   () => route.name,
   (newRoute) => {
@@ -55,8 +65,14 @@ const onScroll = () => {
 </script>
 
 <style scoped>
+.app-bottom-navigation-shim {
+  padding-bottom: 35px !important;
+}
 /* Smooth transition */
 .v-bottom-navigation {
-  transition: transform 0.3s ease-in-out;
+  transition:
+    transform 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
+  will-change: transform, opacity; /* Boost performance */
 }
 </style>

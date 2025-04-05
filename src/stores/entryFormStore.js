@@ -31,7 +31,8 @@ export const useEntryFormStore = defineStore('entryFormStore', {
     showBottomSheet: false,
     attachments: [],
     filterByFavoriteAndFoundation: false,
-    isAppIniting: true
+    isAppIniting: true,
+    isFirebaseListenerActive: false
   }),
   getters: {
     // Gets the firestore document REF
@@ -60,11 +61,11 @@ export const useEntryFormStore = defineStore('entryFormStore', {
     setupEntriesListener() {
       const notificationsStore = useNotificationsStore()
       const flockId = useUserStore().getUserUid
-      if (!flockId || this.isListening) return
+      if (!flockId || this.isFirebaseListenerActive) return
 
       const entriesCollection = collection(db, 'flocks', flockId, 'entries')
 
-      this.isListening = true // ✅ Mark as active listener  GPT says to do this?
+      this.isFirebaseListenerActive = true // ✅ Mark as active listener  GPT says to do this?
 
       onSnapshot(
         entriesCollection,

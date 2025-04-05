@@ -1,6 +1,6 @@
 <template>
   <v-card
-    class="border-sm ma-1 px-2 d-flex flex-column"
+    class="border-sm ma-2 px-2 d-flex flex-column"
     :class="{
       'opacity-80': showOverlay
     }"
