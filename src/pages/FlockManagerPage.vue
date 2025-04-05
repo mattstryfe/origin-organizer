@@ -5,10 +5,9 @@
       <v-skeleton-loader
         v-for="i in 12"
         :key="i"
-        class="v-card ma-1 pa-1 border-sm"
+        class="v-card ma-1 pa-1 border-sm w-100"
         :height="useLayoutStore().calculatedHeight"
         type="card-avatar, article, actions"
-        :width="useLayoutStore().calculatedWidth"
       />
     </template>
 
