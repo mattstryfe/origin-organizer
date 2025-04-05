@@ -2,12 +2,20 @@
   <v-app>
     <main-app-header />
     <v-main>
-      <v-pull-to-refresh
-        class=""
-        :disabled="!isNative"
-        :pull-down-threshold="100"
-        @load="refreshApp"
-      >
+      <v-pull-to-refresh class="" :pull-down-threshold="100" @load="refreshApp">
+        <template #pullDownPanel>
+          <v-row class="mt-3">
+            <v-col class="text-center" col="3">
+              <v-progress-circular
+                color="primary"
+                indeterminate
+                :size="40"
+                :width="6"
+              ></v-progress-circular>
+              <h6 class="text-caption mt-2">Refreshing data...</h6>
+            </v-col>
+          </v-row>
+        </template>
         <v-container class="d-flex flex-column px-4 fill-height" fluid>
           <notification-banner />
 
@@ -27,7 +35,8 @@ import { useUserStore } from '@/stores/userStore'
 import MobileBottomNavigationMenu from '@/components/navigation/MobileBottomNavigationMenu.vue'
 import NotificationBanner from '@/components/NotificationBanner.vue'
 import ConfirmationDialog from '@/components/ConfirmationDialog.vue'
-import { Capacitor } from '@capacitor/core'
+// import { Capacitor } from '@capacitor/core'
+import { useEntryFormStore } from '@/stores/entryFormStore.js'
 
 onMounted(() => {
   if (import.meta.env.MODE === 'development') {
@@ -36,11 +45,14 @@ onMounted(() => {
   }
 })
 
-const isNative = Capacitor.isNativePlatform()
+// const isNative = Capacitor.isNativePlatform()
 
 async function refreshApp({ done }) {
-  console.log('🔁 App-level refresh triggered', isNative)
-  await new Promise((resolve) => setTimeout(() => resolve(), 2000))
+  // Resets entire store
+  useEntryFormStore().$reset()
+
+  // Re-init entry store to repopulate from ground up
+  await useEntryFormStore().setupEntriesListener()
   done('ok')
 }
 </script>

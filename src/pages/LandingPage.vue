@@ -6,7 +6,7 @@
         Track your flock with precision.
       </span>
     </v-col>
-    <v-divider class="mt-2 mx-4" color="blue" :thickness="5"></v-divider>
+    <v-divider class="mt-2 mx-4" color="blue" :thickness="3"></v-divider>
   </v-row>
 
   <v-row class="mt-10">
