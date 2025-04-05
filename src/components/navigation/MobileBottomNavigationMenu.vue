@@ -4,9 +4,10 @@
     app
     v-model="nav"
     class="border-t-sm"
+    :class="{ 'app-bottom-navigation-shim': isNative }"
     color="primary"
     grow
-    height="98"
+    :height="isNative ? 98 : 55"
     horizontal
     v-scroll="onScroll"
     :style="{
@@ -36,9 +37,14 @@ import router from '@/plugins/router'
 import { computed, ref, watch } from 'vue'
 import { useLayoutStore } from '@/stores/layoutStore.js'
 import { useRoute } from 'vue-router'
-const route = useRoute()
+import { Capacitor } from '@capacitor/core'
 
+// app/platform dictator
+const isNative = ref(Capacitor.isNativePlatform())
+
+const route = useRoute()
 const nav = ref({})
+
 watch(
   () => route.name,
   (newRoute) => {
@@ -59,6 +65,9 @@ const onScroll = () => {
 </script>
 
 <style scoped>
+.app-bottom-navigation-shim {
+  padding-bottom: 35px !important;
+}
 /* Smooth transition */
 .v-bottom-navigation {
   transition:

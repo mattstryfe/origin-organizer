@@ -77,7 +77,4 @@ body,
 .v-app-bar {
   padding-top: var(--inset-top) !important;
 }
-.v-bottom-navigation {
-  padding-bottom: 35px !important;
-}
 </style>
