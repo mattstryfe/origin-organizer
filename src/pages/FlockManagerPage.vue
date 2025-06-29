@@ -1,6 +1,7 @@
 <template>
   <v-row class="flex-wrap px-3">
     <flock-manager-filters />
+    <FlockManagerSearchField />
     <template v-if="!isDoneLoadingEntries">
       <v-skeleton-loader
         v-for="i in 12"
@@ -13,7 +14,7 @@
 
     <template v-if="isDoneLoadingEntries">
       <display-entry-card
-        v-for="(entry, index) in entries"
+        v-for="(entry, index) in searchedEntries"
         :key="entry.entryId"
         :ref="(el) => (entryRefs[index] = el)"
         :allow-card-deselection="allowCardDeselection"
@@ -48,10 +49,12 @@ import { onLongPress } from '@vueuse/core'
 import CreateBreedingNavigationDrawer from '@/components/CreateBreeding/CreateBreedingNavigationDrawer.vue'
 import FlockManagerFilters from '@/components/FlockManagerFilters.vue'
 import { useLayoutStore } from '@/stores/layoutStore.js'
+import FlockManagerSearchField from '../components/FlockManagerSearchField.vue'
 
 const entryFormStore = useEntryFormStore()
 const {
   entries,
+  searchedEntries,
   selectionIds,
   isDoneLoadingEntries,
   showBottomSheet,

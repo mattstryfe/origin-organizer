@@ -32,7 +32,8 @@ export const useEntryFormStore = defineStore('entryFormStore', {
     attachments: [],
     filterByFavoriteAndFoundation: false,
     isAppIniting: true,
-    isFirebaseListenerActive: false
+    isFirebaseListenerActive: false,
+    searchParams: ''
   }),
   getters: {
     // Gets the firestore document REF
@@ -43,7 +44,35 @@ export const useEntryFormStore = defineStore('entryFormStore', {
     disableBottomSheetButton: (state) => state.selectionIds.size !== 2,
     getMostRecentEntries: (state) => {
       return state.entries
+    },
+searchedEntries() {
+  const query = this.searchParams?.toLowerCase() || ''
+
+  // Split the query into individual words
+  const searchWords = query.split(/\s+/).filter(Boolean)
+
+  // If no search terms, return all entries
+  if (!searchWords.length) return this.entries
+
+  // Recursive match function
+  const matches = (value) => {
+    if (value == null) return false
+
+    if (Array.isArray(value)) {
+      return value.some(matches)
     }
+
+    if (typeof value === 'object') {
+      return Object.values(value).some(matches)
+    }
+
+    const valStr = String(value).toLowerCase()
+    return searchWords.every((word) => valStr.includes(word))
+  }
+
+  // Apply match logic to all entries
+  return this.entries.filter((entry) => matches(entry))
+}
   },
   actions: {
     filterEntryListBy(sex) {
