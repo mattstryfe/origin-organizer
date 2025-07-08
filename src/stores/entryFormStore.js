@@ -251,11 +251,12 @@ searchedEntries() {
 
       const flockDocRef = await doc(db, 'flocks', flockId)
       const entriesCollectionRef = collection(flockDocRef, 'entries')
-      const { entryId } = await addDoc(entriesCollectionRef, {
+      const entryDocRef = await addDoc(entriesCollectionRef, {
         ...this.formData,
         updatedAt: serverTimestamp(),
         createdAt: serverTimestamp()
       })
+      const entryId = entryDocRef.id
 
       // Now upload file
       if (this.attachments.length > 0) {
