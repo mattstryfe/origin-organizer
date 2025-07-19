@@ -1,4 +1,6 @@
+// stores/entryFormStore.js
 import { defineStore } from 'pinia'
+import { ref, computed, reactive } from 'vue'
 import { useUserStore } from '@/stores/userStore'
 import {
   collection,
@@ -11,268 +13,273 @@ import {
   serverTimestamp
 } from 'firebase/firestore'
 import { db, storage } from '@/plugins/firebase'
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
+import {
+  getDownloadURL,
+  ref as storageRef,
+  uploadBytes
+} from 'firebase/storage'
 import { useNotificationsStore } from '@/stores/notificationsStore'
 import { notesValidator } from '@/utils/generalUtils.js'
 
-export const useEntryFormStore = defineStore('entryFormStore', {
-  state: () => ({
-    formData: {
-      notes: {
-        active: '',
-        archived: []
-      }
-    },
-    entries: [],
-    hasEntryChanged: false,
-    editModeToggle: false,
-    selectionIds: new Map(), // Putting selections here because it might be used for multiple features (breeding, comparison, etc)
-    isDoneLoadingEntries: null,
-    showBottomSheet: false,
-    attachments: [],
-    filterByFavoriteAndFoundation: false,
-    isAppIniting: true,
-    isFirebaseListenerActive: false,
-    searchParams: ''
-  }),
-  getters: {
-    // Gets the firestore document REF
-    getEntryRef: () => {
-      return (entryId) =>
-        doc(db, 'flocks', useUserStore().getUserUid, 'entries', entryId)
-    },
-    disableBottomSheetButton: (state) => state.selectionIds.size !== 2,
-    getMostRecentEntries: (state) => {
-      return state.entries
-    },
-searchedEntries() {
-  const query = this.searchParams?.toLowerCase() || ''
+export const useEntryFormStore = defineStore('entryFormStore', () => {
+  // --- State ---
+  const formData = reactive({
+    notes: {
+      active: '',
+      archived: []
+    }
+  })
+  const entries = ref([])
+  const hasEntryChanged = ref(false)
+  const editModeToggle = ref(false)
+  const selectionIds = ref(new Map())
+  const isDoneLoadingEntries = ref(null)
+  const showBottomSheet = ref(false)
+  const attachments = ref([])
+  const filterByFavoriteAndFoundation = ref(false)
+  const isAppIniting = ref(true)
+  const isFirebaseListenerActive = ref(false)
+  const searchParams = ref('')
 
-  // Split the query into individual words
-  const searchWords = query.split(/\s+/).filter(Boolean)
+  // --- Stores ---
+  const userStore = useUserStore()
+  const notificationsStore = useNotificationsStore()
 
-  // If no search terms, return all entries
-  if (!searchWords.length) return this.entries
+  // --- Getters ---
+  const getEntryRef = (entryId) =>
+    doc(db, 'flocks', userStore.getUserUid, 'entries', entryId)
 
-  // Recursive match function
-  const matches = (value) => {
-    if (value == null) return false
+  const disableBottomSheetButton = computed(() => selectionIds.value.size !== 2)
 
-    if (Array.isArray(value)) {
-      return value.some(matches)
+  const getMostRecentEntries = computed(() => entries.value)
+
+  const searchedEntries = computed(() => {
+    const query = searchParams.value?.toLowerCase() || ''
+    const searchWords = query.split(/\s+/).filter(Boolean)
+    if (!searchWords.length) return entries.value
+
+    const matches = (value) => {
+      if (value == null) return false
+      if (Array.isArray(value)) return value.some(matches)
+      if (typeof value === 'object') return Object.values(value).some(matches)
+      return searchWords.every((word) =>
+        String(value).toLowerCase().includes(word)
+      )
     }
 
-    if (typeof value === 'object') {
-      return Object.values(value).some(matches)
-    }
+    return entries.value.filter((entry) => matches(entry))
+  })
 
-    const valStr = String(value).toLowerCase()
-    return searchWords.every((word) => valStr.includes(word))
+  // --- Actions ---
+  const filterEntryListBy = (sex) => {
+    const valToUse = sex === 'mother' ? 'female' : 'male'
+    const base = filterByFavoriteAndFoundation.value
+      ? entries.value.filter((e) => e.isFoundation || e.isFavorited)
+      : entries.value
+    return base.filter((e) => e.sex === valToUse)
   }
 
-  // Apply match logic to all entries
-  return this.entries.filter((entry) => matches(entry))
-}
-  },
-  actions: {
-    filterEntryListBy(sex) {
-      // quick conversion for display purposes...
-      const valToUse = sex === 'mother' ? 'female' : 'male'
+  const setupEntriesListener = () => {
+    const flockId = userStore.getUserUid
+    if (!flockId || isFirebaseListenerActive.value) return
 
-      const baseFilter = this.filterByFavoriteAndFoundation
-        ? this.entries.filter((e) => e.isFoundation || e.isFavorited)
-        : this.entries
+    const entriesCollection = collection(db, 'flocks', flockId, 'entries')
+    isFirebaseListenerActive.value = true
 
-      return baseFilter.filter((e) => e.sex === valToUse)
-    },
+    onSnapshot(
+      entriesCollection,
+      (querySnapshot) => {
+        const updatedEntriesMap = new Map()
+        const currentIds = new Set(entries.value.map((e) => e.entryId))
+        const addedBatch = []
 
-    // **🔥 Use VueFire to Make Queries Reactive**
-    setupEntriesListener() {
-      const notificationsStore = useNotificationsStore()
-      const flockId = useUserStore().getUserUid
-      if (!flockId || this.isFirebaseListenerActive) return
-
-      const entriesCollection = collection(db, 'flocks', flockId, 'entries')
-
-      this.isFirebaseListenerActive = true // ✅ Mark as active listener  GPT says to do this?
-
-      onSnapshot(
-        entriesCollection,
-        (querySnapshot) => {
-          const updatedEntriesMap = new Map()
-          const currentIds = new Set(this.entries.map((e) => e.entryId))
-          const addedBatch = []
-
-          // Listener that is always running
-          querySnapshot.docChanges().forEach((change) => {
-            // unpack entries and attach imageGetter
-
-            const entry = {
-              entryId: change.doc.id,
-              ...change.doc.data(),
-              notes: notesValidator(change.doc.data().notes), // Ensure notes field exists & fixes if broken/old
-              imageUrlGetter: (entry) => this.getEntryImageUrls(entry)
-            }
-
-            updatedEntriesMap.set(entry.entryId, entry)
-
-            const handlers = {
-              added: () => {
-                if (!currentIds.has(entry.entryId)) {
-                  if (this.isAppIniting) {
-                    addedBatch.push(entry)
-                  } else {
-                    this.entries.push(entry)
-                    notificationsStore.addNotification('found', entry.entryId)
-                  }
-                }
-              },
-              modified: () => {
-                const existingEntry = this.entries.find(
-                  (e) => e.entryId === entry.entryId
-                )
-                // IMPORTANT! Keeps Vue reactivity, especially with arrays and nested data.
-                Object.assign(existingEntry, entry)
-                notificationsStore.addNotification(
-                  'update',
-                  existingEntry.entryId
-                )
-              },
-              removed: () => {
-                this.entries = this.entries.filter(
-                  (e) => e.entryId !== entry.entryId
-                )
-                notificationsStore.addNotification('removed', entry.entryId)
-              }
-            }
-
-            // Execute object literal logic
-            handlers[change.type]?.()
-          })
-
-          // Do a one-time bulk insert
-          if (this.isAppIniting) {
-            this.entries = [...this.entries, ...addedBatch]
-            this.isAppIniting = false
+        querySnapshot.docChanges().forEach((change) => {
+          const entry = {
+            entryId: change.doc.id,
+            ...change.doc.data(),
+            notes: notesValidator(change.doc.data().notes),
+            imageUrlGetter: (entry) => getEntryImageUrls(entry)
           }
 
-          this.isDoneLoadingEntries = true
-        },
-        (error) => {
-          notificationsStore.addNotification('error')
-          // eslint-disable-next-line no-undef
-          console.error('Error fetching entries:', error)
-        }
-      )
-    },
-    clearFormData() {
-      this.formData = {
-        notes: {
-          active: '',
-          archived: []
-        }
-      }
-    },
-    async removeThisEntry(entryId) {
-      const isConfirmed =
-        await useNotificationsStore().waitForDeleteConfirmationResponse()
-      if (!isConfirmed) return
+          updatedEntriesMap.set(entry.entryId, entry)
 
-      await deleteDoc(this.getEntryRef(entryId))
-    },
-    async foundationThisEntry(entryId, isFoundation) {
-      await updateDoc(this.getEntryRef(entryId), {
-        isFoundation: !isFoundation,
-        updatedAt: Timestamp.now()
-      })
-    },
-    async favoriteThisEntry(entryId, isFavorite) {
-      await updateDoc(this.getEntryRef(entryId), {
-        isFavorited: !isFavorite,
-        updatedAt: Timestamp.now()
-      })
-    },
-    getEntryById(entryId) {
-      return this.entries.find((entry) => entry.entryId === entryId)
-    },
-    async updateEntryInDb(entryId) {
-      const timestamp = Timestamp.now()
-      const entryLocalCopy = this.getEntryById(entryId)
+          const handlers = {
+            added: () => {
+              if (!currentIds.has(entry.entryId)) {
+                if (isAppIniting.value) {
+                  addedBatch.push(entry)
+                } else {
+                  entries.value.push(entry)
+                  notificationsStore.addNotification('found', entry.entryId)
+                }
+              }
+            },
+            modified: () => {
+              const existingEntry = entries.value.find(
+                (e) => e.entryId === entry.entryId
+              )
+              if (existingEntry) {
+                Object.assign(existingEntry, entry)
+                notificationsStore.addNotification('update', entry.entryId)
+              }
+            },
+            removed: () => {
+              entries.value = entries.value.filter(
+                (e) => e.entryId !== entry.entryId
+              )
+              notificationsStore.addNotification('removed', entry.entryId)
+            }
+          }
 
-      // Cannot append functions to firestore, this gets re-added
-      delete entryLocalCopy.imageUrlGetter
-
-      // before write to DB, manage notes appropriately
-      if (entryLocalCopy.notes.active.length > 0) {
-        entryLocalCopy.notes.archived.push({
-          timestamp,
-          content: entryLocalCopy.notes.active,
-          user: useUserStore().getUserDisplayName,
-          userPhotoURL: useUserStore().getUserPhotoURL
+          handlers[change.type]?.()
         })
-        entryLocalCopy.notes.active = ''
-      }
 
-      await updateDoc(this.getEntryRef(entryId), {
-        ...entryLocalCopy,
-        updatedAt: timestamp
+        if (isAppIniting.value) {
+          entries.value = [...entries.value, ...addedBatch]
+          isAppIniting.value = false
+        }
+
+        isDoneLoadingEntries.value = true
+      },
+      (error) => {
+        notificationsStore.addNotification('error')
+        console.error('Error fetching entries:', error)
+      }
+    )
+  }
+
+  const clearFormData = () => {
+    formData.notes.active = ''
+    formData.notes.archived = []
+  }
+
+  const removeThisEntry = async (entryId) => {
+    const isConfirmed =
+      await notificationsStore.waitForDeleteConfirmationResponse()
+    if (!isConfirmed) return
+    await deleteDoc(getEntryRef(entryId))
+  }
+
+  const foundationThisEntry = async (entryId, isFoundation) => {
+    await updateDoc(getEntryRef(entryId), {
+      isFoundation: !isFoundation,
+      updatedAt: Timestamp.now()
+    })
+  }
+
+  const favoriteThisEntry = async (entryId, isFavorite) => {
+    await updateDoc(getEntryRef(entryId), {
+      isFavorited: !isFavorite,
+      updatedAt: Timestamp.now()
+    })
+  }
+
+  const getEntryById = (entryId) =>
+    entries.value.find((entry) => entry.entryId === entryId)
+
+  const updateEntryInDb = async (entryId) => {
+    const timestamp = Timestamp.now()
+    const entry = getEntryById(entryId)
+    if (!entry) return
+
+    const copy = { ...entry }
+    delete copy.imageUrlGetter
+
+    if (copy.notes.active?.length > 0) {
+      copy.notes.archived.push({
+        timestamp,
+        content: copy.notes.active,
+        user: userStore.getUserDisplayName,
+        userPhotoURL: userStore.getUserPhotoURL
       })
-
-      this.editModeToggle = false
-    },
-    async getEntryImageUrls(entry) {
-      const flockId = useUserStore().getUserUid
-      const { entryId } = entry
-      const imageId = entry?.photoIds?.[0] ?? null
-
-      if (!imageId) {
-        entry.imageUrl = 'https://cdn.vuetifyjs.com/images/cards/docks.jpg'
-        return
-      }
-
-      try {
-        const storageRef = ref(storage, `${flockId}/${entryId}/${imageId}.jpg`)
-        entry.imageUrl = await getDownloadURL(storageRef)
-      } catch (error) {
-        // eslint-disable-next-line no-undef
-        console.error('Error fetching image URL:', error)
-        return ''
-      }
-    },
-    async saveEntryToDb() {
-      const flockId = useUserStore().getUserUid
-
-      // check to see if attachments are being added
-      // We need to break this up and do this now in order to insert this value into the entriesCollection DB
-      // If we don't do this before & after we would have to make 2 queries.
-      if (this.attachments.length > 0) {
-        this.formData.photoIds = [crypto.randomUUID()]
-      }
-
-      const flockDocRef = await doc(db, 'flocks', flockId)
-      const entriesCollectionRef = collection(flockDocRef, 'entries')
-      const entryDocRef = await addDoc(entriesCollectionRef, {
-        ...this.formData,
-        updatedAt: serverTimestamp(),
-        createdAt: serverTimestamp()
-      })
-      const entryId = entryDocRef.id
-
-      // Now upload file
-      if (this.attachments.length > 0) {
-        await this.uploadImages(flockId, entryId, this.formData.photoIds[0])
-      }
-    },
-    async uploadImages(flockId, entryId, uniqueId) {
-      // Now upload file
-      // TODO: Convert this to unpacking method to hydrate the apps cards
-      const storageRef = ref(storage, `${flockId}/${entryId}/${uniqueId}.jpg`)
-
-      // For now, only handle 1 gracefully...
-      await uploadBytes(storageRef, this.attachments[0])
-
-      // const ref = storageRef(storage, `${flockId}/${entryId}/${this.formData.photoIds[0]}`)
-      // const url = await getDownloadURL(storageRef)
+      copy.notes.active = ''
     }
+
+    await updateDoc(getEntryRef(entryId), {
+      ...copy,
+      updatedAt: timestamp
+    })
+
+    editModeToggle.value = false
+  }
+
+  const getEntryImageUrls = async (entry) => {
+    const flockId = userStore.getUserUid
+    const { entryId } = entry
+    const imageId = entry?.photoIds?.[0] ?? null
+
+    if (!imageId) {
+      entry.imageUrl = 'https://cdn.vuetifyjs.com/images/cards/docks.jpg'
+      return
+    }
+
+    try {
+      const refPath = storageRef(
+        storage,
+        `${flockId}/${entryId}/${imageId}.jpg`
+      )
+      entry.imageUrl = await getDownloadURL(refPath)
+    } catch (error) {
+      console.error('Error fetching image URL:', error)
+    }
+  }
+
+  const saveEntryToDb = async () => {
+    const flockId = userStore.getUserUid
+
+    if (attachments.value.length > 0) {
+      formData.photoIds = [crypto.randomUUID()]
+    }
+
+    const entriesCollectionRef = collection(db, 'flocks', flockId, 'entries')
+    const { id: entryId } = await addDoc(entriesCollectionRef, {
+      ...formData,
+      updatedAt: serverTimestamp(),
+      createdAt: serverTimestamp()
+    })
+
+    if (attachments.value.length > 0) {
+      await uploadImages(flockId, entryId, formData.photoIds[0])
+    }
+  }
+
+  const uploadImages = async (flockId, entryId, uniqueId) => {
+    const refPath = storageRef(storage, `${flockId}/${entryId}/${uniqueId}.jpg`)
+    await uploadBytes(refPath, attachments.value[0])
+  }
+
+  return {
+    // State
+    formData,
+    entries,
+    hasEntryChanged,
+    editModeToggle,
+    selectionIds,
+    isDoneLoadingEntries,
+    showBottomSheet,
+    attachments,
+    filterByFavoriteAndFoundation,
+    isAppIniting,
+    isFirebaseListenerActive,
+    searchParams,
+
+    // Getters
+    getEntryRef,
+    disableBottomSheetButton,
+    getMostRecentEntries,
+    searchedEntries,
+
+    // Actions
+    filterEntryListBy,
+    setupEntriesListener,
+    clearFormData,
+    removeThisEntry,
+    foundationThisEntry,
+    favoriteThisEntry,
+    getEntryById,
+    updateEntryInDb,
+    getEntryImageUrls,
+    saveEntryToDb,
+    uploadImages
   }
 })
