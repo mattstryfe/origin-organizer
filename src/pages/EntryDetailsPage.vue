@@ -24,7 +24,7 @@
         :color="hasEntryChanged ? 'primary' : 'grey'"
         density="compact"
         :variant="hasEntryChanged ? 'elevated' : 'outlined'"
-        @click="handleSaveClick"
+        @click="updateEntryInDb()"
       >
         <v-icon>mdi-content-save</v-icon>
       </v-btn>
@@ -52,7 +52,7 @@ import { storeToRefs } from 'pinia'
 import DisplayEntryCard from '@/components/Cards/DisplayEntryCard.vue'
 import { useLayoutStore } from '@/stores/layoutStore.js'
 
-// Comes in from router props:true
+// Comes in from router props:true when directly navigating to entry
 const { entryId } = defineProps({
   entryId: {
     type: String,
@@ -65,7 +65,7 @@ const entryFormStore = useEntryFormStore()
 const { isDoneLoadingEntries, editModeToggle, hasEntryChanged } =
   storeToRefs(entryFormStore)
 
-const handleSaveClick = () => {
+const updateEntryInDb = () => {
   entryFormStore.updateEntryInDb(entryId)
 }
 

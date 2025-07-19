@@ -29,7 +29,7 @@ export const routes = [
     icon: 'mdi-cog',
     name: 'EntryDetails',
     path: '/entrydetails/:entryId',
-    props: true,
+    props: true, // VERY IMPORTANT!! https://router.vuejs.org/guide/essentials/passing-props#Boolean-mode
     title: 'Entry Details'
   },
   {

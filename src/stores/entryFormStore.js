@@ -53,6 +53,9 @@ export const useEntryFormStore = defineStore('entryFormStore', () => {
 
   const getMostRecentEntries = computed(() => entries.value)
 
+  // TODO: this lags when typing eee, then backspacing, leading me to believe it's not very efficient.
+  // we could probably use a hashmap or just use a firebase filter. it would be more powerful and
+  // potentially less intrusive.
   const searchedEntries = computed(() => {
     const query = searchParams.value?.toLowerCase() || ''
     const searchWords = query.split(/\s+/).filter(Boolean)
@@ -93,6 +96,12 @@ export const useEntryFormStore = defineStore('entryFormStore', () => {
         const currentIds = new Set(entries.value.map((e) => e.entryId))
         const addedBatch = []
 
+        // This creates a living/breathing snapshot of the entries
+        // We could just as easily updates these locally in the app and they would sync up with firebase.
+        // However, we SEVER & reTether reactivity because things like SAVE and CANCEL would otherwise be impossible.
+        // handlers: are attached to handle the changes independently and although this is wasteful,
+        // it adds a nice vessel to attach the notifications.
+        // The batching is used to prevent notifs from going overboard during initial load
         querySnapshot.docChanges().forEach((change) => {
           const entry = {
             entryId: change.doc.id,
@@ -177,32 +186,8 @@ export const useEntryFormStore = defineStore('entryFormStore', () => {
   const getEntryById = (entryId) =>
     entries.value.find((entry) => entry.entryId === entryId)
 
-  const updateEntryInDb = async (entryId) => {
-    const timestamp = Timestamp.now()
-    const entry = getEntryById(entryId)
-    if (!entry) return
-
-    const copy = { ...entry }
-    delete copy.imageUrlGetter
-
-    if (copy.notes.active?.length > 0) {
-      copy.notes.archived.push({
-        timestamp,
-        content: copy.notes.active,
-        user: userStore.getUserDisplayName,
-        userPhotoURL: userStore.getUserPhotoURL
-      })
-      copy.notes.active = ''
-    }
-
-    await updateDoc(getEntryRef(entryId), {
-      ...copy,
-      updatedAt: timestamp
-    })
-
-    editModeToggle.value = false
-  }
-
+  // Attached to entries when they are initially queried this is lazyLoaded and will not fire unless it needs to
+  // it's all deleted during re-write to db because firebase is unable to save functions
   const getEntryImageUrls = async (entry) => {
     const flockId = userStore.getUserUid
     const { entryId } = entry
@@ -224,6 +209,8 @@ export const useEntryFormStore = defineStore('entryFormStore', () => {
     }
   }
 
+  // Only used for INITIAL Saves.
+  // Subsequent saves are done via updateEntryInDb()
   const saveEntryToDb = async () => {
     const flockId = userStore.getUserUid
 
@@ -241,6 +228,39 @@ export const useEntryFormStore = defineStore('entryFormStore', () => {
     if (attachments.value.length > 0) {
       await uploadImages(flockId, entryId, formData.photoIds[0])
     }
+  }
+
+  // Updates entry in DB
+  const updateEntryInDb = async (entryId) => {
+    const timestamp = Timestamp.now()
+    const entry = getEntryById(entryId)
+    if (!entry) return
+
+    const copy = { ...entry }
+    delete copy.imageUrlGetter // VERY IMPORTANT. get's re-attached later
+
+    // Special notes things to append dates and keep it stateful
+    // Also resets active to ''
+    // This is required because of how reactive things are.  If we never severed the tether
+    // the firebase db would be updating every single character we typed in notes.
+    if (copy.notes.active?.length > 0) {
+      copy.notes.archived.push({
+        timestamp,
+        content: copy.notes.active,
+        user: userStore.getUserDisplayName,
+        userPhotoURL: userStore.getUserPhotoURL
+      })
+      copy.notes.active = ''
+    }
+
+    // Can either update the DB entry OR update this.entries.
+    // Both update each other and stay in sync due to DB
+    await updateDoc(getEntryRef(entryId), {
+      ...copy,
+      updatedAt: timestamp
+    })
+
+    editModeToggle.value = false
   }
 
   const uploadImages = async (flockId, entryId, uniqueId) => {
